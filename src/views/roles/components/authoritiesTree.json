@@ -1,0 +1,27 @@
+{
+    "regions": [
+        {
+            "label": "管理员",
+            "author": "ROLE_ADMIN"
+        },
+        {
+            "label": "普通用户",
+            "author": "ROLE_USER"
+        },
+        {
+            "label": "活动",
+            "children":[{
+                "label": "新增",
+                "author": "active-create"
+            },{
+                "label": "删除",
+                "author": "active-delete"
+            },{
+                "label": "编辑",
+                "author": "active-editor"
+            }]
+        }
+    ]
+}
+
+
