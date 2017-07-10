@@ -10,19 +10,19 @@
             </transition>
         </div>
 
-        <Footer></Footer>
+        <FooterBar></FooterBar>
 
     </div>
 </template>
 
 <script>
-    import {Navbar, Footer} from 'views/layout';
+    import {Navbar, FooterBar} from 'views/layout';
 
     export default {
         name: 'layout',
         components: {
             Navbar,
-            Footer
+            FooterBar
         },
     }
 </script>

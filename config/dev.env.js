@@ -3,6 +3,6 @@ var prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
     NODE_ENV: '"development"',
-    BASE_API: '"http://10.200.8.11:8010"',
+    BASE_API: '"http://192.168.1.203:8080"',
     NODE_API: '"http://127.0.0.1:3000"'
 })

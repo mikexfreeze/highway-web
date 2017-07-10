@@ -1,7 +1,4 @@
 export { default as Navbar } from './Navbar/index.vue';
 
-export { default as Sidebar } from './Sidebar';
-
-export { default as Levelbar } from './Levelbar';
-export { default as Footer } from './footer.vue';
+export { default as FooterBar } from './footer.vue';
 
