@@ -8,7 +8,7 @@
 }
 
 h1{
-    letter-spacing: 50px;
+    letter-spacing: 40px;
 }
 
 .el-row {
@@ -17,23 +17,85 @@ h1{
         margin-bottom: 0;
     }
 }
-.el-col {
-    border-radius: 4px;
-}
-.bg-purple-dark {
-    background: #99a9bf;
-}
-.bg-purple {
-    background: #d3dce6;
-}
-.bg-purple-light {
-    background: #e5e9f2;
-}
+
 .grid-content {
     border-radius: 4px;
     min-height: 36px;
 }
-.row-bg {
-    padding: 10px 0;
-    background-color: #f9fafc;
+
+#sensors_containner {
+    border: 1px solid;
+    height: 500px;
+    width: 100%;
+    background-color: white;
+    white-space: nowrap;
+    overflow-x:auto;
+    overflow-y:hidden;
+}
+
+.sensors_box {
+    display: inline-block;
+    margin: 0px 0px 0px 10px;
+}
+
+.placeholder_blank {
+    height: 118px;
+}
+
+.sensors_box {
+    height: 100%;
+    width: 200px;
+    background-color: grey;
+}
+
+.sensor {
+    width: 40px;
+    height: 30px;
+    background-color: green;
+
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center;
+}
+
+.sensor_left {
+    float: left;
+}
+
+.sensor_right {
+    float: right;
+}
+
+.sensor_text {
+    color: white;
+}
+
+.sensor_road {
+    float: left;
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center;
+    position: relative;
+    top: -400px;
+    left: 40px;
+}
+
+.sensor_road_text {
+    color: white;
+    display: inline;
+}
+
+.sensor_detail_check_containner {
+    background-color: white;
+    float: right;
+    position: relative;
+    top: -100px;
+    left: -10px;
+    width: 100px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.sensor_status_text {
+    display: block;
 }
