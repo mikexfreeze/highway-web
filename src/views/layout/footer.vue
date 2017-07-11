@@ -18,13 +18,25 @@
                     </router-link>
                 </el-col>
                 <el-col :span="4">
-                    <div class="grid-content bg-purple"></div>
+                    <router-link to="device">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-tubiaozhexiantu"></use>
+                        </svg>
+                    </router-link>
                 </el-col>
                 <el-col :span="4">
-                    <div class="grid-content bg-purple-light"></div>
+                    <router-link to="errorstat">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-jinggao1"></use>
+                        </svg>
+                    </router-link>
                 </el-col>
                 <el-col :span="4">
-                    <div class="grid-content bg-purple"></div>
+                    <router-link to="orgindata">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-yunpan"></use>
+                        </svg>
+                    </router-link>
                 </el-col>
                 <el-col :span="4">
                     <div class="grid-content bg-purple-light"></div>

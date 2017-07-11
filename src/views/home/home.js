@@ -23,8 +23,14 @@ export default {
                 value: '选项5',
                 label: '北京烤鸭'
             }],
-            value: ''
+            provinceOptions: [],
+            roadOptions: [],
+            stationOptions: [],
+            selectedProvince: null,
+            selectedRoad: null,
+            selectedStation: null
         }
+
     },
     methods:{
         getRoad(){
@@ -46,9 +52,85 @@ export default {
                 .catch(function (error) {
                     console.log(error);
                 });
+        },
+        provinceHasItem() {
+            return this.selectedProvince == null;
+        },
+        roadHasItem() {
+            return this.selectedRoad == null;
+        },
+        stationHasItem() {
+            return this.selectedStation == null;
+        },
+        changeProvince(value) {
+            this.selectedStation = null;
+            this.selectedRoad = null;
+            // 调用查询Road接口
+            var roadList = testGetRoad();
+            this.roadOptions = roadList["roadList"];
+
+        },
+        changeRoad(value) {
+            this.selectedStation = null;
+            var stationList = testGetStation();
+            this.stationOptions = stationList["stationList"];
+        },
+        changeStation(value) {
+            // 调用整个数据接口 TODO:
         }
+    },
+    created: function () {
+        var provinceList = testGetProvince();
+        this.provinceOptions = provinceList["provinceList"];
     }
 }
+
+function testGetProvince() {
+    return {
+        "provinceList": [
+            {
+                "key": "guangxi",
+                "value": "广西"
+            },
+            {
+                "key": "jiangsu",
+                "value": "江苏"
+            }
+        ]
+    }
+}
+
+function testGetRoad() {
+    return {
+        "roadList" : [
+            {
+                "key" : "nn1",
+                "value" : "南宁市绕城高速公路1",
+            },
+            {
+                "key" : "nn2",
+                "value" : "南宁市绕城高速公路2",
+            }
+        ]
+    }
+}
+
+function testGetStation() {
+    return {
+        "stationList" : [
+            {
+                "key" : "nnesfz1",
+                "value" : "南宁东收费站1",
+            },
+            {
+                "key" : "nnesfz2",
+                "value" : "南宁东收费站2",
+            }
+        ]
+    }
+}
+
+
 
 function sensorbox(roadInfo) {
     var color_s0 = colorSensor(roadInfo["s0"]);

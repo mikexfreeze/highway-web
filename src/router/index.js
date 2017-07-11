@@ -15,6 +15,10 @@ import Register from '../views/register';
 // dashboard
 const map = resolve => require(['../views/map/map.vue'], resolve);
 const home = resolve => require(['../views/home/home.vue'], resolve);
+const device = resolve => require(['../views/device/device.vue'], resolve);
+const errorstat = resolve => require(['../views/errorstat/errorstat.vue'], resolve);
+const orgindata = resolve => require(['../views/orgindata/orgindata.vue'], resolve);
+
 
 /* error page*/
 const Err404 = resolve => require(['../views/error/404'], resolve);
@@ -38,11 +42,11 @@ export default new Router({
             name: '首页',
             children: [
                 {path: 'map', component: map, name:'地图'},
-                {path: 'home', component: home, name:'主页'}
+                {path: 'home', component: home, name:'主页'},
+                {path: 'device', component: device, name:'设备'},
+                {path: 'errorstat', component: errorstat, name: '故障统计'},
+                {path: 'orgindata', component: orgindata, name: '原始数据'},
             ]
         }
-
-
-
     ]
 })

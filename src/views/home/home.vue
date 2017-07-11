@@ -9,31 +9,31 @@
             <el-col :span="18">
                 <el-row class="grid-content select-area">
                     <el-col :span="8">
-                        <el-select v-model="value" placeholder="请选择">
+                        <el-select v-model="selectedProvince" placeholder="请选择" @change="changeProvince(value)">
                             <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
+                                    v-for="item in provinceOptions"
+                                    :key="item.key"
+                                    :label="item.value"
                                     :value="item.value">
                             </el-option>
                         </el-select>
                     </el-col>
                     <el-col :span="8">
-                        <el-select v-model="value" placeholder="请选择">
+                        <el-select v-model="selectedRoad" placeholder="请选择" :disabled="provinceHasItem()" @change="changeRoad(value)">
                             <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
+                                    v-for="item in roadOptions"
+                                    :key="item.key"
+                                    :label="item.value"
                                     :value="item.value">
                             </el-option>
                         </el-select>
                     </el-col>
                     <el-col :span="8">
-                        <el-select v-model="value" placeholder="请选择">
+                        <el-select v-model="selectedStation" placeholder="请选择" :disabled="roadHasItem()" @change="changeStation(value)">
                             <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
+                                    v-for="item in stationOptions"
+                                    :key="item.key"
+                                    :label="item.value"
                                     :value="item.value">
                             </el-option>
                         </el-select>
