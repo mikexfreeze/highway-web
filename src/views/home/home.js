@@ -2,9 +2,10 @@
  * Created by Micheal Xiao on 2017/7/10.
  */
 import axios from 'axios'
-
-
+import {GetProvince, GetRoad, GetStation, GetStatu} from './api/Lane.js'
+import statuLabel from './components/status.vue'
 export default {
+    components:{statuLabel},
     data() {
         return {
             options: [{
@@ -28,30 +29,17 @@ export default {
             stationOptions: [],
             selectedProvince: null,
             selectedRoad: null,
-            selectedStation: null
+            selectedStation: null,
+            checkPointList:[]
         }
 
     },
     methods:{
+        getPovince(){
+            return GetProvince()
+        },
         getRoad(){
-            // GetXY()
-            axios.get('http://192.168.1.203:8080/gaosuWeb/doQueryStatOfStation?province=guangxi&road=nanlinggaosu&station=nanlingzhan')
-                .then(function (response) {
-                    console.log(response);
 
-                    var result = response.data;
-
-                    $('#sensors_containner').empty();
-
-                    for (var i = 0; i < result.length; i++) {
-                        var roadInfo = result[i];
-                        var sensorboxHtml = sensorbox(roadInfo);
-                        $('#sensors_containner').append(sensorboxHtml);
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
         },
         provinceHasItem() {
             return this.selectedProvince == null;
@@ -62,27 +50,81 @@ export default {
         stationHasItem() {
             return this.selectedStation == null;
         },
-        changeProvince(value) {
+        changeProvince() {
             this.selectedStation = null;
             this.selectedRoad = null;
             // 调用查询Road接口
-            var roadList = testGetRoad();
-            this.roadOptions = roadList["roadList"];
-
+            GetRoad(this.selectedProvince)
+                .then((response)=>{
+                    this.roadOptions = getResObjArry(response.data.roadList)
+                })
         },
         changeRoad(value) {
             this.selectedStation = null;
-            var stationList = testGetStation();
-            this.stationOptions = stationList["stationList"];
+            GetStation(this.selectedProvince ,this.selectedRoad)
+                .then((response)=>{
+                    this.stationOptions = getResObjArry(response.data.stationList)
+                })
+            // var stationList = testGetStation();
+            // this.stationOptions = stationList["stationList"];
         },
         changeStation(value) {
             // 调用整个数据接口 TODO:
+            let param = {
+                province:this.selectedProvince,
+                road:this.selectedRoad,
+                station:this.selectedStation
+            };
+            GetStatu(param)
+                .then((response)=>{
+                    let list = [];
+                    let data = response.data[0]
+                    console.log(data)
+                    list[0] = {pointName:"传感器1",status:data["s0"]}
+                    list[1] = {pointName:"传感器2",status:data["s1"]}
+                    list[2] = {pointName:"传感器3",status:data["s2"]}
+                    list[3] = {pointName:"传感器4",status:data["s3"]}
+                    list[4] = {pointName:"传感器5",status:data["s4"]}
+                    list[5] = {pointName:"传感器6",status:data["s5"]}
+                    list[6] = {pointName:"传感器7",status:data["s6"]}
+                    list[7] = {pointName:"传感器8",status:data["s7"]}
+                    list[8] = {pointName:"传感器9",status:data["s8"]}
+                    list[9] = {pointName:"传感器10",status:data["s9"]}
+                    list[10] = {pointName:"光幕",status:data["light"]}
+                    list[11] = {pointName:"轮轴器识别1",status:data["axeCounter1"]}
+                    list[12] = {pointName:"轮轴器识别2",status:data["axeCounter2"]}
+                    this.checkPointList = list
+                })
         }
     },
     created: function () {
-        var provinceList = testGetProvince();
-        this.provinceOptions = provinceList["provinceList"];
+        this.getPovince()
+            .then((response) => {
+                this.provinceOptions = [];
+                response.data.provinceList.forEach((val, n) => {
+                    let x = Object.keys(val)[0];
+                    this.provinceOptions.push({
+                        "key": x,
+                        "value": val[x]
+                    })
+
+                })
+            });
+
     }
+}
+
+function getResObjArry(data) {
+    let arr = [];
+    data.forEach((val, n) => {
+        let x = Object.keys(val)[0];
+        arr.push({
+            "key": x,
+            "value": val[x]
+        })
+
+    });
+    return arr
 }
 
 function testGetProvince() {
