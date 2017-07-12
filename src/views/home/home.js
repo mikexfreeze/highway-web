@@ -4,8 +4,9 @@
 import axios from 'axios'
 import {GetProvince, GetRoad, GetStation, GetStatu} from './api/Lane.js'
 import statuLabel from './components/status.vue'
+import roadblock from './components/roadstat.vue'
 export default {
-    components:{statuLabel},
+    components:{statuLabel,roadblock},
     data() {
         return {
             options: [{
@@ -30,7 +31,8 @@ export default {
             selectedProvince: null,
             selectedRoad: null,
             selectedStation: null,
-            checkPointList:[]
+            checkPointList:[],
+            roadStatusList:[]
         }
 
     },
@@ -39,7 +41,17 @@ export default {
             return GetProvince()
         },
         getRoad(){
+            var result = sensorTest();
 
+            $('#sensors_containner').empty();
+
+            this.roadStatusList = result;
+
+            // for (var i = 0; i < result.length; i++) {
+            //     var roadInfo = result[i];
+            //     var sensorboxHtml = sensorbox(roadInfo);
+            //     $('#sensors_containner').append(roadblock);
+            // }
         },
         provinceHasItem() {
             return this.selectedProvince == null;
@@ -79,6 +91,8 @@ export default {
                 .then((response)=>{
                     let list = [];
                     let data = response.data[0]
+
+                    this.roadStatusList = response.data
                     console.log(data)
                     list[0] = {pointName:"传感器1",status:data["s0"]}
                     list[1] = {pointName:"传感器2",status:data["s1"]}
@@ -110,7 +124,6 @@ export default {
 
                 })
             });
-
     }
 }
 
@@ -172,8 +185,6 @@ function testGetStation() {
     }
 }
 
-
-
 function sensorbox(roadInfo) {
     var color_s0 = colorSensor(roadInfo["s0"]);
     var color_s1 = colorSensor(roadInfo["s1"]);
@@ -198,52 +209,53 @@ function sensorbox(roadInfo) {
         sysInfo = "维护预警";
     }
 
-    var sensorboxHtml = "<div class='sensors_box'>" +
-        "<div class='sensor sensor_right' id='sensor_10' " + color_s9 + ">" +
-        "<span class='sensor_text'>10</span>" +
-        "</div>" +
-        "<div class='sensor sensor_left' id='sensor_9' " + color_s8 + ">" +
-        "<span class='sensor_text'>9</span>" +
-        "</div>" +
-        "<div class='placeholder_blank'>" +
-        "</div>" +
-        "<div class='sensor sensor_right' id='sensor_8' " + color_s7 + ">" +
-        "<span class='sensor_text'>8</span>" +
-        "</div>" +
-        "<div class='sensor sensor_left' id='sensor_7' " + color_s6 + ">" +
-        "<span class='sensor_text'>7</span>" +
-        "</div>" +
-        "<div class='placeholder_blank'>" +
-        "</div>" +
-        "<div class='sensor sensor_right' id='sensor_6' " + color_s5 + ">" +
-        "<span class='sensor_text'>6</span>" +
-        "</div>" +
-        "<div class='sensor sensor_left' id='sensor_5' " + color_s4 + ">" +
-        "<span class='sensor_text'>5</span>" +
-        "</div>" +
-        "<div class='placeholder_blank'>" +
-        "</div>" +
-        "<div class='sensor sensor_right' id='sensor_4' " + color_s3 + ">" +
-        "<span class='sensor_text'>4</span>" +
-        "</div>" +
-        "<div class='sensor sensor_left' id='sensor_3' " + color_s2 + ">" +
-        "<span class='sensor_text'>3</span>" +
-        "</div>" +
-        "<div class='placeholder_blank'>" +
-        "</div>" +
-        "<div class='sensor sensor_right' id='sensor_2' " + color_s1 + ">" +
-        "<span class='sensor_text'>2</span>" +
-        "</div>" +
-        "<div class='sensor sensor_left' id='sensor_1' " + color_s0 + ">" +
-        "<span class='sensor_text'>1</span>" +
-        "</div>" +
-        "<div class='sensor_road'>" +
-        "<span class='sensor_road_text'>" + num_road + "</span>" +
-        "</div>" +
-        "<div class='sensor_detail_check_containner'>" +
-        "<span class='sensor_status_text'>" + sysInfo + "</span>" +
-        "<button class='check_sensor_status_btn'>详情查看</button>" +
-        "</div>" +
+    var sensorboxHtml =
+        "<div class='sensors_box'>" +
+            "<div class='sensor sensor_right' id='sensor_10' " + color_s9 + ">" +
+                "<span class='sensor_text'>10</span>" +
+            "</div>" +
+            "<div class='sensor sensor_left' id='sensor_9' " + color_s8 + ">" +
+                "<span class='sensor_text'>9</span>" +
+            "</div>" +
+            "<div class='placeholder_blank'>" +
+            "</div>" +
+            "<div class='sensor sensor_right' id='sensor_8' " + color_s7 + ">" +
+                "<span class='sensor_text'>8</span>" +
+            "</div>" +
+            "<div class='sensor sensor_left' id='sensor_7' " + color_s6 + ">" +
+                "<span class='sensor_text'>7</span>" +
+            "</div>" +
+            "<div class='placeholder_blank'>" +
+            "</div>" +
+            "<div class='sensor sensor_right' id='sensor_6' " + color_s5 + ">" +
+                "<span class='sensor_text'>6</span>" +
+            "</div>" +
+            "<div class='sensor sensor_left' id='sensor_5' " + color_s4 + ">" +
+                "<span class='sensor_text'>5</span>" +
+            "</div>" +
+            "<div class='placeholder_blank'>" +
+            "</div>" +
+            "<div class='sensor sensor_right' id='sensor_4' " + color_s3 + ">" +
+                "<span class='sensor_text'>4</span>" +
+            "</div>" +
+            "<div class='sensor sensor_left' id='sensor_3' " + color_s2 + ">" +
+                "<span class='sensor_text'>3</span>" +
+            "</div>" +
+            "<div class='placeholder_blank'>" +
+            "</div>" +
+            "<div class='sensor sensor_right' id='sensor_2' " + color_s1 + ">" +
+                "<span class='sensor_text'>2</span>" +
+            "</div>" +
+            "<div class='sensor sensor_left' id='sensor_1' " + color_s0 + ">" +
+                "<span class='sensor_text'>1</span>" +
+            "</div>" +
+            "<div class='sensor_road'>" +
+                "<span class='sensor_road_text'>" + num_road + "</span>" +
+            "</div>" +
+            "<div class='sensor_detail_check_containner'>" +
+                "<span class='sensor_status_text'>" + sysInfo + "</span>" +
+                "<button class='check_sensor_status_btn'>详情查看</button>" +
+            "</div>" +
         "</div>"
 
     return sensorboxHtml;
@@ -271,4 +283,33 @@ function roadNumName(port) {
 
     return port + "号道";
 
+}
+
+function sensorTest() {
+    var result = [{
+        "s0" : "1",
+        "s1" : "0",
+        "s2" : "0",
+        "s3" : "1",
+        "s4" : "0",
+        "s5" : "0",
+        "s6" : "1",
+        "s8" : "0",
+        "port" : "8",
+        "light": "0"
+    },
+        {
+            "s0" : "1",
+            "s1" : "0",
+            "s2" : "0",
+            "s3" : "1",
+            "s4" : "0",
+            "s5" : "0",
+            "s6" : "1",
+            "s8" : "0",
+            "port" : "8",
+            "light": "0"
+        }];
+
+    return result;
 }

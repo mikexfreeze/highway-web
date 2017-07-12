@@ -25,77 +25,13 @@ h1{
 
 #sensors_containner {
     border: 1px solid;
-    height: 500px;
-    width: 100%;
+    height: 820px;
     background-color: white;
-    white-space: nowrap;
     overflow-x:auto;
     overflow-y:hidden;
-}
-
-.sensors_box {
-    display: inline-block;
-    margin: 0px 0px 0px 10px;
-}
-
-.placeholder_blank {
-    height: 118px;
-}
-
-.sensors_box {
-    height: 100%;
-    width: 200px;
-    background-color: grey;
-}
-
-.sensor {
-    width: 40px;
-    height: 30px;
-    background-color: green;
-
+    margin: 0px 10px 10px 10px;
     display: flex;
-    justify-content: center; /* align horizontal */
-    align-items: center;
+
+    flex-wrap: nowrap
 }
 
-.sensor_left {
-    float: left;
-}
-
-.sensor_right {
-    float: right;
-}
-
-.sensor_text {
-    color: white;
-}
-
-.sensor_road {
-    float: left;
-    display: flex;
-    justify-content: center; /* align horizontal */
-    align-items: center;
-    position: relative;
-    top: -400px;
-    left: 40px;
-}
-
-.sensor_road_text {
-    color: white;
-    display: inline;
-}
-
-.sensor_detail_check_containner {
-    background-color: white;
-    float: right;
-    position: relative;
-    top: -100px;
-    left: -10px;
-    width: 100px;
-    vertical-align: middle;
-    text-align: center;
-}
-
-.sensor_status_text {
-    display: block;
-}
