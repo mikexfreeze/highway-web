@@ -37,6 +37,9 @@ export default {
 
     },
     methods:{
+        handlechangeLane(data){
+            this.checkPointList = setCheckPointList(this.roadStatusList[data-1])
+        },
         getPovince(){
             return GetProvince()
         },
@@ -89,25 +92,20 @@ export default {
             };
             GetStatu(param)
                 .then((response)=>{
-                    let list = [];
                     let data = response.data[0]
 
+                    response.data.forEach((val,n)=>{
+                        response.data[n].statuLabel = "正常状态"
+                        Object.keys(val).forEach((w)=>{
+                            if(val[w] == "2" || val[w] == "1" && w != "port"){
+                                response.data[n].statuLabel = "维护预警"
+                            }
+                        })
+                    })
+
                     this.roadStatusList = response.data
-                    console.log(data)
-                    list[0] = {pointName:"传感器1",status:data["s0"]}
-                    list[1] = {pointName:"传感器2",status:data["s1"]}
-                    list[2] = {pointName:"传感器3",status:data["s2"]}
-                    list[3] = {pointName:"传感器4",status:data["s3"]}
-                    list[4] = {pointName:"传感器5",status:data["s4"]}
-                    list[5] = {pointName:"传感器6",status:data["s5"]}
-                    list[6] = {pointName:"传感器7",status:data["s6"]}
-                    list[7] = {pointName:"传感器8",status:data["s7"]}
-                    list[8] = {pointName:"传感器9",status:data["s8"]}
-                    list[9] = {pointName:"传感器10",status:data["s9"]}
-                    list[10] = {pointName:"光幕",status:data["light"]}
-                    list[11] = {pointName:"轮轴器识别1",status:data["axeCounter1"]}
-                    list[12] = {pointName:"轮轴器识别2",status:data["axeCounter2"]}
-                    this.checkPointList = list
+
+                    this.checkPointList = setCheckPointList(data)
                 })
         }
     },
@@ -125,6 +123,24 @@ export default {
                 })
             });
     }
+}
+
+function setCheckPointList(data) {
+    let list = [];
+    list[0] = {pointName:"传感器1",status:data["s0"]}
+    list[1] = {pointName:"传感器2",status:data["s1"]}
+    list[2] = {pointName:"传感器3",status:data["s2"]}
+    list[3] = {pointName:"传感器4",status:data["s3"]}
+    list[4] = {pointName:"传感器5",status:data["s4"]}
+    list[5] = {pointName:"传感器6",status:data["s5"]}
+    list[6] = {pointName:"传感器7",status:data["s6"]}
+    list[7] = {pointName:"传感器8",status:data["s7"]}
+    list[8] = {pointName:"传感器9",status:data["s8"]}
+    list[9] = {pointName:"传感器10",status:data["s9"]}
+    list[10] = {pointName:"光幕",status:data["light"]}
+    list[11] = {pointName:"轮轴器识别1",status:data["axeCounter1"]}
+    list[12] = {pointName:"轮轴器识别2",status:data["axeCounter2"]}
+    return list
 }
 
 function getResObjArry(data) {

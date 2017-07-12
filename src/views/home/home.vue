@@ -76,7 +76,7 @@
             <el-col :span="18">
                 <div id="sensors_containner" type="flex" >
                     <!--<roadblock v-for="roadstatus in roadStatusList" :roadstatus="roadstatus"></roadblock>-->
-                    <roadblock v-for="roadstatus in roadStatusList" :roadstatus="roadstatus">
+                    <roadblock v-for="roadstatus in roadStatusList" :roadstatus="roadstatus" :key="roadstatus.port" @changeLane="handlechangeLane">
 
                     </roadblock>
                 </div>
