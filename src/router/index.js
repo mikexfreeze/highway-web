@@ -18,13 +18,12 @@ const home = resolve => require(['../views/home/home.vue'], resolve);
 const device = resolve => require(['../views/device/device.vue'], resolve);
 const errorstat = resolve => require(['../views/errorstat/errorstat.vue'], resolve);
 const orgindata = resolve => require(['../views/orgindata/orgindata.vue'], resolve);
+const admin = resolve => require(['../views/admin/admin.vue'], resolve);
 
 
 /* error page*/
 const Err404 = resolve => require(['../views/error/404'], resolve);
 const Err401 = resolve => require(['../views/error/401'], resolve);
-
-
 
 export default new Router({
     routes: [
@@ -46,6 +45,7 @@ export default new Router({
                 {path: 'device', component: device, name:'设备'},
                 {path: 'errorstat', component: errorstat, name: '故障统计'},
                 {path: 'orgindata', component: orgindata, name: '原始数据'},
+                {path: 'admin', component: admin, name: '管理' }
             ]
         }
     ]

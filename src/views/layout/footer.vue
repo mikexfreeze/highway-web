@@ -39,7 +39,11 @@
                     </router-link>
                 </el-col>
                 <el-col :span="4">
-                    <div class="grid-content bg-purple-light"></div>
+                    <router-link to="admin">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-yonghuguanli"></use>
+                        </svg>
+                    </router-link>
                 </el-col>
             </el-row>
         </el-col>
