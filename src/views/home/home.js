@@ -97,8 +97,8 @@ export default {
                     response.data.forEach((val,n)=>{
                         response.data[n].statuLabel = "正常状态"
                         Object.keys(val).forEach((w)=>{
-                            if(val[w] == "2" || val[w] == "1" && w != "port"){
-                                response.data[n].statuLabel = "维护预警"
+                            if(val[w] == "1" && w != "port"){
+                                response.data[n].statuLabel = "需要维护"
                             }
                         })
                     })
