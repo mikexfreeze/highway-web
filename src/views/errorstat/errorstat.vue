@@ -58,7 +58,7 @@
                 <el-button type="warning" @click="searchError" :disabled="canSearch()">查询</el-button>
             </el-col>
             <el-col :span="4" align="middle">
-                <span>漏失总重</span>
+                <span style="line-height: 34px">漏失总重</span>
                 <span>{{errorCount}}</span>
                 <span>kg</span>
             </el-col>

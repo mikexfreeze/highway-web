@@ -1,24 +1,39 @@
+import {GetUserList} from './api/UserEdit.js'
+import userstatlabel from './components/userstatus.vue'
+
 export default {
+    components:{userstatlabel},
     data() {
         return {
-            options: [{
-                value: '选项1',
-                label: '黄金糕'
-            }, {
-                value: '选项2',
-                label: '双皮奶'
-            }, {
-                value: '选项3',
-                label: '蚵仔煎'
-            }, {
-                value: '选项4',
-                label: '龙须面'
-            }, {
-                value: '选项5',
-                label: '北京烤鸭'
-            }],
-            input5 : ""
+            userList: [],
+            input5 : "",
+            multipleSelection: []
         }
+    },
+    created: function () {
+        GetUserList().then((response) => {
+          this.userList = response.data;
+        })
+    },
+    methods: {
+        handleSelectionChange(val) {
+            this.multipleSelection = val;
+            console.log("multipleSelection is " + this.multipleSelection );
+        },
+        addNewUser() {
+            //TODO:
+        },
+        deleteSelectUser(){
+            // this.multipleSelection.forEach((E) => {
+            //
+            // })
 
+        },
+        stopUser() {
+
+        },
+        enableUser() {
+
+        }
     }
 }
