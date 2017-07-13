@@ -82,8 +82,6 @@
                 </div>
             </el-col>
         </el-row>
-
-        <el-button @click="getRoad">车道</el-button>
     </div>
 </template>
 

@@ -70,3 +70,15 @@ export function GetErrorCount(param) {
         return response
     })
 }
+
+export function GetCarLog(param) {
+    return fetch({
+        url: '/gaosuWeb/doShowCarLog',
+        method: 'get',
+        params: param
+    }).then(function (response) {
+        console.log("获取 Car Log");
+        console.log(response);
+        return response
+    })
+}
