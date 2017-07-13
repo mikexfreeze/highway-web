@@ -48,10 +48,10 @@
                         <el-tag type="success">正常状态</el-tag>
                     </el-col>
                     <el-col :span="8">
-                        <el-tag type="primary">传感器异常</el-tag>
+                        <el-tag type="primary">无传感器</el-tag>
                     </el-col>
                     <el-col :span="8">
-                        <el-tag type="danger">无传感器</el-tag>
+                        <el-tag type="danger">异常状态</el-tag>
                     </el-col>
                 </el-row>
                 <h5>设备体检报告</h5>
