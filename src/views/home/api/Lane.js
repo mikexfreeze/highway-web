@@ -36,6 +36,17 @@ export function GetStation(province, road) {
     })
 }
 
+export function GetPort(province, road, station) {
+    return fetch({
+        url: 'gaosuWeb/doGetLocation?province=' + province + '&road=' + road + '&station=' + station + '&queryType=Port',
+        method: 'get',
+    }).then(function (response) {
+        console.log("获取port");
+        console.log(response);
+        return response
+    })
+}
+
 export function GetStatu(param) {
     return fetch({
         url: '/gaosuWeb/doQueryStatOfStation',
@@ -43,6 +54,18 @@ export function GetStatu(param) {
         params:param
     }).then(function (response) {
         console.log("获取station info");
+        console.log(response);
+        return response
+    })
+}
+
+export function GetErrorCount(param) {
+    return fetch({
+        url: '/gaosuWeb/doErrorCounting',
+        method: 'get',
+        params: param
+    }).then(function (response) {
+        console.log("获取 Error Counting");
         console.log(response);
         return response
     })
