@@ -128,9 +128,13 @@
                         width="120">
                 </el-table-column>
                 <el-table-column
-                        prop="SenInfoAxeCounter1"
                         label="轮轴"
                         width="80">
+                    <template scope="scope">
+                        <span>{{scope.row.SenInfoAxeCounter1}} </span>
+                        <span>{{scope.row.SenInfoAxeCounter2}}</span>
+                        <el-button v-if="scope.row.isEnable =='1'" type="warning" @click="disabledBtn(scope.row)">禁用</el-button>
+                    </template>
                 </el-table-column>
                 <el-table-column
                         prop="CarNum"

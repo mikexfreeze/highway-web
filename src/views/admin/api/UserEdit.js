@@ -11,7 +11,7 @@ export function GetUserList() {
     })
 }
 
-export function modifyUser(userName,enable) {
+export function ModifyUser(userName,enable) {
     return fetch({
         url: '/gaosuWeb/doUserEdit?controlType=modify&userName=' + userName + '&enable=' + enable,
         method: 'get',
@@ -22,7 +22,18 @@ export function modifyUser(userName,enable) {
     })
 }
 
-export function deleteUser(userName) {
+export function AddUser(userName) {
+    return fetch({
+        url: '/gaosuWeb/doUserEdit?controlType=add&userName=' + userName + '&passwordMD5=123',
+        method: 'get',
+    }).then(function (response) {
+        console.log("新增用户")
+        console.log(response)
+        return response
+    })
+}
+
+export function DeleteUser(userName) {
     return fetch({
         url: '/gaosuWeb/doUserEdit?controlType=del&userName=' + userName,
         method: 'get',
