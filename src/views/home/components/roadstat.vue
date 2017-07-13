@@ -125,7 +125,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .road_stat_unit {
         background-color: #97a8be;
         width: 240px;
