@@ -17,6 +17,7 @@ export default {
             deviceID: null,
             isBtnLoading: false,
             picUrl:null,
+            timer:null,
         }
     },
     methods:{
@@ -103,7 +104,7 @@ export default {
 
                 })
 
-                setTimeout(function () {
+                vm.timer = setTimeout(function () {
                     vm.getPic()
                 }, 10000)
             }
@@ -111,6 +112,7 @@ export default {
 
     },
     created: function () {
+        clearTimeout(this.timer);
         this.getPovince()
             .then((response) => {
                 this.provinceOptions = [];
@@ -125,7 +127,7 @@ export default {
             });
     },
     destroyed: function () {
-        clearTimeout()
+        clearTimeout(this.timer)
     }
 }
 
