@@ -1,7 +1,6 @@
 /**
  * Created by Micheal Xiao on 2017/7/10.
  */
-import axios from 'axios'
 import {GetProvince, GetRoad, GetStation, GetStatu} from './api/Lane.js'
 import statuLabel from './components/status.vue'
 import roadblock from './components/roadstat.vue'

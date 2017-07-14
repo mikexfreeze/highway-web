@@ -4,9 +4,9 @@
 
         <div class="main-container">
             <transition name="fade" mode="out-in">
-                <keep-alive>
+                <!--<keep-alive>-->
                     <router-view></router-view>
-                </keep-alive>
+                <!--</keep-alive>-->
             </transition>
         </div>
 
