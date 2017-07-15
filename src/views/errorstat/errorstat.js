@@ -1,5 +1,5 @@
 import {GetProvince, GetRoad, GetStation, GetPort,GetStatu,GetErrorCount} from '../home/api/Lane.js'
-
+import print from 'assets/js/printThis.js'
 export default {
     data() {
         return {
@@ -88,6 +88,9 @@ export default {
 
                 })
 
+        },
+        printTable(){
+            $(".table-area").printThis()
         }
     },
     created: function () {

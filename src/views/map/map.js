@@ -5,7 +5,7 @@ import {GetXY} from './api/map'
 import dotview from './components/dotview.vue'
 
 var randomState = 0;
-
+var timeSet;
 export default {
     components:{dotview},
     data(){
@@ -23,12 +23,18 @@ export default {
             this.dotList = response.data;
         })
 
-        setInterval(function () {
+        console.log("d")
+        timeSet = setInterval(function () {
             GetXY().then((response) => {
                 this.dotList = response.data;
             })
 
         }, 60000)
+
+    },
+    destroyed:function () {
+        console.log("c")
+        clearInterval(timeSet)
     }
 }
 

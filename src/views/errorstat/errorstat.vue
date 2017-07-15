@@ -63,7 +63,7 @@
                 <span>kg</span>
             </el-col>
             <el-col :span="10" type="flex" justify="end">
-                <el-button>打印输出</el-button>
+                <el-button @click="printTable">打印输出</el-button>
             </el-col>
         </el-row>
         <el-row class="table-area">
@@ -73,7 +73,7 @@
                 <el-table-column
                         type="index"
                         label="序号"
-                        width="80">
+                        >
                 </el-table-column>
                 <el-table-column
                         prop="DevID"
@@ -93,7 +93,6 @@
                 <el-table-column
                         prop="sstat"
                         label="传感器状态">
-                        width="80"
                 </el-table-column>
                 <el-table-column
                         prop="Modweight"

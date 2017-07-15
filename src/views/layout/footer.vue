@@ -3,8 +3,9 @@
     <el-row class="footer">
         <el-col :span="15">
             <el-row>
-                <el-col :span="4">
+                <el-col :span="4" >
                     <router-link to="map">
+                        <img class="active-icon" src="../../assets/images/icons/1-1.png" />
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-globe"></use>
                         </svg>
@@ -59,6 +60,20 @@
 </script>
 
 <style scoped lang="scss">
+    .active-icon{
+        display: none;
+    }
+
+    .router-link-active{
+        position: relative;
+        .active-icon{
+            display: block;
+            position: absolute;
+            width: 50%;
+            right: 0;
+        }
+    }
+
     .footer {
         position: fixed;
         width: 100%;

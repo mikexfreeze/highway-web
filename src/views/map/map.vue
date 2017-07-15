@@ -4,7 +4,7 @@
         <div id='station_point'>
             <div id='station_status'>
             </div>
-            <dotview v-for="dot in dotList" :mapDot="dot" :style="{top: dot.top + 'px', left: dot.left + 'px'}"></dotview>
+            <dotview v-for="(dot, index) in dotList" :key="index" :mapDot="dot" :style="{top: dot.top + 'px', left: dot.left + 'px'}"></dotview>
         </div>
     </div>
 </template>
