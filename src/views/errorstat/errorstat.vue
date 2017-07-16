@@ -34,7 +34,7 @@
                         </el-select>
                     </el-col>
                     <el-col :span="6">
-                        <el-select v-model="selectedPort" placeholder="请选择" :disabled="stationHasItem()" @change="changePort()">
+                        <el-select v-model="selectedPort" placeholder="请选择" :disabled="stationHasItem()">
                             <el-option
                                     v-for="item in portOptions"
                                     :key="item.key"
