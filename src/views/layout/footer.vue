@@ -13,6 +13,7 @@
                 </el-col>
                 <el-col :span="4">
                     <router-link to="home">
+                        <img class="active-icon" src="../../assets/images/icons/2-2.png" />
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-shouye"></use>
                         </svg>
@@ -20,6 +21,7 @@
                 </el-col>
                 <el-col :span="4">
                     <router-link to="device">
+                        <img class="active-icon" src="../../assets/images/icons/3-3.png" />
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-tubiaozhexiantu"></use>
                         </svg>
@@ -27,6 +29,7 @@
                 </el-col>
                 <el-col :span="4">
                     <router-link to="errorstat">
+                        <img class="active-icon" src="../../assets/images/icons/4-4.png" />
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-jinggao1"></use>
                         </svg>
@@ -34,6 +37,7 @@
                 </el-col>
                 <el-col :span="4">
                     <router-link to="orgindata">
+                        <img class="active-icon" src="../../assets/images/icons/5-5.png" />
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-yunpan"></use>
                         </svg>
@@ -41,6 +45,7 @@
                 </el-col>
                 <el-col :span="4">
                     <router-link to="admin">
+                        <img class="active-icon" src="../../assets/images/icons/6-6.png" />
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-yonghuguanli"></use>
                         </svg>
@@ -49,14 +54,45 @@
             </el-row>
         </el-col>
         <el-col :span="9">
-            <div class="grid-content bg-purple-dark"></div>
+            <div class="grid-content bg-purple-dark">
+                <el-col :span="4" align="center" :offset="2">
+                    <img class="img-dot" src="../../assets/images/greendot.png" />
+                    <span class="dot-text">正常状态</span>
+                </el-col>
+                <el-col :span="4" align="center">
+                    <img class="img-dot" src="../../assets/images/bluedot.png" />
+                    <span class="dot-text">检查预警</span>
+                </el-col>
+                <el-col :span="4" align="center">
+                    <img class="img-dot" src="../../assets/images/reddot.png" />
+                    <span class="dot-text">维护预警</span>
+                </el-col>
+                <el-col :span="4" align="right">
+                    <span class="time-span">{{getTime()}}</span>
+                    <span class="time-span">{{getDate()}}</span>
+                </el-col>
+            </div>
         </el-col>
     </el-row>
     <!--</div>-->
 </template>
 
 <script>
-    export default{}
+    import ElCol from "element-ui/packages/col/src/col";
+    export default{
+        components: {ElCol},
+        methods: {
+            getDate() {
+                var date = new Date();
+
+                return date.toLocaleDateString('zh');
+            },
+            getTime() {
+                var date = new Date();
+                return date.toLocaleTimeString('zh',{hour12:false,hour:"numeric",minute:"numeric"})
+            }
+        }
+    }
 </script>
 
 <style scoped lang="scss">
@@ -74,6 +110,21 @@
         }
     }
 
+    .time-span {
+        color: #4AB7BD;
+        display: block;
+        vertical-align: bottom;
+    }
+
+    .img-dot {
+        width:30%;
+        height: 30%;
+    }
+
+    .dot-text {
+        display: inline-block;
+    }
+
     .footer {
         position: fixed;
         width: 100%;
@@ -82,7 +133,7 @@
     }
 
     .bg-purple-dark {
-        background: #99a9bf;
+        background: white;
     }
 
     .bg-purple {

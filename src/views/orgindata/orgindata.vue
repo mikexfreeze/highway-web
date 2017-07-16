@@ -64,8 +64,7 @@
                     style="width: 100%">
                 <el-table-column
                         prop="DevID"
-                        label="设备ID"
-                        width="120">
+                        label="设备ID">
                 </el-table-column>
                 <el-table-column
                         prop="Time"
