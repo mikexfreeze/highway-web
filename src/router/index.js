@@ -7,7 +7,7 @@ Vue.use(Router)
 import Layout from '../views/layout/Layout.vue';
 
 /* login*/
-import Login from '../views/login';
+import Login from '../views/login/index.vue';
 
 /*register*/
 import Register from '../views/register';
@@ -25,28 +25,32 @@ const admin = resolve => require(['../views/admin/admin.vue'], resolve);
 const Err404 = resolve => require(['../views/error/404'], resolve);
 const Err401 = resolve => require(['../views/error/401'], resolve);
 
+export const constantRouterMap = [
+    { path: '/login', component: Login, hidden: true },
+    { path: '/404', component: Err404, hidden: true },
+    { path: '/401', component: Err401, hidden: true },
+    { path: '*', redirect: '/404', hidden: true },
+    {
+        path: '/',
+        component: Layout,
+        redirect: '/map',
+        name: '首页',
+        children: [
+            {path: 'map', component: map, name:'地图'},
+            {path: 'home', component: home, name:'主页'},
+            {path: 'device', component: device, name:'设备'},
+            {path: 'errorstat', component: errorstat, name: '故障统计'},
+            {path: 'orgindata', component: orgindata, name: '原始数据'},
+            {path: 'admin', component: admin, name: '管理' }
+        ]
+    }
+]
+
+export const asyncRouterMap = [
+
+];
+
+
 export default new Router({
-    routes: [
-        // {path: '/register', component: Register, hidden: true},
-        // {path: '/login', component: Login, hidden: true},
-
-        {path: '/404', component: Err404, hidden: true},
-        {path: '/401', component: Err401, hidden: true},
-        {path: '*', redirect: '/404', hidden: true},
-
-        {
-            path: '/',
-            component: Layout,
-            redirect: '/map',
-            name: '首页',
-            children: [
-                {path: 'map', component: map, name:'地图'},
-                {path: 'home', component: home, name:'主页'},
-                {path: 'device', component: device, name:'设备'},
-                {path: 'errorstat', component: errorstat, name: '故障统计'},
-                {path: 'orgindata', component: orgindata, name: '原始数据'},
-                {path: 'admin', component: admin, name: '管理' }
-            ]
-        }
-    ]
+    routes: constantRouterMap
 })

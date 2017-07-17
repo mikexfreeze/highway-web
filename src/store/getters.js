@@ -13,8 +13,7 @@ const getters = {
     // auth_type: state => state.user.auth_type,
     // status: state => state.user.status,
     roles: state => state.user.roles,
-    tabs: state => state.tabs.tabs,
-    // setting: state => state.user.setting
-    expTabs: state => state.expTabs.expTabs
+    permission_routers: state => state.permission.routers,
+    addRouters: state => state.permission.addRouters
 };
 export default getters
