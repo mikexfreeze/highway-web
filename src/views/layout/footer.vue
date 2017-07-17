@@ -68,8 +68,8 @@
                     <span class="dot-text">维护预警</span>
                 </el-col>
                 <el-col :span="4" align="right">
-                    <span class="time-span">{{getTime()}}</span>
-                    <span class="time-span">{{getDate()}}</span>
+                    <span class="time-span">{{timenow}}</span>
+                    <span class="time-span">{{datenow}}</span>
                 </el-col>
             </div>
         </el-col>
@@ -81,16 +81,28 @@
     import ElCol from "element-ui/packages/col/src/col";
     export default{
         components: {ElCol},
+        data() {
+          return {
+              datenow : '',
+              timenow : '',
+              date : '',
+              interval :''
+          }
+        },
         methods: {
-            getDate() {
-                var date = new Date();
+            time() {
+                this.date = new Date();
 
-                return date.toLocaleDateString('zh');
-            },
-            getTime() {
-                var date = new Date();
-                return date.toLocaleTimeString('zh',{hour12:false,hour:"numeric",minute:"numeric"})
+                this.datenow = this.date.toLocaleDateString('zh');
+
+                this.timenow = this.date.toLocaleTimeString('zh',{hour12:false,hour:"numeric",minute:"numeric"})
             }
+        },
+        mounted() {
+            this.interval = setInterval(this.time, 5000)
+        },
+        beforeDestroy() {
+            clearInterval(this.interval)
         }
     }
 </script>
