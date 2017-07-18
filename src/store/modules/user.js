@@ -106,6 +106,8 @@ const user = {
                         })
                         reject();
                     }
+                }).catch(error => {
+                   reject(error);
                 });
             });
         },

@@ -10,12 +10,32 @@ export default {
     components:{dotview},
     data(){
         return{
-            dotList: []
+            dotList: [],
+            imageWidth: 0,
+            imageHeight: 0,
         }
+    },
+    mounted() {
+      this.$nextTick(function () {
+          window.addEventListener('resize', this.getImageWidth);
+          window.addEventListener('resize', this.getImageHeight);
+
+          //Init
+          this.getImageWidth()
+          this.getImageHeight()
+      })
     },
     methods:{
         getXY(){
             this.dotList = testXY();
+        },
+
+        getImageWidth(event) {
+            this.imageWidth = document.getElementById('map-image').clientWidth;
+
+        },
+        getImageHeight(event) {
+            this.imageHeight = document.getElementById('map-image').clientHeight;
         }
     },
     created: function () {
@@ -30,11 +50,14 @@ export default {
             })
 
         }, 60000)
-
     },
     destroyed:function () {
         console.log("c")
         clearInterval(timeSet)
+    },
+    beforeDestroy() {
+        window.removeEventListener('resize', this.getImageWidth);
+        window.removeEventListener('resize', this.getImageHeight);
     }
 }
 
