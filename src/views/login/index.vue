@@ -79,8 +79,9 @@
                         this.$store.dispatch('LoginByUsername', vm.loginForm).then(()=> {
                             vm.loading = false;
                             vm.$router.push('map');
+                        },()=> {
+                            vm.loading = false;
                         })
-
                     } else {
                         console.log('error submit!!');
                         return false;

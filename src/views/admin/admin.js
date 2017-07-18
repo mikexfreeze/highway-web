@@ -11,6 +11,7 @@ export default {
             temp: {},
             dialogStatus: "",
             dialogFormVisible: false,
+            logoutLogFormVisible: false,
             loading:false
         }
     },
@@ -62,6 +63,16 @@ export default {
                     this.dialogFormVisible = false;
                     this.getList()
                 })
+        },
+        logout() {
+            this.logoutLogFormVisible = true;
+        },
+        sureLogout(){
+            this.logoutLogFormVisible = false;
+            var vm = this;
+            this.$store.dispatch('LogOut').then(()=> {
+                vm.$router.push('/');
+            });
         },
         activeBtn(){
 

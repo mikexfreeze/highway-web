@@ -34,30 +34,11 @@ export function loginByUserName(username, password) {
 
     return fetch({
         method: 'get',
-        // url: '/gaosuWeb/doLogin?username=' + username + '&password=' + password,
-        url:'/gaosuWeb/doGetLocation?queryType=Province'
+        url: '/gaosuWeb/doLogin?username=' + username + '&password=' + password,
     }).then(function (result) {
         return result
     });
 
-    // return axios({
-    //     method: 'get',
-    //     // url: '/gaosuWeb/doLogin?username=' + username + '&password=' + password,
-    //     url:'/gaosuWeb/doGetLocation?queryType=Province'
-    // }).then(function (result) {
-    //     return result
-    // }, error => {
-    //     console.log("error")
-    //     console.log(error)
-    //     if (error.response.status >= 400) {
-    //         Message({
-    //             message: error.response.data.error_description,
-    //             type: 'error',
-    //             duration: 10 * 1000
-    //         })
-    //     }
-    //     return Promise.reject(error);
-    // })
 }
 
 export function getInfo(token) {

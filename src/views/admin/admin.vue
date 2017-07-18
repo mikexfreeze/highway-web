@@ -10,6 +10,7 @@
                 <span class="wrapper">
                     <el-button type="info" @click="addNewUser">添加</el-button>
                     <el-button type="danger" @click="deleteSelectUser">删除</el-button>
+                    <el-button type="warning" @click="logout">登出</el-button>
                 </span>
             </el-col>
             <el-col :span="6">
@@ -69,6 +70,14 @@
                 <!--<el-button v-else type="primary" @click="update">确 定</el-button>-->
             </div>
         </el-dialog>
+
+        <el-dialog :title="'确定登出？'" :visible.sync="logoutLogFormVisible">
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="logoutLogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="sureLogout">确 定</el-button>
+            </div>
+        </el-dialog>
+
     </div>
 </template>
 

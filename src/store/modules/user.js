@@ -1,5 +1,7 @@
 import {loginByEmail, loginByUserName, logout, getInfo} from 'api/login';
 import Cookies from 'js-cookie';
+import { Message } from 'element-ui';
+
 
 const user = {
     state: {
@@ -92,9 +94,18 @@ const user = {
             const username = userInfo.username.trim();
             return new Promise((resolve, reject) => {
                 loginByUserName(username, userInfo.password).then((response)=> {
-                    Cookies.set('Admin-Token', 'admin');
-                    commit('SET_TOKEN', 'admin');
-                    resolve();
+                    if (response.data.result == '0') {
+                        Cookies.set('Admin-Token', 'admin');
+                        commit('SET_TOKEN', 'admin');
+                        resolve();
+                    } else {
+                        Message({
+                            message: "登录失败 result=" + response.data.result,
+                            type: 'error',
+                            duration: 5 * 1000
+                        })
+                        reject();
+                    }
                 });
             });
         },
@@ -140,10 +151,8 @@ const user = {
             return new Promise((resolve, reject) => {
                 console.log("登出")
                 commit('SET_TOKEN', '');
-                commit('SET_ROLES', []);
                 Cookies.remove('Admin-Token');
                 resolve();
-
             });
         },
 
