@@ -11,8 +11,8 @@ export default {
     data(){
         return{
             dotList: [],
-            imageWidth: 0,
-            imageHeight: 0,
+            imageWidth: 906,
+            imageHeight: 545,
         }
     },
     mounted() {
@@ -20,9 +20,7 @@ export default {
           window.addEventListener('resize', this.getImageWidth);
           window.addEventListener('resize', this.getImageHeight);
 
-          //Init
-          this.getImageWidth()
-          this.getImageHeight()
+
       })
     },
     methods:{
@@ -47,9 +45,15 @@ export default {
         timeSet = setInterval(function () {
             GetXY().then((response) => {
                 this.dotList = response.data;
+
             })
 
         }, 60000)
+
+    },
+    updated: function () {
+        this.imageWidth = document.getElementById('map-image').clientWidth;
+        this.imageHeight = document.getElementById('map-image').clientHeight;
     },
     destroyed:function () {
         console.log("c")
