@@ -78,9 +78,7 @@
 </template>
 
 <script>
-    import ElCol from "element-ui/packages/col/src/col";
     export default{
-        components: {ElCol},
         data() {
           return {
               datenow : '',
