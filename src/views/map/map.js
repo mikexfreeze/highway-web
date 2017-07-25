@@ -11,17 +11,44 @@ export default {
     data(){
         return{
             dotList: [],
-            imageWidth: 906,
-            imageHeight: 545,
+            imageWidth: 1059,
+            imageHeight: 672,
         }
     },
     mounted() {
+        var vm = this;
       this.$nextTick(function () {
-          window.addEventListener('resize', this.getImageWidth);
-          window.addEventListener('resize', this.getImageHeight);
+          window.addEventListener('resize', resizeThrottler, false);
 
+          var resizeTimeout;
+          function resizeThrottler() {
+              if (!resizeTimeout) {
+                  resizeTimeout = setTimeout(function () {
+                      resizeTimeout = null;
+                      actualResizeHandler()
+                  }, 100);
+              }
+          }
 
+          function actualResizeHandler() {
+              vm.getImageHeight();
+              vm.getImageWidth();
+          }
       })
+
+
+        setTimeout(function () {
+            vm.getImageWidth();
+            vm.getImageHeight();
+
+            GetXY().then((response) => {
+                vm.dotList = response.data;
+            })
+        }, 1000)
+
+
+
+
     },
     methods:{
         getXY(){
@@ -37,11 +64,7 @@ export default {
         }
     },
     created: function () {
-        GetXY().then((response) => {
-            this.dotList = response.data;
-        })
 
-        console.log("d")
         timeSet = setInterval(function () {
             GetXY().then((response) => {
                 this.dotList = response.data;
@@ -50,13 +73,14 @@ export default {
 
         }, 60000)
 
+
     },
     updated: function () {
         this.imageWidth = document.getElementById('map-image').clientWidth;
         this.imageHeight = document.getElementById('map-image').clientHeight;
+
     },
     destroyed:function () {
-        console.log("c")
         clearInterval(timeSet)
     },
     beforeDestroy() {
@@ -78,15 +102,10 @@ function mapTestState() {
     }
 
     var result = [{
-        "top" : "250",
-        "left" : "700",
+        "top" : "240",
+        "left" : "810",
         "stat" : randomState
-    },
-        {
-            "top" : "350",
-            "left" : "200",
-            "stat" : randomState
-        }];
+    }];
 
     randomState++;
 
