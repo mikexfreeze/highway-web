@@ -1,6 +1,19 @@
 <template>
     <!--<div class="footer">-->
     <el-row class="footer">
+        <el-popover
+                ref="popover"
+                placement="top"
+                width="160"
+                v-model="popoverVisible"
+                trigger="hover">
+            <div style="text-align: right; margin: 0">
+                <el-button size="mini" type="text" @click="handleDevCheck">设备体检报告</el-button>
+                <el-button type="text" size="mini" @click="handleDevLive">设备实时报告</el-button>
+            </div>
+        </el-popover>
+
+
         <el-col :span="15">
             <el-row>
                 <el-col :span="4" >
@@ -20,12 +33,14 @@
                     </router-link>
                 </el-col>
                 <el-col :span="4">
-                    <router-link to="device">
-                        <img class="active-icon" src="../../assets/images/icons/3-3.png" />
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-tubiaozhexiantu"></use>
-                        </svg>
-                    </router-link>
+                    <div v-popover:popover>
+                        <router-link to="device">
+                            <img class="active-icon" src="../../assets/images/icons/3-3.png"/>
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-tubiaozhexiantu"></use>
+                            </svg>
+                        </router-link>
+                    </div>
                 </el-col>
                 <el-col :span="4">
                     <router-link to="errorstat">
@@ -84,7 +99,8 @@
               datenow : '',
               timenow : '',
               date : '',
-              interval :''
+              interval :'',
+              popoverVisible: false
           }
         },
         methods: {
@@ -94,6 +110,14 @@
                 this.datenow = this.date.toLocaleDateString('zh');
 
                 this.timenow = this.date.toLocaleTimeString('zh',{hour12:false,hour:"numeric",minute:"numeric"})
+            },
+            handleDevCheck() {
+                this.$router.push('devcheck');
+                this.popoverVisible = false;
+            },
+            handleDevLive() {
+                this.$router.push('device');
+                this.popoverVisible = false;
             }
         },
         mounted() {

@@ -11,6 +11,8 @@ import 'components/Icon-svg/index'; // 封装的svg组件
 import './directives'; // 自定义指令
 import 'components'; // 自定义全局组件
 
+
+
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 

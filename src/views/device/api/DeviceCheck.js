@@ -22,3 +22,26 @@ export function ShowPaint(deviceID) {
         return response
     })
 }
+
+
+export function GetSensorAverageConfig(deviceID) {
+    return fetch({
+        url: '/gaosuWeb/doGetSensorAverageConfig?DevID='+ deviceID,
+        method: 'get',
+    }).then(function (response) {
+        console.log("获取传感器最大最小值")
+        console.log(response)
+        return response
+    })
+}
+
+export function GetSensorAverageValueLog(deviceID) {
+    return fetch({
+        url: '/gaosuWeb/doGetSensorAverageValueLog?DevID='+ deviceID,
+        method: 'get',
+    }).then(function (response) {
+        console.log("获取传感器一周的平均值")
+        console.log(response)
+        return response
+    })
+}

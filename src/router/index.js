@@ -19,6 +19,7 @@ const device = resolve => require(['../views/device/device.vue'], resolve);
 const errorstat = resolve => require(['../views/errorstat/errorstat.vue'], resolve);
 const orgindata = resolve => require(['../views/orgindata/orgindata.vue'], resolve);
 const admin = resolve => require(['../views/admin/admin.vue'], resolve);
+const devcheck = resolve => require(['../views/device/dcheck.vue'], resolve);
 
 
 /* error page*/
@@ -41,7 +42,8 @@ export const constantRouterMap = [
             {path: 'device', component: device, name:'设备'},
             {path: 'errorstat', component: errorstat, name: '故障统计'},
             {path: 'orgindata', component: orgindata, name: '原始数据'},
-            {path: 'admin', component: admin, name: '管理' }
+            {path: 'admin', component: admin, name: '管理' },
+            {path: 'devcheck', component: devcheck, name: '设备体检'}
         ]
     }
 ]

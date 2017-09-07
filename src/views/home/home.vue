@@ -1,4 +1,4 @@
-<template>
+    <template>
     <div>
         <el-row>
             <el-col :span="6">
