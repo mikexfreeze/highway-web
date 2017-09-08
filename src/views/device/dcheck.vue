@@ -450,6 +450,6 @@
     .echarts {
         width: 100%;
         min-width: 0%;
-        height: 50vw;
+        height: 36vw;
     }
 </style>
