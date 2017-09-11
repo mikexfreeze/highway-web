@@ -34,8 +34,8 @@
                 </el-col>
                 <el-col :span="4">
                     <div v-popover:popover>
-                        <router-link to="device">
-                            <img class="active-icon" src="../../assets/images/icons/3-3.png"/>
+                        <router-link :to="devRoute()" @click="userClickDevice" ref="testDevice">
+                            <img  class="active-icon" :src="activeDeviceImage()"/>
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-tubiaozhexiantu"></use>
                             </svg>
@@ -93,6 +93,10 @@
 </template>
 
 <script>
+    import Pic_1 from '../../assets/images/icons/3-1.png'
+    import Pic_2 from '../../assets/images/icons/3-2.png'
+
+
     export default{
         data() {
           return {
@@ -100,10 +104,40 @@
               timenow : '',
               date : '',
               interval :'',
-              popoverVisible: false
+              popoverVisible: false,
+              deviceType:"1"
           }
         },
+//        watch: {
+//            deviceType: function (newType) {
+//                this.deviceType = newType
+//
+//            }
+//        },
         methods: {
+            devRoute() {
+                let r = "device"
+                if (this.deviceType === "1") {
+                    r = "device";
+                } else if (this.deviceType === "2") {
+                    r = "devcheck";
+                }
+                return r;
+            },
+            userClickDevice() {
+                this.deviceType = "2";
+            },
+            activeDeviceImage() {
+                let imageUrl = Pic_1;
+                if (this.deviceType === "1") {
+                    imageUrl = Pic_1;
+                } else if (this.deviceType === "2") {
+                    imageUrl = Pic_2;
+                }
+
+                return imageUrl;
+            },
+
             time() {
                 this.date = new Date();
 
@@ -112,12 +146,17 @@
                 this.timenow = this.date.toLocaleTimeString('zh',{hour12:false,hour:"numeric",minute:"numeric"})
             },
             handleDevCheck() {
+                this.deviceType = "2";
                 this.$router.push('devcheck');
                 this.popoverVisible = false;
+
+                this.$refs.testDevice.className += " router-link-exact-active router-link-active" ;
             },
             handleDevLive() {
+                this.deviceType = "1";
                 this.$router.push('device');
                 this.popoverVisible = false;
+
             }
         },
         mounted() {
