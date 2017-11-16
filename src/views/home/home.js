@@ -126,19 +126,24 @@ export default {
 
 function setCheckPointList(data) {
     let list = [];
-    list[0] = {pointName:"传感器1",status:data["s0"]}
-    list[1] = {pointName:"传感器2",status:data["s1"]}
-    list[2] = {pointName:"传感器3",status:data["s2"]}
-    list[3] = {pointName:"传感器4",status:data["s3"]}
-    list[4] = {pointName:"传感器5",status:data["s4"]}
-    list[5] = {pointName:"传感器6",status:data["s5"]}
-    list[6] = {pointName:"传感器7",status:data["s6"]}
-    list[7] = {pointName:"传感器8",status:data["s7"]}
-    list[8] = {pointName:"传感器9",status:data["s8"]}
-    list[9] = {pointName:"传感器10",status:data["s9"]}
-    list[10] = {pointName:"光幕",status:data["light"]}
-    list[11] = {pointName:"轮轴器识别1",status:data["axeCounter1"]}
-    list[12] = {pointName:"轮轴器识别2",status:data["axeCounter2"]}
+
+    let sensorCount = Number(data["sensorCount"]);
+
+    if (sensorCount > 12) {
+        sensorCount = 12
+    }
+
+    for (var sIndex = 0; sIndex < sensorCount;sIndex++) {
+        var tmpPointName = "传感器" + (sIndex + 1);
+        var statusIndex = "s" + sIndex;
+
+        list[sIndex] = {pointName:tmpPointName, status: data[statusIndex]}
+    }
+
+    list.push({pointName:"光幕",status:data["light"]});
+    list.push({pointName:"轮轴器识别1",status:data["axeCounter1"]});
+    list.push({pointName:"轮轴器识别2",status:data["axeCounter2"]});
+
     return list
 }
 
