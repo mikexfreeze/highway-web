@@ -165,8 +165,26 @@
                         clearTimeout(timer)
                         c1.hideLoading()
                         c1.mergeOptions(this.charts)
-                }, 1500)
+                }, 500)
             },
+
+            newLoad() {
+                let c1 = this.$refs.c1
+                c1.showLoading({
+                    text: '正在加载',
+                    color: '#4ea397',
+                    maskColor: 'rgba(255, 255, 255, 0.4)'
+                })
+
+                c1.clear()
+
+                let timer = setInterval(() => {
+                    clearTimeout(timer)
+                    c1.hideLoading()
+                    c1.mergeOptions(this.charts)
+                }, 500)
+            },
+
             // 渲染图表
             updateChart(sensorData) {
                 let maxV = parseInt(sensorData.cMax);
@@ -184,6 +202,9 @@
 
                 this.setCurrent(sensorData);
                 if (sensorData.avs.length > 0) {
+
+
+
                     this.charts = {
                         tooltip: {
                             trigger: 'axis'
@@ -213,7 +234,7 @@
                                 show: false
                             },
                         },
-                        series: {
+                        series: [{
                             type: 'line',
                             data: sensorData.avs,
                             lineStyle: {
@@ -271,11 +292,84 @@
                                         }
                                     }]
                             }
+                        }]
+                    }
+
+                    this. newLoad()
+                }
+            },
+            // 渲染整个图表
+            updateWholeChart(sensorList) {
+
+                this.charts = {
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: sensorList[0].avs.map((v,i)=>{
+                            return i
+                        }),
+                        axisLabel: {
+                            show: false
+                        },
+                        axisTick: {
+                            show: false
+                        },
+                        boundaryGap: false
+                    },
+                    yAxis: {
+                        splitLine: {
+                            show: false
+                        },
+                        max: 1100,
+                        axisLabel: {
+                            show: false
+                        },
+                        axisTick: {
+                            show: false
+                        },
+                    }
+                }
+
+                var series = [];
+
+                sensorList.forEach((sensorData)=> {
+                    let maxV = parseInt(sensorData.cMax);
+                    let minV = parseInt(sensorData.cMin);
+
+                    // 根据最大最小数值，修正传感器实际状态
+                    for (let i = 0;i < sensorData.avs.length; i++) {
+                        let normalValue = parseInt(sensorData.avs[i]);
+                        if (normalValue > maxV || normalValue < minV) {
+                            sensorData.status = '1';
+                            break;
                         }
                     }
 
-                    this.load()
-                }
+                    if (sensorData.avs.length > 0) {
+
+                        var rColor = randomColor();
+
+
+                        let tmpSery = {
+                            type: 'line',
+                            data: sensorData.avs,
+                            lineStyle: {
+                                normal: {
+                                    color: rColor
+                                }
+                            }
+                        };
+
+                        series.push(tmpSery);
+                    }
+                });
+
+
+                this.charts.series = series;
+
+                this.load();
             },
             // 获取图表数据
             fetchChartData() {
@@ -290,7 +384,7 @@
                             element.cMin = result[minKey];
                         })
 
-                        this.updateChart(this.sensorList[0])
+//                        this.updateChart(this.sensorList[0])
                     })
 
                 GetSensorAverageValueLog(this.deviceID)
@@ -298,8 +392,16 @@
                         let result = res.data;
 
                         result.forEach(val=> {
+                            let sensorCount = val.SensorCount;
 
-                            for (let i = 0;i < 10;i++) {
+                            // 目前只显示10或12
+
+                            if (sensorCount > 12) {
+                                sensorCount = 12
+                            }
+
+
+                            for (let i = 0;i < sensorCount;i++) {
                                 let svKey = "SV" + i;
                                 let senIndex = i;
 
@@ -309,7 +411,9 @@
                             }
                         })
 
-                        this.updateChart(this.sensorList[0]);
+//                        this.updateChart(this.sensorList[0]);
+
+                        this.updateWholeChart(this.sensorList);
                     })
 
             },
@@ -410,18 +514,33 @@
 
     // 构造传感器列表数据结构
     function makeSensorList(data) {
+        // 判断浏览器个数
+        let countOfSensor = data.sensorCount;
+
+        if (countOfSensor > 12) {
+            countOfSensor = 12;
+        }
+
         let list = [];
-        list[0] = {pointName:"传感器1",status:data["s0"], cMax:"", cMin:"", avs:[]}
-        list[1] = {pointName:"传感器2",status:data["s1"], cMax:"", cMin:"", avs:[]}
-        list[2] = {pointName:"传感器3",status:data["s2"], cMax:"", cMin:"", avs:[]}
-        list[3] = {pointName:"传感器4",status:data["s3"], cMax:"", cMin:"", avs:[]}
-        list[4] = {pointName:"传感器5",status:data["s4"], cMax:"", cMin:"", avs:[]}
-        list[5] = {pointName:"传感器6",status:data["s5"], cMax:"", cMin:"", avs:[]}
-        list[6] = {pointName:"传感器7",status:data["s6"], cMax:"", cMin:"", avs:[]}
-        list[7] = {pointName:"传感器8",status:data["s7"], cMax:"", cMin:"", avs:[]}
-        list[8] = {pointName:"传感器9",status:data["s8"], cMax:"", cMin:"", avs:[]}
-        list[9] = {pointName:"传感器10",status:data["s9"], cMax:"", cMin:"", avs:[]}
+
+        for (var sIndex =0;sIndex < countOfSensor;sIndex++) {
+            let pointNameText = "传感器" + (sIndex + 1);
+            let statusIndex = "s" + sIndex;
+
+            var tmpSensorInfo = {pointName:pointNameText,status:data[statusIndex], cMax:"", cMin:"",avs:[] }
+
+            list[sIndex] = tmpSensorInfo;
+        }
+
         return list
+    }
+
+    function randomColor(){
+        let r = Math.floor(Math.random()*255);
+        let g = Math.floor(Math.random()*255);
+        let b = Math.floor(Math.random()*255);
+        let color = 'rgba('+ r +','+ g +','+ b +',0.8)';
+        return color;
     }
 
 
