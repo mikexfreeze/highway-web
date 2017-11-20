@@ -34,7 +34,7 @@
                         </el-select>
                     </el-col>
                     <el-col :span="6">
-                        <el-select v-model="selectedPort" placeholder="请选择" :disabled="stationHasItem()" @change="changePort()">
+                        <el-select v-model="selectedPort" placeholder="请选择" :disabled="stationHasItem()">
                             <el-option
                                     v-for="item in portOptions"
                                     :key="item.key"
@@ -141,6 +141,17 @@
                         width="120">
                 </el-table-column>
             </el-table>
+        </el-row>
+        <el-row class="pagination-area">
+            <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-sizes="[30, 40, 60, 100]"
+                    :page-size="30"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="totalNum">
+            </el-pagination>
         </el-row>
     </div>
 </template>

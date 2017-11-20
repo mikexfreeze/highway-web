@@ -1,4 +1,4 @@
-import {GetProvince, GetRoad, GetStation, GetPort,GetStatu,GetErrorCount} from '../home/api/Lane.js'
+import {GetProvince, GetRoad, GetStation, GetPort,GetStatu,GetErrorCount,GetErrorCountTotalNum} from '../home/api/Lane.js'
 import print from 'assets/js/printThis.js'
 export default {
     data() {
@@ -14,6 +14,9 @@ export default {
             selectedTime: [],
             errorList:[],
             errorCount:"0",
+            currentPage: 1,
+            pageSize: 30,
+            totalNum: 0,
         }
 
     },
@@ -69,29 +72,120 @@ export default {
             let endT = (this.selectedTime.length > 1) ? toParmaDateString(this.selectedTime[1]) : "";
 
 
-            let param = {
+            // 获取总个数
+            let numParam = {
                 province:this.selectedProvince,
                 road:this.selectedRoad,
                 station:this.selectedStation,
                 port:this.selectedPort,
                 startTime:startT,
-                endTime:endT
+                endTime:endT,
+                getTotalNumFlag: 1
             };
+
+            GetErrorCountTotalNum(numParam)
+                .then((resp)=> {
+                    let resultArr = resp.data;
+
+                    if (resultArr.length > 0) {
+                        let totalObj = resultArr[0];
+                        this.totalNum = parseInt(totalObj.totalNum);
+
+                        this.fetchDataWithTotalAndParam(numParam);
+                    }
+                });
+        },
+        printTable(){
+            $(".table-area").printThis()
+        },
+
+        // 分页
+        handleSizeChange(val) {
+            console.log(`每页 ${val} 条`);
+            this.pageSize = val;
+
+            this.currentPage = 1;
+
+            this.updatePageChange();
+
+
+
+
+        },
+        handleCurrentChange(val) {
+            console.log(`当前页: ${val}`);
+            this.currentPage = val;
+
+            this.updatePageChange();
+
+        },
+        // 根据总数更新页面获取数据
+        fetchDataWithTotalAndParam(param) {
+            // 点击查询是初始化下分页参数
+            this.currentPage = 1;
+
+            param.getTotalNumFlag = 0;
+            param.startLine = this.pageSize * (this.currentPage - 1) + 1;
+            param.endLine = this.pageSize * (this.currentPage - 1) + 1 + this.pageSize;
+
+            if (param.endLine > this.totalNum) {
+                param.endLine = this.totalNum
+
+                if (this.totalNum < param.startLine) {
+                    param.endLine = param.startLine;
+                }
+            }
+
+
             GetErrorCount(param)
                 .then((response)=>{
                     let data = response.data
 
                     this.errorList = data.ErrorList;
                     this.errorCount = data.errCount;
-
-
-
                 })
 
         },
-        printTable(){
-            $(".table-area").printThis()
+        updatePageChange() {
+            let startT = (this.selectedTime.length > 1) ? toParmaDateString(this.selectedTime[0]): "";
+            let endT = (this.selectedTime.length > 1) ? toParmaDateString(this.selectedTime[1]) : "";
+
+            let startLine = this.pageSize * (this.currentPage - 1) + 1;
+            let endLine = this.pageSize * (this.currentPage - 1) + 1 + this.pageSize
+
+            if (endLine > this.totalNum) {
+                endLine = this.totalNum
+
+                if (this.totalNum < startLine) {
+                    endLine = startLine;
+                }
+            }
+
+
+            // 获取总个数
+            let numParam = {
+                province:this.selectedProvince,
+                road:this.selectedRoad,
+                station:this.selectedStation,
+                port:this.selectedPort,
+                startTime:startT,
+                endTime:endT,
+                getTotalNumFlag: 0,
+                startLine: startLine,
+                endLine: endLine
+            };
+
+            GetErrorCount(numParam)
+                .then((response)=>{
+                    let data = response.data
+
+                    this.errorList = data.ErrorList;
+                    this.errorCount = data.errCount;
+                })
         }
+
+
+
     },
     created: function () {
         this.getPovince()
