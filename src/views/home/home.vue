@@ -67,7 +67,7 @@
                             prop="status"
                             label="状态"
                             width="100">
-                        <template scope="scope">
+                        <template slot-scope="scope">
                             <statu-label :status="scope.row.status"></statu-label>
                         </template>
                     </el-table-column>

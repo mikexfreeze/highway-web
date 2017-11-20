@@ -41,13 +41,13 @@
                             prop="isEnable"
                             label="状态"
                             width="200">
-                        <template scope="scope">
+                        <template slot-scope="scope">
                             <userstatlabel :isEnable="scope.row.isEnable"></userstatlabel>
                         </template>
                     </el-table-column>
                     <el-table-column
                             label="操作">
-                        <template scope="scope">
+                        <template slot-scope="scope">
                             <el-button v-if="scope.row.isEnable !='1'" style="" type="success" @click="activeBtn(scope.row)">启用
                             </el-button>
                             <el-button v-if="scope.row.isEnable =='1'" type="warning" @click="disabledBtn(scope.row)">禁用</el-button>

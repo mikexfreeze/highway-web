@@ -44,6 +44,7 @@ export default {
             GetXY().then((response) => {
                 vm.dotList = response.data;
             })
+
         }, 1000)
 
 

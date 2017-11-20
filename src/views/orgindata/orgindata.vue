@@ -129,7 +129,7 @@
                 <el-table-column
                         label="轮轴"
                         width="80">
-                    <template scope="scope">
+                    <template slot-scope="scope">
                         <span>{{scope.row.SenInfoAxeCounter1}} </span>
                         <span>{{scope.row.SenInfoAxeCounter2}}</span>
                         <el-button v-if="scope.row.isEnable =='1'" type="warning" @click="disabledBtn(scope.row)">禁用</el-button>
