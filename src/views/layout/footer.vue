@@ -69,23 +69,26 @@
             </el-row>
         </el-col>
         <el-col :span="9">
-            <div class="grid-content bg-purple-dark">
-                <el-col :span="4" align="center" :offset="2">
-                    <img class="img-dot" src="../../assets/images/greendot.png" />
-                    <span class="dot-text">正常状态</span>
-                </el-col>
-                <el-col :span="4" align="center">
-                    <img class="img-dot" src="../../assets/images/bluedot.png" />
-                    <span class="dot-text">检查预警</span>
-                </el-col>
-                <el-col :span="4" align="center">
-                    <img class="img-dot" src="../../assets/images/reddot.png" />
-                    <span class="dot-text">维护预警</span>
-                </el-col>
-                <el-col :span="4" align="right">
-                    <span class="time-span">{{timenow}}</span>
-                    <span class="time-span">{{datenow}}</span>
-                </el-col>
+            <div class="grid-content bg-purple-dark" >
+                <div id="right-bottom-status">
+                    <el-col :span="4" align="center" :offset="2">
+                        <img class="img-dot" src="../../assets/images/greendot.png" />
+                        <span class="dot-text">正常状态</span>
+                    </el-col>
+                    <el-col :span="4" align="center">
+                        <img class="img-dot" src="../../assets/images/bluedot.png" />
+                        <span class="dot-text">检查预警</span>
+                    </el-col>
+                    <el-col :span="4" align="center">
+                        <img class="img-dot" src="../../assets/images/reddot.png" />
+                        <span class="dot-text">维护预警</span>
+                    </el-col>
+                    <el-col :span="4" align="right">
+                        <span class="time-span">{{timenow}}</span>
+                        <span class="time-span">{{datenow}}</span>
+                    </el-col>
+                </div>
+
             </div>
         </el-col>
     </el-row>
@@ -227,8 +230,17 @@
     }
 
     .icon{
-        height: 70px;
-        margin-top: 5px;
-        width: 100%;
+        height: 50px;
+        margin-top: 15px;
+        width: 80%;
     }
+
+    #right-bottom-status {
+        margin: auto;
+        padding-top: 20px;
+    }
+
+
+
+
 </style>
