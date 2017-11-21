@@ -125,8 +125,8 @@ export default {
             this.currentPage = 1;
 
             param.getTotalNumFlag = 0;
-            param.startLine = this.pageSize * (this.currentPage - 1) + 1;
-            param.endLine = this.pageSize * (this.currentPage - 1) + 1 + this.pageSize;
+            param.startLine = this.pageSize * (this.currentPage - 1) ;
+            param.endLine = this.pageSize * (this.currentPage - 1) + this.pageSize;
 
             if (param.endLine > this.totalNum) {
                 param.endLine = this.totalNum
@@ -150,8 +150,8 @@ export default {
             let startT = (this.selectedTime.length > 1) ? toParmaDateString(this.selectedTime[0]): "";
             let endT = (this.selectedTime.length > 1) ? toParmaDateString(this.selectedTime[1]) : "";
 
-            let startLine = this.pageSize * (this.currentPage - 1) + 1;
-            let endLine = this.pageSize * (this.currentPage - 1) + 1 + this.pageSize
+            let startLine = this.pageSize * (this.currentPage - 1);
+            let endLine = this.pageSize * (this.currentPage - 1) + this.pageSize
 
             if (endLine > this.totalNum) {
                 endLine = this.totalNum
