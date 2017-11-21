@@ -1,11 +1,27 @@
 
 
 <template>
-    <span class="dot">
-        <div class="dotview greenview" v-if="mapDot.stat == 0" ></div>
-        <div class="dotview blueview" v-if="mapDot.stat == 1" ></div>
-        <div class="dotview redview" v-if="mapDot.stat == 2" ></div>
+
+        <span class="dot">
+            <el-popover
+                    ref="popover1"
+                    placement="top-start"
+                    :title="mapDot.stationName"
+                    width="200"
+                    trigger="hover"
+                    content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
+        </el-popover>
+
+        <div class="dotview greenview" v-popover:popover1 v-if="mapDot.stat == 0" >
+        </div>
+        <div class="dotview blueview" v-popover:popover1 v-if="mapDot.stat == 1" >
+        </div>
+        <div class="dotview redview" v-popover:popover1 v-if="mapDot.stat == 2" >
+        </div>
     </span>
+
+
+
 </template>
 <script>
     export default{
