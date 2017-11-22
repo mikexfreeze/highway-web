@@ -4,6 +4,10 @@
 import {GetProvince, GetRoad, GetStation, GetStatu} from './api/Lane.js'
 import statuLabel from './components/status.vue'
 import roadblock from './components/roadstat.vue'
+
+var timeSet;
+
+
 export default {
     components:{statuLabel,roadblock},
     data() {
@@ -106,9 +110,46 @@ export default {
 
                     this.checkPointList = setCheckPointList(data)
                 })
-        }
+        },
+        updateStatusPerSecond() {
+            // 调用整个数据接口 TODO:
+            let param = {
+                province:this.selectedProvince,
+                road:this.selectedRoad,
+                station:this.selectedStation
+            };
+            GetStatu(param)
+                .then((response)=>{
+                    let data = response.data[0]
+
+                    response.data.forEach((val,n)=>{
+                        response.data[n].statuLabel = "正常状态"
+                        Object.keys(val).forEach((w)=>{
+                            if(val[w] == "1" && w != "port"){
+                                response.data[n].statuLabel = "需要维护"
+                            }
+                        })
+                    })
+
+                    this.roadStatusList = response.data
+
+                    this.checkPointList = setCheckPointList(data)
+                })
+        },
     },
+
     created: function () {
+
+        var gThis = this;
+
+        timeSet = setInterval(function () {
+            if (gThis.selectedStation) {
+                gThis.updateStatusPerSecond()
+            }
+        }, 60000);
+
+
+
         this.getPovince()
             .then((response) => {
                 this.provinceOptions = [];
@@ -121,7 +162,10 @@ export default {
 
                 })
             });
-    }
+    },
+    destroyed:function () {
+        clearInterval(timeSet)
+    },
 }
 
 function setCheckPointList(data) {
