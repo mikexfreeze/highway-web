@@ -59,7 +59,15 @@
                         <el-tag type="danger">异常状态</el-tag>
                     </el-col>
                 </el-row>
-                <h5>设备体检报告</h5>
+                <el-row>
+                    <el-col :span="8">
+                        <h5>设备体检报告</h5>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-button size="mini" round id="btn-checkall" @click="checkAll()">查看全部</el-button>
+                    </el-col>
+                </el-row>
+
                 <el-table
                         highlight-current-row
                         @current-change="handleCurrentChange"
@@ -105,10 +113,13 @@
     require('echarts/lib/component/toolbox');
     require('echarts/lib/component/legend');
     require('echarts/lib/component/markLine');
+    require('echarts/lib/component/dataZoom');
     import {sensorline} from './sensorline';
+    import ElButton from "../../../node_modules/element-ui/packages/button/src/button.vue";
 
     export default {
         components: {
+            ElButton,
             chart: ECharts,
             statuLabel
         },
@@ -146,6 +157,9 @@
                 });
         },
         methods: {
+            checkAll() {
+                this.updateWholeChart(this.sensorList);
+            },
             handleCurrentChange(val) {
                 this.currentRow = val;
                 this.updateChart(val);
@@ -206,6 +220,17 @@
 
 
                     this.charts = {
+                        dataZoom: [
+                            {
+                                type: 'inside',
+                                orient: 'vertical',
+                                start:70,
+                                end:0
+                            },{
+                                type: 'slider',
+                                orient: 'vertical',
+                            }
+                        ],
                         tooltip: {
                             trigger: 'axis'
                         },
@@ -226,7 +251,7 @@
                             splitLine: {
                                 show: false
                             },
-                            max: 1100,
+                            max: 1500,
                             axisLabel: {
                                 show: false
                             },
@@ -302,6 +327,7 @@
             updateWholeChart(sensorList) {
 
                 this.charts = {
+
                     tooltip: {
                         trigger: 'axis'
                     },
@@ -329,8 +355,22 @@
                         axisTick: {
                             show: false
                         },
-                    }
+                    },
+                    dataZoom: [
+                        {
+                            type: 'inside',
+                            orient: 'vertical',
+                            start:70,
+                            end:0
+                        },{
+                            type: 'slider',
+                            orient: 'vertical',
+                        }
+
+                    ],
                 }
+
+
 
                 var series = [];
 
@@ -369,7 +409,7 @@
 
                 this.charts.series = series;
 
-                this.load();
+                this.newLoad();
             },
             // 获取图表数据
             fetchChartData() {
@@ -571,4 +611,9 @@
         min-width: 0%;
         height: 36vw;
     }
+
+    #btn-checkall {
+        margin-top: 20px;
+    }
+
 </style>
