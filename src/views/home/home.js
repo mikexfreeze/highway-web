@@ -35,13 +35,15 @@ export default {
             selectedRoad: null,
             selectedStation: null,
             checkPointList:[],
-            roadStatusList:[]
+            roadStatusList:[],
+            currentSelectedLaneIndex:null,
         }
 
     },
     methods:{
         handlechangeLane(data){
             this.checkPointList = setCheckPointList(this.roadStatusList[data-1])
+            this.currentSelectedLaneIndex = data-1;
         },
         getPovince(){
             return GetProvince()
@@ -95,6 +97,11 @@ export default {
             };
             GetStatu(param)
                 .then((response)=>{
+
+                // 默认取第一个
+                    this.currentSelectedLaneIndex = 0;
+
+
                     let data = response.data[0]
 
                     response.data.forEach((val,n)=>{
@@ -104,9 +111,9 @@ export default {
                                 response.data[n].statuLabel = "需要维护"
                             }
                         })
-                    })
+                    });
 
-                    this.roadStatusList = response.data
+                    this.roadStatusList = response.data;
 
                     this.checkPointList = setCheckPointList(data)
                 })
@@ -120,7 +127,7 @@ export default {
             };
             GetStatu(param)
                 .then((response)=>{
-                    let data = response.data[0]
+                    let data = response.data[this.currentSelectedLaneIndex];
 
                     response.data.forEach((val,n)=>{
                         response.data[n].statuLabel = "正常状态"
@@ -131,7 +138,7 @@ export default {
                         })
                     })
 
-                    this.roadStatusList = response.data
+                    this.roadStatusList = response.data;
 
                     this.checkPointList = setCheckPointList(data)
                 })
@@ -146,7 +153,7 @@ export default {
             if (gThis.selectedStation) {
                 gThis.updateStatusPerSecond()
             }
-        }, 60000);
+        }, 10000);
 
 
 
