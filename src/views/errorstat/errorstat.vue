@@ -88,7 +88,12 @@
                 <el-table-column
                         prop="CarWeight"
                         label="总重"
-                        width="180">
+                        width="100">
+                </el-table-column>
+                <el-table-column
+                        prop="OtherDevWeight"
+                        label="收费计重"
+                        width="100">
                 </el-table-column>
                 <el-table-column
                         prop="sstat"
