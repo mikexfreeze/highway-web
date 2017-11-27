@@ -10,11 +10,11 @@
                     @show="popViewShow()"
             >
                 <el-table
-                        :data="checkPointList"
+                        :data="portList"
                         style="width: 100%">
                     <el-table-column
-                            prop="pointName"
-                            label="检查点"
+                            prop="portName"
+                            label="道路"
                     >
                     </el-table-column>
                     <el-table-column
@@ -49,7 +49,7 @@
         data: function () {
             return {
                 tmpDot: this.mapDot,
-                checkPointList: []
+                portList: []
             }
         },
         methods: {
@@ -72,12 +72,29 @@
 
                         let tmpStatus = resp.data;
 
-                        // 过滤数据
-                        let selecetedStatus = tmpStatus.find((val=>{
-                            return val.port === port
-                        }))
+                        this.portList = [];
 
-                        this.checkPointList = setCheckPointList(selecetedStatus)
+                        tmpStatus.forEach((portInfo => {
+                            let portName = portInfo.port + "号道";
+
+                            let portStatus = "0";
+
+
+                            Object.keys(portInfo).forEach((w)=>{
+                                if(portInfo[w] == "1" && w != "port" && w != "sensorCount"){
+                                    portStatus = "1";
+                                } else if (portInfo[w] == "2" && w != "port" && w != "sensorCount") {
+                                    if (portStatus == "0") {
+                                        portStatus = "2";
+                                    }
+                                }
+                            })
+
+                            this.portList.push({
+                                portName: portName,
+                                status: portStatus
+                            })
+                        }))
                     })
             },
 

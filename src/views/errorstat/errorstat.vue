@@ -59,7 +59,7 @@
             </el-col>
             <el-col :span="4" align="middle">
                 <span style="line-height: 34px">漏失总重</span>
-                <span>{{errorCount}}</span>
+                <span>{{leakWeightCount}}</span>
                 <span>kg</span>
             </el-col>
             <el-col :span="10" type="flex" justify="end">

@@ -14,6 +14,7 @@ export default {
             selectedTime: [],
             errorList:[],
             errorCount:"0",
+            leakWeightCount:"0",
             currentPage: 1,
             pageSize: 30,
             totalNum: 0,
@@ -143,6 +144,8 @@ export default {
 
                     this.errorList = data.ErrorList;
                     this.errorCount = data.errCount;
+                    this.leakWeightCount = data.LeakWeightCount;
+
                 })
 
         },

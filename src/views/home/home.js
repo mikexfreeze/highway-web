@@ -132,7 +132,7 @@ export default {
                     response.data.forEach((val,n)=>{
                         response.data[n].statuLabel = "正常状态"
                         Object.keys(val).forEach((w)=>{
-                            if(val[w] == "1" && w != "port"){
+                            if(val[w] == "1" && w != "port" && w != "sensorCount"){
                                 response.data[n].statuLabel = "需要维护"
                             }
                         })
