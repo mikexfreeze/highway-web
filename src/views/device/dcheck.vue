@@ -251,7 +251,6 @@
                             splitLine: {
                                 show: false
                             },
-                            max: 1500,
                             axisLabel: {
                                 show: false
                             },
@@ -348,7 +347,6 @@
                         splitLine: {
                             show: false
                         },
-                        max: 1100,
                         axisLabel: {
                             show: false
                         },
