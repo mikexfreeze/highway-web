@@ -3,7 +3,7 @@
 }
 
 .select-area{
-    margin:0.67em 0 0 0.67em;
+    margin:0.4em 0 0 0.67em;
     font-size: 2em;
 }
 
@@ -22,6 +22,13 @@ h1{
     border-radius: 4px;
     min-height: 36px;
 }
+
+.page-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
 #sensors_containner {
     border: 1px solid;

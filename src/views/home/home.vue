@@ -3,7 +3,7 @@
         <el-row>
             <el-col :span="6">
                 <div class="grid-content page-title">
-                    <h1>设备检测</h1>
+                    <h2>收费站检测</h2>
                 </div>
             </el-col>
             <el-col :span="18">
@@ -67,7 +67,7 @@
                             prop="status"
                             label="状态"
                             width="100">
-                        <template slot-scope="scope">
+                        <template scope="scope">
                             <statu-label :status="scope.row.status"></statu-label>
                         </template>
                     </el-table-column>

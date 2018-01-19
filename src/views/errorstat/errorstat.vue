@@ -57,22 +57,35 @@
             <el-col :span="2">
                 <el-button type="warning" @click="searchError" :disabled="canSearch()">查询</el-button>
             </el-col>
-            <el-col :span="4" align="middle">
+            <el-col :span="5" pull="1" align="middle">
                 <span style="line-height: 34px">漏失总重</span>
                 <span>{{leakWeightCount}}</span>
                 <span>kg</span>
             </el-col>
-            <el-col :span="10" type="flex" justify="end">
+            <el-col :span="3" pull="1" type="flex" justify="end">
                 <el-button @click="printTable">打印输出</el-button>
+            </el-col>
+            <el-col :span="4" pull="1">
+                <el-pagination
+                        @size-change="handleSizeChange"
+                        @current-change="handleCurrentChange"
+                        :current-page="currentPage"
+                        :page-sizes="[30, 40, 60, 100]"
+                        :page-size=pageSize
+                        layout="total, sizes, prev, pager, next, jumper"
+                        :total="totalNum">
+                </el-pagination>
             </el-col>
         </el-row>
         <el-row class="table-area">
             <el-table
                     :data="errorList"
+                    height="500"
                     style="width: 100%">
                 <el-table-column
                         type="index"
                         label="序号"
+                        width="70"
                         >
                 </el-table-column>
                 <el-table-column
@@ -97,35 +110,25 @@
                 </el-table-column>
                 <el-table-column
                         prop="sstat"
-                        label="传感器状态">
+                        label="传感器状态"
+                        >
                 </el-table-column>
                 <el-table-column
                         prop="Modweight"
                         label="重量修补"
-                        width="180">
+                        width="100">
                 </el-table-column>
                 <el-table-column
                         prop="AxleStat"
                         label="轮轴状态"
-                        width="120">
+                        width="100">
                 </el-table-column>
                 <el-table-column
                         prop="light"
                         label="光幕状态"
-                        width="120">
+                        width="100">
                 </el-table-column>
             </el-table>
-        </el-row>
-        <el-row class="pagination-area">
-            <el-pagination
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
-                    :current-page="currentPage"
-                    :page-sizes="[30, 40, 60, 100]"
-                    :page-size=pageSize
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :total="totalNum">
-            </el-pagination>
         </el-row>
     </div>
 </template>

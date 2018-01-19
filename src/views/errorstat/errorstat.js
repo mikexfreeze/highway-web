@@ -104,27 +104,18 @@ export default {
         handleSizeChange(val) {
             console.log(`每页 ${val} 条`);
             this.pageSize = val;
-
             this.currentPage = 1;
-
             this.updatePageChange();
-
-
-
-
         },
         handleCurrentChange(val) {
             console.log(`当前页: ${val}`);
             this.currentPage = val;
-
             this.updatePageChange();
-
         },
         // 根据总数更新页面获取数据
         fetchDataWithTotalAndParam(param) {
             // 点击查询是初始化下分页参数
             this.currentPage = 1;
-
             param.getTotalNumFlag = 0;
             param.startLine = this.pageSize * (this.currentPage - 1) ;
             param.endLine = this.pageSize * (this.currentPage - 1) + this.pageSize;
@@ -136,7 +127,6 @@ export default {
                     param.endLine = param.startLine;
                 }
             }
-
 
             GetErrorCount(param)
                 .then((response)=>{
@@ -163,7 +153,6 @@ export default {
                     endLine = startLine;
                 }
             }
-
 
             // 获取总个数
             let numParam = {

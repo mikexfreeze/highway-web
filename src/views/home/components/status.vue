@@ -1,7 +1,7 @@
 <template>
     <span>
         <el-tag v-if="status == 0" type="success">正常状态</el-tag>
-        <el-tag v-if="status == 1" type="danger">维护预警</el-tag>
+        <el-tag v-if="status == 1" type="danger">检测</el-tag>
         <el-tag v-if="status == 2" type="primary">检查预警</el-tag>
     </span>
 </template>

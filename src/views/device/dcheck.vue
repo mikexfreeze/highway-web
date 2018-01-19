@@ -47,21 +47,10 @@
             </el-col>
         </el-row>
         <el-row>
-            <el-col :span="6" class="col-1-left">
+            <el-col :span="5" class="col-1-left">
                 <el-row>
                     <el-col :span="8">
-                        <el-tag type="success">正常状态</el-tag>
-                    </el-col>
-                    <el-col :span="8">
-                        <el-tag type="primary">无传感器</el-tag>
-                    </el-col>
-                    <el-col :span="8">
-                        <el-tag type="danger">异常状态</el-tag>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="8">
-                        <h5>设备体检报告</h5>
+                        <h6>设备体检报告</h6>
                     </el-col>
                     <el-col :span="8">
                         <el-button size="mini" round id="btn-checkall" @click="checkAll()">查看全部</el-button>
@@ -84,13 +73,13 @@
                             prop="status"
                             label="状态"
                             width="100">
-                        <template slot-scope="scope">
+                        <template scope="scope">
                             <statu-label :status="scope.row.status"></statu-label>
                         </template>
                     </el-table-column>
                 </el-table>
             </el-col>
-            <el-col :span="18">
+            <el-col :span="19">
                 <figure id="sensor-charts-contianer">
                     <chart :options="sensorline"  ref="c1" auto-resize></chart>
                 </figure>
@@ -217,8 +206,6 @@
                 this.setCurrent(sensorData);
                 if (sensorData.avs.length > 0) {
 
-
-
                     this.charts = {
                         dataZoom: [
                             {
@@ -318,7 +305,6 @@
                             }
                         }]
                     }
-
                     this. newLoad()
                 }
             },
@@ -326,10 +312,13 @@
             updateWholeChart(sensorList) {
 
                 this.charts = {
-
                     tooltip: {
                         trigger: 'axis'
                     },
+                    legend: {
+                       data: []
+                    },
+
                     xAxis: {
                         type: 'category',
                         data: sensorList[0].avs.map((v,i)=>{
@@ -364,14 +353,13 @@
                             type: 'slider',
                             orient: 'vertical',
                         }
-
                     ],
                 }
 
-
-
                 var series = [];
+                var lengendData = [];
 
+                var i = 1;
                 sensorList.forEach((sensorData)=> {
                     let maxV = parseInt(sensorData.cMax);
                     let minV = parseInt(sensorData.cMin);
@@ -389,7 +377,6 @@
 
                         var rColor = randomColor();
 
-
                         let tmpSery = {
                             type: 'line',
                             data: sensorData.avs,
@@ -397,15 +384,31 @@
                                 normal: {
                                     color: rColor
                                 }
-                            }
+                            },
+                            name: "传感器" + i,
                         };
 
                         series.push(tmpSery);
+
+
+                        let tmpLegend = {
+                            name: "传感器" + i,
+                        }
+                        lengendData.push(tmpLegend);
+
+                        i++;
                     }
                 });
 
 
                 this.charts.series = series;
+                this.charts.legend.data = lengendData;
+
+                // 配置图例
+
+
+
+
 
                 this.newLoad();
             },
@@ -587,21 +590,17 @@
 <style scoped>
 
     .select-area{
-        margin: 0.67em 0 0 0.67em;
+        margin: 0.4em 0 0 0.67em;
         font-size: 2em;
     }
 
     .col-1-left {
-        margin-top: 40px;
+        margin-top: 0.1em;
     }
 
-    .figure {
-        width: 100vw;
-        margin: 1em auto;
-        padding: 0 1em;
-        border: none;
-        border-radius: 0px;
-        box-shadow: none
+    figure#sensor-charts-contianer {
+        margin-left: 0;
+        margin-right: 0;
     }
 
     .echarts {

@@ -35,7 +35,8 @@
                 <el-col :span="4">
                     <div v-popover:popover>
                         <router-link :to="devRoute()" @click="userClickDevice" ref="testDevice">
-                            <img  class="active-icon" :src="activeDeviceImage()"/>
+                            <!--<img  class="active-icon" :src="activeDeviceImage()"/>-->
+
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-tubiaozhexiantu"></use>
                             </svg>
@@ -71,22 +72,31 @@
         <el-col :span="9">
             <div class="grid-content bg-purple-dark" >
                 <div id="right-bottom-status">
-                    <el-col :span="4" align="center" :offset="2">
-                        <img class="img-dot" src="../../assets/images/greendot.png" />
-                        <span class="dot-text">正常状态</span>
-                    </el-col>
-                    <el-col :span="4" align="center">
-                        <img class="img-dot" src="../../assets/images/bluedot.png" />
-                        <span class="dot-text">检查预警</span>
-                    </el-col>
-                    <el-col :span="4" align="center">
-                        <img class="img-dot" src="../../assets/images/reddot.png" />
-                        <span class="dot-text">维护预警</span>
-                    </el-col>
-                    <el-col :span="4" align="right">
-                        <span class="time-span">{{timenow}}</span>
-                        <span class="time-span">{{datenow}}</span>
-                    </el-col>
+                    <el-row type="flex" justify="space-between">
+                        <el-clol :span="8">
+
+                        </el-clol>
+                        <el-col :span="3" align="center" :offset="2">
+                            <img class="img-dot" src="../../assets/images/greendot.png" />
+                            <span class="dot-text">正常状态</span>
+                        </el-col>
+                        <el-col :span="3" align="center">
+                            <img class="img-dot" src="../../assets/images/bluedot.png" />
+                            <span class="dot-text">检查预警</span>
+                        </el-col>
+                        <el-col :span="3" align="center">
+                            <img class="img-dot" src="../../assets/images/reddot.png" />
+                            <span class="dot-text">维护预警</span>
+                        </el-col>
+
+                        <el-col :span="6" align="right">
+                            <span class="time-span">{{timenow}}</span>
+                            <span class="time-span">{{datenow}}</span>
+                        </el-col>
+                        <el-col :span="1">
+                        </el-col>
+                    </el-row>
+
                 </div>
 
             </div>
@@ -98,9 +108,11 @@
 <script>
     import Pic_1 from '../../assets/images/icons/3-1.png'
     import Pic_2 from '../../assets/images/icons/3-2.png'
+    import ElRow from "element-ui/packages/row/src/row";
 
 
     export default{
+        components: {ElRow},
         data() {
           return {
               datenow : '',
