@@ -57,15 +57,15 @@
             <el-col :span="2">
                 <el-button type="warning" @click="searchError" :disabled="canSearch()">查询</el-button>
             </el-col>
-            <el-col :span="5" pull="1" align="middle">
+            <el-col :span="5" :pull="1" align="middle">
                 <span style="line-height: 34px">漏失总重</span>
                 <span>{{leakWeightCount}}</span>
                 <span>kg</span>
             </el-col>
-            <el-col :span="3" pull="1" type="flex" justify="end">
+            <el-col :span="3" :pull="1" type="flex" justify="end">
                 <el-button @click="printTable">打印输出</el-button>
             </el-col>
-            <el-col :span="4" pull="1">
+            <el-col :span="4" :pull="1">
                 <el-pagination
                         @size-change="handleSizeChange"
                         @current-change="handleCurrentChange"

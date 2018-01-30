@@ -35,9 +35,9 @@ export function GetSensorAverageConfig(deviceID) {
     })
 }
 
-export function GetSensorAverageValueLog(deviceID) {
+export function GetSensorAverageValueLog(deviceID,type) {
     return fetch({
-        url: '/gaosuWeb/doGetSensorAverageValueLog?DevID='+ deviceID,
+        url: '/gaosuWeb/doGetSensorAverageValueLog?DevID='+ deviceID +'&type=' + type,
         method: 'get',
     }).then(function (response) {
         console.log("获取传感器一周的平均值")

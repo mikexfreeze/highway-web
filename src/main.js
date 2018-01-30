@@ -22,8 +22,8 @@ import store from './store';
 // import permission from 'store/permission';
 import * as filters from './filters'; // 全局vue filter
 
-Vue.config.productionTip = false
-Vue.use(ElementUI)
+Vue.config.productionTip = false;
+Vue.use(ElementUI);
 
 // register global utility filters.
 Object.keys(filters).forEach(key => {
@@ -62,4 +62,4 @@ const app = new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount('#app')
+}).$mount('#app');

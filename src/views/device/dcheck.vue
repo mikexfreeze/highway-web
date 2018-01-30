@@ -80,9 +80,21 @@
                 </el-table>
             </el-col>
             <el-col :span="19">
-                <figure id="sensor-charts-contianer">
-                    <chart :options="sensorline"  ref="c1" auto-resize></chart>
-                </figure>
+                <el-row>
+                    <el-select id="chart-types" size="mini" v-model="selectedType" placeholder="请选择"  @change="changeType()">
+                        <el-option
+                                v-for="item in types"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-row>
+                <el-row>
+                    <figure id="sensor-charts-contianer">
+                        <chart :options="sensorline"  ref="c1" auto-resize></chart>
+                    </figure>
+                </el-row>
             </el-col>
         </el-row>
 
@@ -105,9 +117,11 @@
     require('echarts/lib/component/dataZoom');
     import {sensorline} from './sensorline';
     import ElButton from "../../../node_modules/element-ui/packages/button/src/button.vue";
+    import ElRow from "element-ui/packages/row/src/row";
 
     export default {
         components: {
+            ElRow,
             ElButton,
             chart: ECharts,
             statuLabel
@@ -129,6 +143,21 @@
                 currentRow: null,
                 seconds:0,
                 sensorline,
+                selectedType:'1',
+                types: [
+                    {
+                        value:"1",
+                        label:"一周"
+                    },
+                    {
+                        value:"2",
+                        label:"一个月"
+                    },
+                    {
+                        value:"3",
+                        label:"三个月"
+                    }
+                ]
             }
         },
         created: function () {
@@ -146,6 +175,9 @@
                 });
         },
         methods: {
+            changeType() {
+                this.fetchChartData();
+            },
             checkAll() {
                 this.updateWholeChart(this.sensorList);
             },
@@ -428,7 +460,7 @@
 //                        this.updateChart(this.sensorList[0])
                     })
 
-                GetSensorAverageValueLog(this.deviceID)
+                GetSensorAverageValueLog(this.deviceID,this.selectedType)
                     .then(res=> {
                         let result = res.data;
 
@@ -585,6 +617,7 @@
     }
 
 
+
 </script>
 
 <style scoped>
@@ -611,6 +644,10 @@
 
     #btn-checkall {
         margin-top: 20px;
+    }
+    #chart-types {
+        margin-left: 5em;
+        margin-top: 1.4em;
     }
 
 </style>
