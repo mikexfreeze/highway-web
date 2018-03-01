@@ -77,16 +77,16 @@
 
                         </el-col>
                         <el-col :span="4" align="center">
-                            <img class="img-dot" src="../../assets/images/greendot.png" />
-                            <span class="dot-text">正常状态</span>
+                            <img style="width: 38px;height: 38px;margin-top: -0.6em" class="img-dot" src="../../assets/images/greendot.png" />
+                            <span style="display: block;" class="dot-text">正常状态</span>
                         </el-col>
                         <el-col :span="4" align="center">
-                            <img class="img-dot" src="../../assets/images/bluedot.png" />
-                            <span class="dot-text">检查预警</span>
+                            <img style="width: 38px;height: 38px;margin-top: -0.6em"  class="img-dot" src="../../assets/images/bluedot.png" />
+                            <span style="display: block;" class="dot-text">检查预警</span>
                         </el-col>
                         <el-col :span="4" align="center">
-                            <img class="img-dot" src="../../assets/images/reddot.png" />
-                            <span class="dot-text">维护预警</span>
+                            <img style="width: 38px;height: 38px;margin-top: -0.6em" class="img-dot" src="../../assets/images/reddot.png" />
+                            <span style="display: block;" class="dot-text">维护预警</span>
                         </el-col>
 
                         <el-col :span="6" align="right">
