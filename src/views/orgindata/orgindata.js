@@ -16,6 +16,7 @@ export default {
             currentPage: 1,
             pageSize: 30,
             totalNum: 0,
+            tableHeight: (document.body.clientHeight - 140)
         }
 
     },
@@ -133,7 +134,17 @@ export default {
 
             GetCarLog(param)
                 .then((response)=>{
-                    let data = response.data
+                    let data = response.data;
+
+                    var oriErrorList = data;
+                    oriErrorList.forEach(function (val) {
+                        var sstat = val.sstat;
+                        var sArr = sstat.split("-");
+
+                        var sArrNew = sArr.filter(e => e !== "null");
+
+                        val.sstat = sArrNew.join("-");
+                    });
 
                     this.carsList = data;
                 })
@@ -147,7 +158,7 @@ export default {
             let endLine = this.pageSize * (this.currentPage - 1) + this.pageSize
 
             if (endLine > this.totalNum) {
-                endLine = this.totalNum
+                endLine = this.totalNum;
 
                 if (this.totalNum < startLine) {
                     endLine = startLine;
@@ -170,7 +181,17 @@ export default {
 
             GetCarLog(numParam)
                 .then((response)=>{
-                    let data = response.data
+                    let data = response.data;
+
+                    var oriErrorList = data;
+                    oriErrorList.forEach(function (val) {
+                        var sstat = val.sstat;
+                        var sArr = sstat.split("-");
+
+                        var sArrNew = sArr.filter(e => e !== "null");
+
+                        val.sstat = sArrNew.join("-");
+                    });
 
                     this.carsList = data;
                 })

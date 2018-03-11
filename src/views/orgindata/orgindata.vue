@@ -72,75 +72,81 @@
         <el-row class="table-area">
             <el-table
                     :data="carsList"
-                    style="width: 100%">
+                    style="width: 100%"
+                    :fit="true"
+                    :max-height="tableHeight"
+            >
                 <el-table-column
                         prop="DevID"
                         label="设备ID"
-                        width="80">
+                        fixed
+                        min-width="300">
                 </el-table-column>
                 <el-table-column
                         prop="Time"
                         label="时间"
-                        width="80">
+                        min-width="200">
                 </el-table-column>
                 <el-table-column
                         prop="CarWeight"
                         label="总重"
-                        width="70">
+                        >
                 </el-table-column>
                 <el-table-column
                         prop="Speed"
                         label="速度"
-                        width="70">
+                        >
                 </el-table-column>
                 <el-table-column
                         prop="Axlenum"
                         label="轴数"
-                        width="70">
+                        >
                 </el-table-column>
                 <el-table-column
                         prop="AW1"
                         label="轴1重"
-                        width="70">
+                        >
                 </el-table-column>
                 <el-table-column
                         prop="AW2"
                         label="轴2重"
-                        width="70">
+                        >
                 </el-table-column>
                 <el-table-column
                         prop="AW3"
                         label="轴3重"
-                        width="70">
+                        >
                 </el-table-column>
                 <el-table-column
                         prop="AW4"
                         label="轴4重"
-                        width="70">
+                        >
                 </el-table-column>
                 <el-table-column
                         prop="AW5"
                         label="轴5重"
-                        width="70">
+                        >
                 </el-table-column>
                 <el-table-column
                         prop="AW6"
                         label="轴6重"
-                        width="70">
+                        >
                 </el-table-column>
                 <el-table-column
                         prop="sstat"
                         label="传感器"
+                        min-width="300"
                         >
                 </el-table-column>
                 <el-table-column
                         prop="Modweight"
                         label="重量修正"
-                        width="70">
+                        min-width="100"
+                        >
                 </el-table-column>
                 <el-table-column
                         label="轮轴"
-                        width="50">
+                        >
                     <template scope="scope">
                         <span>{{scope.row.SenInfoAxeCounter1}} </span>
                         <span>{{scope.row.SenInfoAxeCounter2}}</span>
@@ -150,7 +156,7 @@
                 <el-table-column
                         prop="CarNum"
                         label="车牌"
-                        width="70">
+                        width="100">
                 </el-table-column>
             </el-table>
         </el-row>

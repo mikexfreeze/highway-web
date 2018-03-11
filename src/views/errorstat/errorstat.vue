@@ -80,7 +80,8 @@
         <el-row class="table-area">
             <el-table
                     :data="errorList"
-                    height="500"
+                    :fit="true"
+                    :max-height="tableHeight"
                     style="width: 100%">
                 <el-table-column
                         type="index"
@@ -91,26 +92,27 @@
                 <el-table-column
                         prop="DevID"
                         label="设备ID"
-                        width="180">
+                        min-width="300"
+                >
                 </el-table-column>
                 <el-table-column
                         prop="time"
                         label="时间"
-                        width="180">
+                        min-width="200">
                 </el-table-column>
                 <el-table-column
                         prop="CarWeight"
-                        label="总重"
-                        width="100">
+                        label="总重">
                 </el-table-column>
                 <el-table-column
                         prop="OtherDevWeight"
                         label="收费计重"
-                        width="100">
+                >
                 </el-table-column>
                 <el-table-column
                         prop="sstat"
                         label="传感器状态 ( 0:正常  1:故障 )"
+                        min-width="300"
                         >
                 </el-table-column>
                 <el-table-column

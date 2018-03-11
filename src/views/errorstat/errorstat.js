@@ -13,6 +13,7 @@ export default {
             selectedPort: null,
             selectedTime: [],
             errorList:[],
+            tableHeight: (document.body.clientHeight - 140),
             errorCount:"0",
             leakWeightCount:"0",
             currentPage: 1,
@@ -132,6 +133,16 @@ export default {
                 .then((response)=>{
                     let data = response.data
 
+                    var oriErrorList = data.ErrorList;
+                    oriErrorList.forEach(function (val) {
+                        var sstat = val.sstat;
+                        var sArr = sstat.split("-");
+
+                        var sArrNew = sArr.filter(e => e !== "null");
+
+                        val.sstat = sArrNew.join("-");
+                    });
+
                     this.errorList = data.ErrorList;
                     this.errorCount = data.errCount;
                     this.leakWeightCount = data.LeakWeightCount;
@@ -170,6 +181,15 @@ export default {
             GetErrorCount(numParam)
                 .then((response)=>{
                     let data = response.data
+                    var oriErrorList = data.ErrorList;
+                    oriErrorList.forEach(function (val) {
+                       var sstat = val.sstat;
+                       var sArr = sstat.split("-");
+
+                       var sArrNew = sArr.filter(e => e !== "null");
+
+                       val.sstat = sArrNew.join("-");
+                    });
 
                     this.errorList = data.ErrorList;
                     this.errorCount = data.errCount;
@@ -192,6 +212,8 @@ export default {
 
                 })
             });
+
+
     }
 }
 
