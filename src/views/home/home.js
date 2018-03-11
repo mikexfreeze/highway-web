@@ -116,7 +116,16 @@ export default {
                     this.roadStatusList = response.data;
 
                     this.checkPointList = setCheckPointList(data)
+
+                    this.saveSelecetedToCache();
                 })
+        },
+        saveSelecetedToCache() {
+            window.localStorage.setItem("home_povince", this.selectedProvince);
+            window.localStorage.setItem("home_road_options", JSON.stringify(this.roadOptions));
+            window.localStorage.setItem("home_road", this.selectedRoad);
+            window.localStorage.setItem("home_station_options", JSON.stringify(this.stationOptions));
+            window.localStorage.setItem("home_station", this.selectedStation);
         },
         updateStatusPerSecond() {
             // 调用整个数据接口 TODO:
@@ -155,6 +164,26 @@ export default {
             }
         }, 10000);
 
+        var cachePovince = window.localStorage.getItem("home_povince");
+        if (cachePovince) {
+            this.selectedProvince = cachePovince;
+        }
+
+        var cacheRoad = window.localStorage.getItem("home_road");
+
+        if (cacheRoad) {
+            this.selectedRoad = cacheRoad;
+            this.roadOptions = JSON.parse(window.localStorage.getItem("home_road_options"));
+        }
+
+        var cacheStation = window.localStorage.getItem("home_station");
+
+        if (cacheStation) {
+            this.selectedStation =  cacheStation;
+            this.stationOptions = JSON.parse(window.localStorage.getItem("home_station_options"));
+            this.currentSelectedLaneIndex = 0;
+            this.updateStatusPerSecond();
+        }
 
 
         this.getPovince()

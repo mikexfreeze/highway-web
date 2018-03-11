@@ -173,8 +173,49 @@
 
                     })
                 });
+
+            var cachePovince = window.localStorage.getItem("home_povince");
+            if (cachePovince) {
+                this.selectedProvince = cachePovince;
+            }
+
+            var cacheRoad = window.localStorage.getItem("home_road");
+
+            if (cacheRoad) {
+                this.selectedRoad = cacheRoad;
+                this.roadOptions = JSON.parse(window.localStorage.getItem("home_road_options"));
+            }
+
+            var cacheStation = window.localStorage.getItem("home_station");
+
+            if (cacheStation) {
+                this.selectedStation =  cacheStation;
+                this.stationOptions = JSON.parse(window.localStorage.getItem("home_station_options"));
+                GetPort(this.selectedProvince, this.selectedRoad, this.selectedStation)
+                    .then((response)=> {
+                        this.portOptions = getPortObj(response.data.portList)
+                    })
+
+                // 获取传感器状态
+                let param = {
+                    province:this.selectedProvince,
+                    road:this.selectedRoad,
+                    station:this.selectedStation
+                };
+                GetStatu(param)
+                    .then(res=> {
+                        this.tmpStatus = res.data;
+                    })
+            }
         },
         methods: {
+            saveSelecetedToCache() {
+                window.localStorage.setItem("home_povince", this.selectedProvince);
+                window.localStorage.setItem("home_road_options", JSON.stringify(this.roadOptions));
+                window.localStorage.setItem("home_road", this.selectedRoad);
+                window.localStorage.setItem("home_station_options", JSON.stringify(this.stationOptions));
+                window.localStorage.setItem("home_station", this.selectedStation);
+            },
             changeType() {
                 this.fetchChartData();
             },
@@ -553,6 +594,7 @@
 
                 // 获取图表数据
                 this.fetchChartData();
+                this.saveSelecetedToCache();
             },
             combineDeviceID() {
                 this.deviceID = this.selectedProvince + "-" + this.selectedRoad + "-" + this.selectedStation + "-" + this.selectedPort
