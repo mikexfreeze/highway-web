@@ -448,17 +448,18 @@
 
                     if (sensorData.avs.length > 0) {
 
-                        var rColor = randomColor();
+//                        var rColor = randomColor();
 
                         let tmpSery = {
                             type: 'line',
                             data: sensorData.avs,
                             lineStyle: {
-                                normal: {
-                                    color: rColor
-                                }
+//                                normal: {
+//                                    color: rColor
+//                                }
                             },
                             name: "传感器" + i,
+                            symbol:"circle"
                         };
 
                         series.push(tmpSery);
@@ -466,6 +467,7 @@
 
                         let tmpLegend = {
                             name: "传感器" + i,
+                            icon: "pin"
                         }
                         lengendData.push(tmpLegend);
 
