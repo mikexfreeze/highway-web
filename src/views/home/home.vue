@@ -3,7 +3,7 @@
         <el-row>
             <el-col :span="6">
                 <div class="grid-content page-title">
-                    <h2>收费站检测</h2>
+                    <h2>收费站监测</h2>
                 </div>
             </el-col>
             <el-col :span="18">

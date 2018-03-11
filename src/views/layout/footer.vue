@@ -3,11 +3,12 @@
     <el-row class="footer">
         <el-popover
                 ref="popover"
-                placement="top"
+                placement="top-end"
                 width="160"
                 v-model="popoverVisible"
+                popper-class="ysfclass"
                 trigger="hover">
-            <div style="text-align: right; margin: 0">
+            <div style="text-align: right;">
                 <el-button size="mini" type="text" @click="handleDevCheck">设备体检报告</el-button>
                 <el-button type="text" size="mini" @click="handleDevLive">设备实时报告</el-button>
             </div>
@@ -33,15 +34,13 @@
                     </router-link>
                 </el-col>
                 <el-col :span="4">
-                    <div v-popover:popover>
-                        <router-link :to="devRoute()" @click="userClickDevice" ref="testDevice">
+                        <router-link v-popover:popover  :to="devRoute()" @click="userClickDevice" ref="testDevice">
                             <!--<img  class="active-icon" :src="activeDeviceImage()"/>-->
 
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-tubiaozhexiantu"></use>
                             </svg>
                         </router-link>
-                    </div>
                 </el-col>
                 <el-col :span="4">
                     <router-link to="errorstat">
@@ -118,7 +117,7 @@
               date : '',
               interval :'',
               popoverVisible: false,
-              deviceType:"1"
+              deviceType:"1",
           }
         },
 //        watch: {
@@ -250,7 +249,9 @@
         padding-top: 20px;
     }
 
-
+    .ysfclass {
+        display: none;
+    }
 
 
 </style>
