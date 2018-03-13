@@ -105,8 +105,14 @@
                         label="总重">
                 </el-table-column>
                 <el-table-column
+                        prop="Modweight"
+                        label="重量修补"
+                        min-width="100">
+                </el-table-column>
+                <el-table-column
                         prop="OtherDevWeight"
                         label="收费计重"
+                        min-width="100"
                 >
                 </el-table-column>
                 <el-table-column
@@ -115,11 +121,7 @@
                         min-width="300"
                         >
                 </el-table-column>
-                <el-table-column
-                        prop="Modweight"
-                        label="重量修补"
-                        width="100">
-                </el-table-column>
+
                 <el-table-column
                         prop="AxleStat"
                         label="轮轴状态"

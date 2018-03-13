@@ -13,7 +13,7 @@ export default {
             selectedPort: null,
             selectedTime: [],
             errorList:[],
-            tableHeight: (document.body.clientHeight - 140),
+            tableHeight: (document.body.clientHeight - 240),
             errorCount:"0",
             leakWeightCount:"0",
             currentPage: 1,

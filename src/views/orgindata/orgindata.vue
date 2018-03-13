@@ -93,6 +93,12 @@
                         >
                 </el-table-column>
                 <el-table-column
+                        prop="Modweight"
+                        label="重量修正"
+                        min-width="100"
+                >
+                </el-table-column>
+                <el-table-column
                         prop="Speed"
                         label="速度"
                         >
@@ -138,12 +144,7 @@
                         min-width="300"
                         >
                 </el-table-column>
-                <el-table-column
-                        prop="Modweight"
-                        label="重量修正"
-                        min-width="100"
-                        >
-                </el-table-column>
+
                 <el-table-column
                         label="轮轴"
                         >

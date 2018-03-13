@@ -16,7 +16,7 @@ export default {
             currentPage: 1,
             pageSize: 30,
             totalNum: 0,
-            tableHeight: (document.body.clientHeight - 140)
+            tableHeight: (document.body.clientHeight - 240)
         }
 
     },
@@ -110,9 +110,6 @@ export default {
             this.currentPage = 1;
 
             this.updatePageChange();
-
-
-
 
         },
         handleCurrentChange(val) {
