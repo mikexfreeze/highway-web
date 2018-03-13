@@ -107,10 +107,9 @@ export default {
                     var data = respone.data;
 
                     if (data.picUrl) {
-                        vm.picUrl = data.picUrl;
+                        vm.picUrl =  timestamp(data.picUrl);
                     }
-
-                })
+                });
 
                 vm.timer = setTimeout(function () {
                     vm.getPic()
@@ -156,8 +155,6 @@ export default {
                     this.portOptions = getPortObj(response.data.portList)
                 })
         }
-
-
     },
     destroyed: function () {
         clearTimeout(this.timer)
@@ -187,4 +184,10 @@ function getPortObj(data) {
         })
     });
     return arr
+}
+
+function timestamp(url){
+    var getTimestamp=new Date().getTime();
+    url=url+"?timestamp="+getTimestamp
+    return url;
 }
