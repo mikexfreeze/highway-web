@@ -57,7 +57,7 @@
             <el-col :span="2">
                 <el-button type="warning" @click="searchCarLog" :disabled="canSearch()">查询</el-button>
             </el-col>
-            <el-col :span="6" :push="8">
+            <el-col :span="6" :push="4">
                 <el-pagination
                         @size-change="handleSizeChange"
                         @current-change="handleCurrentChange"

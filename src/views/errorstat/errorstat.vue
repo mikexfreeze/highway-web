@@ -65,7 +65,7 @@
             <el-col :span="3" :pull="1" type="flex" justify="end">
                 <el-button @click="printTable">打印输出</el-button>
             </el-col>
-            <el-col :span="4" :pull="1">
+            <el-col :span="4" :pull="2">
                 <el-pagination
                         @size-change="handleSizeChange"
                         @current-change="handleCurrentChange"
