@@ -83,6 +83,21 @@ export function GetErrorCountTotalNum(param) {
     })
 }
 
+export function GetCreateReport(param) {
+    return fetch({
+        url: '/gaosuWeb/createreport',
+        method: 'post',
+        data: param
+    }).then(function (response) {
+        console.log("获取 report");
+        console.log(response);
+        return response
+    })
+}
+
+
+
+
 export function GetCarLog(param) {
     return fetch({
         url: '/gaosuWeb/doShowCarLog',

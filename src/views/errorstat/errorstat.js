@@ -1,5 +1,6 @@
 import {GetProvince, GetRoad, GetStation, GetPort,GetStatu,GetErrorCount,GetErrorCountTotalNum} from '../home/api/Lane.js'
 import print from 'assets/js/printThis.js'
+import {GetCreateReport} from "../home/api/Lane";
 export default {
     data() {
         return {
@@ -19,6 +20,7 @@ export default {
             currentPage: 1,
             pageSize: 30,
             totalNum: 0,
+            fullscreenLoading: false
         }
 
     },
@@ -106,7 +108,46 @@ export default {
                 });
         },
         printTable(){
-            $(".table-area").printThis()
+            this.fullscreenLoading = true;
+
+            let startT = (this.selectedTime.length > 1) ? reportDateString(this.selectedTime[0]): "";
+            let endT = (this.selectedTime.length > 1) ? reportDateString(this.selectedTime[1]) : "";
+            let deviceID = this.selectedProvince + "_" + this.selectedRoad + "_" + this.selectedStation + "_" + this.selectedPort;
+
+
+            // 获取总个数
+            let numParam = {
+                DevID: deviceID,
+                StartTm:startT,
+                EndTm:endT,
+            };
+
+            var vm = this;
+
+            GetCreateReport(numParam)
+                .then((resp)=> {
+
+                if (resp.result === "1") {
+                    Message({
+                        message: "返回出错",
+                        type: 'error',
+                        duration: 5 * 1000
+                    });
+                    return;
+                } else {
+
+                    let fileName = resp.result;
+
+
+
+
+                }
+
+
+                }).finally(()=>{
+                this.fullscreenLoading = false;
+            });
+
         },
 
         // 分页
@@ -280,4 +321,16 @@ function toParmaDateString(date) {
     var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
     console.log(Y+M+D);
     return Y+M+D;
+}
+
+function reportDateString(date) {
+    var Y = date.getFullYear() + "-";
+    var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+    var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + ' ';
+    var H = (date.getHours() < 10 ? '0'+date.getHours() : date.getHours()) + '-';
+    var m = (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()) + '-';
+    var s = (date.getSeconds() < 10 ? '0'+date.getSeconds() : date.getSeconds());
+    console.log(Y+M+D+H+m+s);
+
+    return Y+M+D+H+m+s;
 }
