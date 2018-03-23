@@ -80,7 +80,7 @@
                 </el-table>
             </el-col>
             <el-col :span="19">
-                <el-row>
+                <el-row id="select-chart-type-row">
                     <el-select id="chart-types" size="mini" v-model="selectedType" placeholder="请选择"  @change="changeType()">
                         <el-option
                                 v-for="item in types"
@@ -420,8 +420,8 @@
                         {
                             type: 'inside',
                             orient: 'vertical',
-                            start:70,
-                            end:0
+                            start:100,
+                            end:99
                         },{
                             type: 'slider',
                             orient: 'vertical',
@@ -689,7 +689,9 @@
     #btn-checkall {
         margin-top: 20px;
     }
-    #chart-types {
+
+
+    #select-chart-type-row {
         margin-left: 5em;
         margin-top: 1.4em;
     }
