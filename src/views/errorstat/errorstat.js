@@ -1,6 +1,8 @@
 import {GetProvince, GetRoad, GetStation, GetPort,GetStatu,GetErrorCount,GetErrorCountTotalNum} from '../home/api/Lane.js'
 import print from 'assets/js/printThis.js'
 import {GetCreateReport} from "../home/api/Lane";
+import {Message} from 'element-ui';
+
 export default {
     data() {
         return {
@@ -124,6 +126,8 @@ export default {
 
             var vm = this;
 
+            // testDownloadExl(vm);
+
             GetCreateReport(numParam)
                 .then((resp)=> {
 
@@ -137,10 +141,7 @@ export default {
                 } else {
 
                     let fileName = resp.result;
-
-
-
-
+                    Download(fileName,vm);
                 }
 
 
@@ -334,3 +335,30 @@ function reportDateString(date) {
 
     return Y+M+D+H+m+s;
 }
+
+
+function testDownloadExl(vm) {
+
+    var serverResult = {"result":"1"};
+    vm.fullscreenLoading = false;
+
+    if (serverResult.result === "1") {
+        Message({
+            message: "返回出错",
+            type: 'error',
+            duration: 5 * 1000
+        });
+        return;
+    } else {
+
+        let fileName = serverResult.result;
+        Download(fileName,vm);
+    }
+
+
+}
+
+function Download(url,vm) {
+
+    vm.$refs.my_iframe.src=url;
+};

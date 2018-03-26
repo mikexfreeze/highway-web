@@ -134,6 +134,7 @@
                 </el-table-column>
             </el-table>
         </el-row>
+        <iframe id="my_iframe" style="display:none;" ref="my_iframe"></iframe>
     </div>
 </template>
 
