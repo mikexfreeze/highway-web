@@ -114,7 +114,7 @@ export default {
 
             let startT = (this.selectedTime.length > 1) ? reportDateString(this.selectedTime[0]): "";
             let endT = (this.selectedTime.length > 1) ? reportDateString(this.selectedTime[1]) : "";
-            let deviceID = this.selectedProvince + "_" + this.selectedRoad + "_" + this.selectedStation + "_" + this.selectedPort;
+            let deviceID = this.selectedProvince + "-" + this.selectedRoad + "-" + this.selectedStation + "-" + this.selectedPort;
 
 
             // 获取总个数
@@ -131,7 +131,7 @@ export default {
             GetCreateReport(numParam)
                 .then((resp)=> {
 
-                if (resp.result === "1") {
+                if (resp.data.result === "1") {
                     Message({
                         message: "返回出错",
                         type: 'error',
@@ -140,7 +140,7 @@ export default {
                     return;
                 } else {
 
-                    let fileName = resp.result;
+                    let fileName = resp.data.result;
                     Download(fileName,vm);
                 }
 
@@ -328,18 +328,16 @@ function reportDateString(date) {
     var Y = date.getFullYear() + "-";
     var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
     var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + ' ';
-    var H = (date.getHours() < 10 ? '0'+date.getHours() : date.getHours()) + '-';
-    var m = (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()) + '-';
-    var s = (date.getSeconds() < 10 ? '0'+date.getSeconds() : date.getSeconds());
-    console.log(Y+M+D+H+m+s);
 
-    return Y+M+D+H+m+s;
+    console.log(Y+M+D);
+
+    return Y+M+D;
 }
 
 
 function testDownloadExl(vm) {
 
-    var serverResult = {"result":"1"};
+    var serverResult = {"result":"http://127.0.0.1:8080/gaosuWeb/img/test.xlsx"};
     vm.fullscreenLoading = false;
 
     if (serverResult.result === "1") {

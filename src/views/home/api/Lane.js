@@ -85,9 +85,9 @@ export function GetErrorCountTotalNum(param) {
 
 export function GetCreateReport(param) {
     return fetch({
-        url: '/gaosuWeb/createreport',
-        method: 'post',
-        data: param
+        url: process.env.NODE_API + '/createreport',
+        method: 'get',
+        params: param
     }).then(function (response) {
         console.log("获取 report");
         console.log(response);
