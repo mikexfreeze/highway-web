@@ -142,8 +142,8 @@
                 charts:{},
                 currentRow: null,
                 seconds:0,
-                sensorline,
                 selectedType:'1',
+                sensorline,
                 types: [
                     {
                         value:"1",
@@ -420,8 +420,8 @@
                         {
                             type: 'inside',
                             orient: 'vertical',
-                            start:100,
-                            end:99
+                            start:99,
+                            end:100
                         },{
                             type: 'slider',
                             orient: 'vertical',
@@ -448,16 +448,10 @@
 
                     if (sensorData.avs.length > 0) {
 
-//                        var rColor = randomColor();
 
                         let tmpSery = {
                             type: 'line',
                             data: sensorData.avs,
-                            lineStyle: {
-//                                normal: {
-//                                    color: rColor
-//                                }
-                            },
                             name: "传感器" + i,
                             symbol:"circle"
                         };
@@ -500,12 +494,17 @@
                             element.cMin = result[minKey];
                         })
 
-//                        this.updateChart(this.sensorList[0])
-                    })
+                    });
 
                 GetSensorAverageValueLog(this.deviceID,this.selectedType)
                     .then(res=> {
                         let result = res.data;
+
+                        this.sensorList.forEach(sVal=> {
+                           sVal.avs = [];
+                        });
+
+
 
                         result.forEach(val=> {
                             let sensorCount = val.SensorCount;
@@ -525,9 +524,7 @@
 
                                 this.sensorList[senIndex].avs.push(sav)
                             }
-                        })
-
-//                        this.updateChart(this.sensorList[0]);
+                        });
 
                         this.updateWholeChart(this.sensorList);
                     })
