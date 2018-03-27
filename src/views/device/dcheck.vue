@@ -278,17 +278,30 @@
 
                 this.setCurrent(sensorData);
                 if (sensorData.avs.length > 0) {
+                    let baseV = sensorData.avs[0];
+
+                    let fixAvs = sensorData.avs.map(x=> x - baseV);
+
+                    let minFixV = minV - parseInt(baseV);
+                    let maxFixV = maxV - parseInt(baseV);
+
 
                     this.charts = {
                         dataZoom: [
                             {
                                 type: 'inside',
                                 orient: 'vertical',
-                                start:70,
+                                start:100,
                                 end:0
                             },{
                                 type: 'slider',
                                 orient: 'vertical',
+                            },
+                            {
+                                type: 'slider',
+                                orient: 'horizontal',
+                                start:0,
+                                end:100
                             }
                         ],
                         tooltip: {
@@ -305,7 +318,8 @@
                             axisTick: {
                                 show: false
                             },
-                            boundaryGap: false
+                            boundaryGap: false,
+
                         },
                         yAxis: {
                             splitLine: {
@@ -320,62 +334,62 @@
                         },
                         series: [{
                             type: 'line',
-                            data: sensorData.avs,
+                            data: fixAvs,
                             lineStyle: {
                                 normal: {
                                     color: 'green'
                                 }
                             },
-                            markLine: {
-                                data:[
-                                    {
-                                        name: '平均线',
-                                        type: 'average',
-                                        label: {
-                                            normal: {
-                                                position: 'start',
-                                                formatter: '均值  '
-                                            }
-                                        },
-                                        lineStyle : {
-                                            normal: {
-                                                color: 'grey',
-                                                type: 'solid'
-                                            }
-                                        }
-                                    },
-                                    {
-                                        name: '最大值',
-                                        yAxis: sensorData.cMax,
-                                        label: {
-                                            normal: {
-                                                position: 'start',
-                                                formatter: '最大值  '
-                                            }
-                                        },
-                                        lineStyle : {
-                                            normal: {
-                                                color: 'red',
-                                                type: 'solid'
-                                            }
-                                        }
-                                    },{
-                                        name: '最小值',
-                                        yAxis: sensorData.cMin,
-                                        label: {
-                                            normal: {
-                                                position: 'start',
-                                                formatter: '最小值  '
-                                            }
-                                        },
-                                        lineStyle : {
-                                            normal: {
-                                                color: 'red',
-                                                type: 'solid'
-                                            }
-                                        }
-                                    }]
-                            }
+//                            markLine: {
+//                                data:[
+//                                    {
+//                                        name: '平均线',
+//                                        type: 'average',
+//                                        label: {
+//                                            normal: {
+//                                                position: 'start',
+//                                                formatter: '均值  '
+//                                            }
+//                                        },
+//                                        lineStyle : {
+//                                            normal: {
+//                                                color: 'grey',
+//                                                type: 'solid'
+//                                            }
+//                                        }
+//                                    },
+//                                    {
+//                                        name: '最大值',
+//                                        yAxis: maxFixV,
+//                                        label: {
+//                                            normal: {
+//                                                position: 'start',
+//                                                formatter: '最大值  '
+//                                            }
+//                                        },
+//                                        lineStyle : {
+//                                            normal: {
+//                                                color: 'red',
+//                                                type: 'solid'
+//                                            }
+//                                        }
+//                                    },{
+//                                        name: '最小值',
+//                                        yAxis: minFixV,
+//                                        label: {
+//                                            normal: {
+//                                                position: 'start',
+//                                                formatter: '最小值  '
+//                                            }
+//                                        },
+//                                        lineStyle : {
+//                                            normal: {
+//                                                color: 'red',
+//                                                type: 'solid'
+//                                            }
+//                                        }
+//                                    }]
+//                            }
                         }]
                     }
                     this. newLoad()
@@ -420,11 +434,17 @@
                         {
                             type: 'inside',
                             orient: 'vertical',
-                            start:99,
+                            start:0,
                             end:100
                         },{
                             type: 'slider',
                             orient: 'vertical',
+                        },
+                        {
+                            type: 'slider',
+                            orient: 'horizontal',
+                            start:0,
+                            end:100
                         }
                     ],
                 }
@@ -433,6 +453,7 @@
                 var lengendData = [];
 
                 var i = 1;
+
                 sensorList.forEach((sensorData)=> {
                     let maxV = parseInt(sensorData.cMax);
                     let minV = parseInt(sensorData.cMin);
@@ -448,12 +469,17 @@
 
                     if (sensorData.avs.length > 0) {
 
+                        let baseV = sensorData.avs[0];
+
+                        let fixAvs = sensorData.avs.map(x=> x - baseV);
+
 
                         let tmpSery = {
                             type: 'line',
-                            data: sensorData.avs,
+                            data: fixAvs,
                             name: "传感器" + i,
-                            symbol:"circle"
+                            symbol:"circle",
+
                         };
 
                         series.push(tmpSery);
@@ -680,7 +706,7 @@
     .echarts {
         width: 100%;
         min-width: 0%;
-        height: 36vw;
+        height: 32vw;
     }
 
     #btn-checkall {
