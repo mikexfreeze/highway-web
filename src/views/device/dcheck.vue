@@ -142,9 +142,13 @@
                 charts:{},
                 currentRow: null,
                 seconds:0,
-                selectedType:'1',
+                selectedType:'0',
                 sensorline,
                 types: [
+                    {
+                      value:"0",
+                      label:"一天"
+                    },
                     {
                         value:"1",
                         label:"一周"
@@ -270,7 +274,11 @@
                 // 根据最大最小数值，修正传感器实际状态
                 for (let i = 0;i < sensorData.avs.length; i++) {
                     let normalValue = parseInt(sensorData.avs[i]);
-                    if (normalValue > maxV || normalValue < minV) {
+
+                    let fixnormalV = normalValue - parseInt(sensorData.avs[0]);
+
+
+                    if (fixnormalV > maxV || fixnormalV < minV) {
                         sensorData.status = '1';
                         break;
                     }
@@ -281,9 +289,6 @@
                     let baseV = sensorData.avs[0];
 
                     let fixAvs = sensorData.avs.map(x=> x - baseV);
-
-                    let minFixV = minV - parseInt(baseV);
-                    let maxFixV = maxV - parseInt(baseV);
 
 
                     this.charts = {
@@ -331,6 +336,8 @@
                             axisTick: {
                                 show: false
                             },
+                            max: maxV + 10,
+                            min: minV - 10
                         },
                         series: [{
                             type: 'line',
@@ -340,56 +347,40 @@
                                     color: 'green'
                                 }
                             },
-//                            markLine: {
-//                                data:[
-//                                    {
-//                                        name: '平均线',
-//                                        type: 'average',
-//                                        label: {
-//                                            normal: {
-//                                                position: 'start',
-//                                                formatter: '均值  '
-//                                            }
-//                                        },
-//                                        lineStyle : {
-//                                            normal: {
-//                                                color: 'grey',
-//                                                type: 'solid'
-//                                            }
-//                                        }
-//                                    },
-//                                    {
-//                                        name: '最大值',
-//                                        yAxis: maxFixV,
-//                                        label: {
-//                                            normal: {
-//                                                position: 'start',
-//                                                formatter: '最大值  '
-//                                            }
-//                                        },
-//                                        lineStyle : {
-//                                            normal: {
-//                                                color: 'red',
-//                                                type: 'solid'
-//                                            }
-//                                        }
-//                                    },{
-//                                        name: '最小值',
-//                                        yAxis: minFixV,
-//                                        label: {
-//                                            normal: {
-//                                                position: 'start',
-//                                                formatter: '最小值  '
-//                                            }
-//                                        },
-//                                        lineStyle : {
-//                                            normal: {
-//                                                color: 'red',
-//                                                type: 'solid'
-//                                            }
-//                                        }
-//                                    }]
-//                            }
+                            markLine: {
+                                data:[
+                                    {
+                                        name: '预警最大值',
+                                        yAxis: maxV,
+                                        label: {
+                                            normal: {
+                                                position: 'start',
+                                                formatter: '预警最大值  '
+                                            }
+                                        },
+                                        lineStyle : {
+                                            normal: {
+                                                color: 'red',
+                                                type: 'dashed'
+                                            }
+                                        }
+                                    },{
+                                        name: '预警最小值',
+                                        yAxis: minV,
+                                        label: {
+                                            normal: {
+                                                position: 'start',
+                                                formatter: '预警最小值  '
+                                            }
+                                        },
+                                        lineStyle : {
+                                            normal: {
+                                                color: 'red',
+                                                type: 'dashed'
+                                            }
+                                        }
+                                    }]
+                            }
                         }]
                     }
                     this. newLoad()
@@ -397,6 +388,8 @@
             },
             // 渲染整个图表
             updateWholeChart(sensorList) {
+
+
 
                 this.charts = {
                     tooltip: {
@@ -429,7 +422,10 @@
                         axisTick: {
                             show: false
                         },
+                        max: parseInt(sensorList[0].cMax) + 10,
+                        min: parseInt(sensorList[0].cMin) - 10
                     },
+
                     dataZoom: [
                         {
                             type: 'inside',
@@ -460,8 +456,13 @@
 
                     // 根据最大最小数值，修正传感器实际状态
                     for (let i = 0;i < sensorData.avs.length; i++) {
+
                         let normalValue = parseInt(sensorData.avs[i]);
-                        if (normalValue > maxV || normalValue < minV) {
+
+                        let fixnormalV = normalValue - parseInt(sensorData.avs[0]);
+
+
+                        if (fixnormalV > maxV || fixnormalV < minV) {
                             sensorData.status = '1';
                             break;
                         }
@@ -495,15 +496,61 @@
                     }
                 });
 
+                let maxV = sensorList[0].cMax;
+                let minV = sensorList[0].cMin;
+
+
+                let makelineTmp = {
+                    type: 'line',
+                    markLine: {
+                        data:[
+                            {
+                                name: '预警最大值',
+                                yAxis: maxV,
+                                label: {
+                                    normal: {
+                                        position: 'start',
+                                        formatter: '预警最大值  '
+                                    }
+                                },
+                                lineStyle : {
+                                    normal: {
+                                        color: 'red',
+                                        type: 'dashed'
+                                    }
+                                }
+                            },{
+                                name: '预警最小值',
+                                yAxis: minV,
+                                label: {
+                                    normal: {
+                                        position: 'start',
+                                        formatter: '预警最小值  '
+                                    }
+                                },
+                                lineStyle : {
+                                    normal: {
+                                        color: 'red',
+                                        type: 'dashed'
+                                    }
+                                }
+                            }]
+                    },
+                    data: [],
+                    lineStyle: {
+                        normal: {
+                            color: 'green'
+                        }
+                    },
+
+                };
+                series.push(makelineTmp);
+
 
                 this.charts.series = series;
                 this.charts.legend.data = lengendData;
 
                 // 配置图例
-
-
-
-
 
                 this.newLoad();
             },
