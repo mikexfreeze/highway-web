@@ -360,7 +360,7 @@
                                         },
                                         lineStyle : {
                                             normal: {
-                                                color: 'red',
+                                                color: '#FF9900',
                                                 type: 'dashed'
                                             }
                                         }
@@ -375,7 +375,7 @@
                                         },
                                         lineStyle : {
                                             normal: {
-                                                color: 'red',
+                                                color: '#FF9900',
                                                 type: 'dashed'
                                             }
                                         }
@@ -383,15 +383,14 @@
                             }
                         }]
                     }
-                    this. newLoad()
+                    this.newLoad()
                 }
             },
             // 渲染整个图表
             updateWholeChart(sensorList) {
 
-
-
                 this.charts = {
+                    color: ["red","orange","yellow","green","teal","darkblue","darkorchid","lightslategray","darkgoldenrod","black","royalblue","deeppink"],
                     tooltip: {
                         trigger: 'axis'
                     },
@@ -478,9 +477,9 @@
                         let tmpSery = {
                             type: 'line',
                             data: fixAvs,
+                            smooth:false,
                             name: "传感器" + i,
-                            symbol:"circle",
-
+                            symbol:"circle"
                         };
 
                         series.push(tmpSery);
@@ -515,7 +514,7 @@
                                 },
                                 lineStyle : {
                                     normal: {
-                                        color: 'red',
+                                        color: '#FF9900',
                                         type: 'dashed'
                                     }
                                 }
@@ -530,7 +529,7 @@
                                 },
                                 lineStyle : {
                                     normal: {
-                                        color: 'red',
+                                        color: '#FF9900',
                                         type: 'dashed'
                                     }
                                 }
@@ -729,7 +728,6 @@
         let color = 'rgba('+ r +','+ g +','+ b +',0.8)';
         return color;
     }
-
 
 
 </script>
