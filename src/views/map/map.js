@@ -47,6 +47,8 @@ export default {
 
         }, 1000)
 
+        // this.getXY();
+
 
 
 
@@ -104,7 +106,7 @@ function mapTestState() {
 
     var result = [{
         "top" : "240",
-        "left" : "810",
+        "left" : "830",
         "stat" : randomState
     }];
 

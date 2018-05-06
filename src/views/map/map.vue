@@ -2,7 +2,7 @@
     <div>
 
 
-        <img id="map-image"  src="../../assets/images/nanning_map.png" >
+        <img id="map-image"  src="../../assets/images/map.jpg" >
         <div id='station_point' >
             <dotview  v-for="(dot, index) in dotList" :key="index" :mapDot="dot" :style="{top: (dot.top * (imageHeight/545)) + 'px', left: (dot.left * (imageWidth/906)) + 'px'}"></dotview>
         </div>
