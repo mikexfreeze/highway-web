@@ -454,6 +454,8 @@
                     let minV = parseInt(sensorData.cMin);
 
                     // 根据最大最小数值，修正传感器实际状态
+                        sensorData.status = '0';
+
                     for (let i = 0;i < sensorData.avs.length; i++) {
 
                         let normalValue = parseInt(sensorData.avs[i]);
