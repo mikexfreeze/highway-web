@@ -287,8 +287,17 @@
                 this.setCurrent(sensorData);
                 if (sensorData.avs.length > 0) {
                     let baseV = sensorData.avs[0];
+                    let fixAvs = sensorData.avs.map(x=> {
+                        var ret = x - baseV;
 
-                    let fixAvs = sensorData.avs.map(x=> x - baseV);
+                        if (ret < minV) {
+                            ret = minV - 10;
+                        } else if (ret > maxV) {
+                            ret = maxV + 10;
+                        }
+
+                        return ret;
+                    });
 
 
                     this.charts = {
@@ -447,9 +456,7 @@
                 var series = [];
                 var lengendData = [];
 
-                var i = 1;
-
-                sensorList.forEach((sensorData)=> {
+                sensorList.forEach((sensorData,index)=> {
                     let maxV = parseInt(sensorData.cMax);
                     let minV = parseInt(sensorData.cMin);
 
@@ -473,27 +480,34 @@
 
                         let baseV = sensorData.avs[0];
 
-                        let fixAvs = sensorData.avs.map(x=> x - baseV);
+                        let fixAvs = sensorData.avs.map(x=> {
+                           var ret = x - baseV;
+
+                           if (ret < minV) {
+                               ret = minV - 10;
+                           } else if (ret > maxV) {
+                               ret = maxV + 10;
+                           }
+
+                           return ret;
+                        });
 
 
                         let tmpSery = {
                             type: 'line',
                             data: fixAvs,
                             smooth:false,
-                            name: "传感器" + i,
+                            name: "传感器" + (index + 1),
                             symbol:"circle"
                         };
 
                         series.push(tmpSery);
 
-
                         let tmpLegend = {
-                            name: "传感器" + i,
+                            name: "传感器" + (index + 1),
                             icon: "pin"
                         }
                         lengendData.push(tmpLegend);
-
-                        i++;
                     }
                 });
 
@@ -577,8 +591,6 @@
                         this.sensorList.forEach(sVal=> {
                            sVal.avs = [];
                         });
-
-
 
                         result.forEach(val=> {
                             let sensorCount = val.SensorCount;
