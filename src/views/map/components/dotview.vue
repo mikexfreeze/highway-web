@@ -117,9 +117,9 @@
             list[sIndex] = {pointName:tmpPointName, status: data[statusIndex]}
         }
 
-        list.push({pointName:"光幕",status:data["light"]});
-        list.push({pointName:"轮轴器识别1",status:data["axeCounter1"]});
-        list.push({pointName:"轮轴器识别2",status:data["axeCounter2"]});
+        list.push({pointName:"光栅识别器",status:data["light"]});
+        list.push({pointName:"轮轴识别器1",status:data["axeCounter1"]});
+        list.push({pointName:"轮轴识别器2",status:data["axeCounter2"]});
 
         return list
     }

@@ -1,4 +1,5 @@
-import {GetProvince, GetRoad, GetStation, GetPort,GetCarLog, GetCarLogTotalNum} from '../home/api/Lane.js'
+import {GetProvince, GetRoad, GetStation, GetPort,GetCarLog, GetCarLogFull} from '../home/api/Lane.js'
+import {GetCarLogTotalNum} from "../home/api/Lane";
 
 export default {
     data() {
@@ -27,11 +28,11 @@ export default {
     },
     methods:{
         saveSelecetedToCache() {
-            window.localStorage.setItem("home_povince", this.selectedProvince);
-            window.localStorage.setItem("home_road_options", JSON.stringify(this.roadOptions));
-            window.localStorage.setItem("home_road", this.selectedRoad);
-            window.localStorage.setItem("home_station_options", JSON.stringify(this.stationOptions));
-            window.localStorage.setItem("home_station", this.selectedStation);
+            window.localStorage.setItem("feedata_povince", this.selectedProvince);
+            window.localStorage.setItem("feedata_road_options", JSON.stringify(this.roadOptions));
+            window.localStorage.setItem("feedata_road", this.selectedRoad);
+            window.localStorage.setItem("feedata_station_options", JSON.stringify(this.stationOptions));
+            window.localStorage.setItem("feedata_station", this.selectedStation);
         },
         canSearch() {
             if (this.selectedProvince != null && this.selectedTime.length > 1 && this.selectedTime[0] && this.selectedTime[1]) {
@@ -86,7 +87,6 @@ export default {
             // 获取总个数
             let numParam = {
                 province:this.selectedProvince,
-                road:this.selectedRoad,
                 station:this.selectedStation,
                 port:this.selectedPort,
                 startTime:startT,
@@ -94,7 +94,7 @@ export default {
                 getTotalNumFlag: 1
             };
 
-            GetCarLogTotalNum(numParam)
+            GetCarLogFull(numParam)
                 .then((resp)=> {
                     let resultArr = resp.data;
 
@@ -142,19 +142,9 @@ export default {
             }
 
 
-            GetCarLog(param)
+            GetCarLogFull(param)
                 .then((response)=>{
                     let data = response.data;
-
-                    var oriErrorList = data;
-                    oriErrorList.forEach(function (val) {
-                        var sstat = val.sstat;
-                        var sArr = sstat.split("-");
-
-                        var sArrNew = sArr.filter(e => e !== "null");
-
-                        val.sstat = sArrNew.join("-");
-                    });
 
                     this.carsList = data;
                 })
@@ -189,23 +179,14 @@ export default {
                 endLine: endLine
             };
 
-            GetCarLog(numParam)
+            GetCarLogFull(numParam)
                 .then((response)=>{
                     let data = response.data;
-
-                    var oriErrorList = data;
-                    oriErrorList.forEach(function (val) {
-                        var sstat = val.sstat;
-                        var sArr = sstat.split("-");
-
-                        var sArrNew = sArr.filter(e => e !== "null");
-
-                        val.sstat = sArrNew.join("-");
-                    });
 
                     this.carsList = data;
                 })
         },
+        // 查看详情
         handleCheckDetail(index,row) {
 
             this.rowData = row;
@@ -220,17 +201,37 @@ export default {
 
                 var wIndex = "AW" + (i + 1);
 
+                var dIndex = "AGDis" + (i + 1);
+
                 aE.aW = this.rowData[wIndex];
+                aE.aS = "";
+                aE.aD = this.rowData[dIndex];
 
                 aInfo.push(aE);
             }
 
             this.rowData.aInfo = aInfo;
 
+            var groupNum = this.rowData.AGWNum;
+
+            var aGInfo = [];
+
+            for (var i = 0; i < groupNum; i++) {
+                var agE = {};
+                var wIndex = "AGW" + (i + 1);
+                var tIndex = "AGWT" + (i + 1);
+                agE.AGW = this.rowData[wIndex];
+                agE.AGT = this.rowData[tIndex];
+                aGInfo.push(agE);
+            }
+
+            this.rowData.aGInfo =  aGInfo;
+
 
             this.dialogTableVisible = true;
 
-        },
+
+        }
 
     },
     created: function () {
@@ -247,23 +248,23 @@ export default {
                 })
             });
 
-        var cachePovince = window.localStorage.getItem("home_povince");
+        var cachePovince = window.localStorage.getItem("feedata_povince");
         if (cachePovince) {
             this.selectedProvince = cachePovince;
         }
 
-        var cacheRoad = window.localStorage.getItem("home_road");
+        var cacheRoad = window.localStorage.getItem("feedata_road");
 
         if (cacheRoad) {
             this.selectedRoad = cacheRoad;
-            this.roadOptions = JSON.parse(window.localStorage.getItem("home_road_options"));
+            this.roadOptions = JSON.parse(window.localStorage.getItem("feedata_road_options"));
         }
 
-        var cacheStation = window.localStorage.getItem("home_station");
+        var cacheStation = window.localStorage.getItem("feedata_station");
 
         if (cacheStation) {
             this.selectedStation =  cacheStation;
-            this.stationOptions = JSON.parse(window.localStorage.getItem("home_station_options"));
+            this.stationOptions = JSON.parse(window.localStorage.getItem("feedata_station_options"));
             GetPort(this.selectedProvince, this.selectedRoad, this.selectedStation)
                 .then((response)=> {
                     this.portOptions = getPortObj(response.data.portList)

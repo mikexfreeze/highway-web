@@ -14,8 +14,10 @@
                 </el-col>
             </el-row>
             <el-row>
-                <div class="grid-content">
+                <div class="grid-content" style="text-align: center">
                     <h1 class="road_port" align="center"> {{roadstatus.port}} 号道</h1>
+                    <img  v-if="roadstatus.s16 === '0'" width="40"  src="../../../assets/images/neton.png"/>
+                    <img  v-if="roadstatus.s16 === '1'" width="40" align="center" src="../../../assets/images/netoff.png"/>
                 </div>
             </el-row>
             <el-row>
@@ -103,8 +105,10 @@
                 </el-col>
             </el-row>
             <el-row>
-                <div class="grid-content-sm">
+                <div class="grid-content-sm" style="text-align: center">
                     <h1 class="road_port" align="center"> {{roadstatus.port}} 号道</h1>
+                    <img  v-if="roadstatus.s16 === '0'" width="40"  src="../../../assets/images/neton.png"/>
+                    <img  v-if="roadstatus.s16 === '1'" width="40" align="center" src="../../../assets/images/netoff.png"/>
                 </div>
             </el-row>
             <el-row>

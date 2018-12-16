@@ -15,6 +15,20 @@
         </el-popover>
 
 
+        <el-popover
+                ref="popover-data"
+                placement="top-end"
+                width="160"
+                v-model="dataPopoverVisible"
+                popper-class="ysfclass"
+                trigger="hover">
+            <div style="text-align: right;">
+                <el-button size="mini" type="text" @click="handleOrgData">监测数据查询</el-button>
+                <el-button type="text" size="mini" @click="handleFeeData">计费数据查询</el-button>
+            </div>
+        </el-popover>
+
+
         <el-col :span="15">
             <el-row>
                 <el-col :span="4" >
@@ -51,8 +65,8 @@
                     </router-link>
                 </el-col>
                 <el-col :span="4">
-                    <router-link to="orgindata">
-                        <img class="active-icon" src="../../assets/images/icons/5-5.png" />
+                    <router-link v-popover:popover-data  :to="dataRoute()" @click="userClickData" ref="testData">
+
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-yunpan"></use>
                         </svg>
@@ -117,7 +131,9 @@
               date : '',
               interval :'',
               popoverVisible: false,
+              dataPopoverVisible: false,
               deviceType:"1",
+              dataInfoType:"1"  // 1 监测(原始)数据 2 收费数据
           }
         },
 //        watch: {
@@ -136,9 +152,25 @@
                 }
                 return r;
             },
+
+            dataRoute() {
+                let r = "orgindata";
+                if (this.dataInfoType === "1") {
+                    r = "orgindata";
+                } else if (this.dataInfoType === "2" ) {
+                    r = "feedata";
+                }
+                return r;
+            },
+
             userClickDevice() {
                 this.deviceType = "2";
             },
+
+            userClickData() {
+                this.dataInfoType = "1";
+            },
+
             activeDeviceImage() {
                 let imageUrl = Pic_1;
                 if (this.deviceType === "1") {
@@ -169,7 +201,21 @@
                 this.$router.push('device');
                 this.popoverVisible = false;
 
+            },
+            handleOrgData() {
+                this.dataInfoType = "1";
+                this.$router.push('orgindata');
+                this.dataPopoverVisible = false;
+
+                this.$refs.testData.className += " router-link-exact-active router-link-active" ;
+            },
+            handleFeeData() {
+                this.dataInfoType = "2";
+                this.$router.push('feedata');
+                this.dataPopoverVisible = false;
             }
+
+
         },
         mounted() {
             this.interval = setInterval(this.time, 5000)

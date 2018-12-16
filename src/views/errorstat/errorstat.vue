@@ -92,33 +92,31 @@
                 <el-table-column
                         prop="DevID"
                         label="设备ID"
-                        min-width="300"
+                        min-width="100"
                 >
                 </el-table-column>
                 <el-table-column
                         prop="time"
                         label="时间"
-                        min-width="200">
+                        >
                 </el-table-column>
                 <el-table-column
                         prop="CarWeight"
-                        label="总重">
+                        label="总重(Kg)">
                 </el-table-column>
                 <el-table-column
                         prop="Modweight"
-                        label="重量修补"
-                        min-width="100">
+                        label="重量修补(Kg)"
+                        >
                 </el-table-column>
                 <el-table-column
                         prop="OtherDevWeight"
-                        label="收费计重"
-                        min-width="100"
+                        label="收费计重(Kg)"
                 >
                 </el-table-column>
                 <el-table-column
                         prop="sstat"
                         label="传感器状态 ( 0:正常  1:故障 )"
-                        min-width="300"
                         >
                 </el-table-column>
 

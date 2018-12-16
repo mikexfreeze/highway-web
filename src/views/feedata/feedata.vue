@@ -79,61 +79,40 @@
                 <el-table-column
                         type="index"
                         label="序号"
-                        width="100"
-                        >
+                        width="80">
                 </el-table-column>
                 <el-table-column
                         prop="DevID"
                         label="设备ID"
-                        min-width="210">
+                        min-width="100">
                 </el-table-column>
                 <el-table-column
                         prop="Time"
                         label="时间"
-                        min-width="110">
+                        min-width="100">
                 </el-table-column>
                 <el-table-column
                         prop="CarWeight"
                         label="总重(Kg)"
-                        >
-                </el-table-column>
-                <el-table-column
-                        prop="Modweight"
-                        label="重量修正(Kg)"
-                        min-width="110"
                 >
                 </el-table-column>
                 <el-table-column
                         prop="Speed"
-                        label="速度(Km/h)"
-                        min-width="110"
-                        >
+                        label="车速(Km/h)"
+                >
                 </el-table-column>
                 <el-table-column
                         prop="Axlenum"
                         label="轴数"
-                        >
+                >
                 </el-table-column>
-                <el-table-column
-                        prop="sstat"
-                        label="传感器"
-                        min-width="110"
-                        >
+                <el-table-column label="轴组数" prop="Axlenum">
                 </el-table-column>
-
-                <el-table-column
-                        label="轮轴"
-                        >
+                <el-table-column label="是否超重" prop="OverLoad">
                     <template scope="scope">
-                        <span>{{scope.row.SenInfoAxeCounter1}} </span>
-                        <span>{{scope.row.SenInfoAxeCounter2}}</span>
-                        <el-button v-if="scope.row.isEnable =='1'" type="warning" @click="disabledBtn(scope.row)">禁用</el-button>
+                        <span v-if="scope.row.OverLoad === '1'">是</span>
+                        <span v-else>否</span>
                     </template>
-                </el-table-column>
-                <el-table-column
-                        prop="CarNum"
-                        label="车牌"
-                        width="100">
                 </el-table-column>
                 <el-table-column label="操作">
                     <template scope="scope">
@@ -144,6 +123,7 @@
                     </template>
                 </el-table-column>
             </el-table>
+
 
             <el-dialog title="详情" :visible.sync="dialogTableVisible" width="30%">
                 <el-form :inline="true" class="demo-form-inline">
@@ -166,25 +146,21 @@
                         <span>{{rowData.Speed ? rowData.Speed + " Km/h" : ""}}</span>
                     </el-form-item>
 
-                    <el-form-item label="传感器:">
-                        <span>{{rowData.sstat}}</span>
+                    <el-form-item label="是否倒车:">
+                        <span v-if="rowData.REVERSE === '1'">是</span>
+                        <span v-else>否</span>
                     </el-form-item>
-
-                    <el-form-item label="轮轴状态:">
-
-                            <span>{{rowData.SenInfoAxeCounter1}} </span>
-                            <span>{{rowData.SenInfoAxeCounter2}}</span>
-
+                    <el-form-item label="是否超重:">
+                        <span v-if="rowData.OverLoad === '1'">是</span>
+                        <span v-else>否</span>
                     </el-form-item>
-
-
 
                     <el-form-item label="轴数" style="width: 100%;">
                         <span>{{rowData.Axlenum}}</span>
                     </el-form-item>
                     <el-table border
-                              :data="rowData.aInfo"
-                              style="width: 100%;margin-bottom: 20px">
+                            :data="rowData.aInfo"
+                            style="width: 100%;margin-bottom: 20px">
                         <el-table-column
                                 align="center"
                                 type="index"
@@ -195,9 +171,42 @@
                                 align="center"
                                 prop="aW"
                                 label="轴重(Kg)"
-                                >
+                        >
                         </el-table-column>
-
+                        <el-table-column
+                                align="center"
+                                prop="aS"
+                                label="轴速(Km/h)">
+                        </el-table-column>
+                        <el-table-column
+                                align="center"
+                                prop="aD"
+                                label="轴距(m)">
+                        </el-table-column>
+                    </el-table >
+                    <el-form-item label="轴组数" style="width: 100%;">
+                        <span>{{rowData.AGWNum}}</span>
+                    </el-form-item>
+                    <el-table border
+                              :data="rowData.aGInfo"
+                              style="width: 100%;margin-bottom: 20px">
+                        <el-table-column
+                                width="100"
+                                align="center"
+                                type="index"
+                                label="序号">
+                        </el-table-column>
+                        <el-table-column
+                                align="center"
+                                prop="AGW"
+                                label="轴组重(Kg)"
+                        >
+                        </el-table-column>
+                        <el-table-column
+                                align="center"
+                                prop="AGT"
+                                label="轴组轴型">
+                        </el-table-column>
                     </el-table >
 
                 </el-form>
@@ -205,7 +214,11 @@
             </el-dialog>
         </el-row>
     </div>
+
+
+
+
 </template>
 
-<script src="./orgindata.js"></script>
-<style  src="./orgindata.scss"></style>
+<script src="./feedata.js"></script>
+<style src="./feedata.scss"></style>

@@ -220,9 +220,30 @@ function setCheckPointList(data) {
         list[sIndex] = {pointName:tmpPointName, status: data[statusIndex]}
     }
 
-    list.push({pointName:"光幕",status:data["light"]});
-    list.push({pointName:"轮轴器识别1",status:data["axeCounter1"]});
-    list.push({pointName:"轮轴器识别2",status:data["axeCounter2"]});
+    if (data["light"] && data["light"].length > 0) {
+        list.push({pointName:"光栅识别器",status:data["light"]});
+    }
+
+    if (data["axeCounter1"] && data["axeCounter1"].length > 0) {
+        list.push({pointName:"轮轴识别器1",status:data["axeCounter1"]});
+    }
+
+    if (data["axeCounter2"] && data["axeCounter2"].length > 0) {
+        list.push({pointName:"轮轴识别器2",status:data["axeCounter2"]});
+    }
+
+    if (data["s17"] && data["s17"].length > 0) {
+        list.push({pointName:"线圈识别器",status:data["s17"]});
+    }
+
+    if (data["s18"] && data["s18"].length > 0) {
+        list.push({pointName:"轮胎识别器",status:data["s18"]});
+    }
+
+    if (data["s19"] && data["s19"].length > 0) {
+        list.push({pointName:"仪表通讯",status:data["s19"]});
+    }
+
 
     return list
 }
