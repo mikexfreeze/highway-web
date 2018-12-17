@@ -27,10 +27,12 @@ export default {
     components:{dotview,chart: ECharts,},
     data(){
         return{
+            errorDataDetail: [],
             dotList: [],
             imageWidth: 1059,
             imageHeight: 672,
             show: true,
+            dialogTableVisible: false,
             pickerOptions: {
                 shortcuts: [{
                     text: '最近一周',
@@ -159,6 +161,8 @@ export default {
                 // 构造图表
                 if (resp.data) {
 
+                    this.errorDataDetail = resp.data;
+
                     this.errorChart = makeErrorChart(resp.data,"监测统计")
 
 
@@ -188,6 +192,9 @@ export default {
                 chart.mergeOptions(dataOptions)
             }, 500)
         },
+        checkErrorDetail() {
+
+        }
 
 
     },
@@ -237,12 +244,20 @@ export default {
 
             // 构造表
             if (resp.data) {
+
+                // this.errorDataDetail = resp.data;
+
                 this.errorChart = makeErrorChart(resp.data, "健康统计", diffDays)
             }
 
 
 
-        })
+        });
+
+        this.errorDataDetail = [{"PlatLen":"18","ProductSpec":"測試產品型號","Manufactor":"測試廠家","DevID":"guangxi-nanlinggaosu-nanlingzhan-1","PlatType":"測試稱台類型","checkDay":"0","brokenDay":"2"},{"PlatLen":"","ProductSpec":"","Manufactor":"","DevID":"guangxi-nanlinggaosu-nanlingzhan-2","PlatType":"","checkDay":"0","brokenDay":"0"},{"PlatLen":"","ProductSpec":"","Manufactor":"","DevID":"guangxi-nanlinggaosu-nanlingzhan-3","PlatType":"","checkDay":"0","brokenDay":"0"}]
+
+
+        // TEST
     },
 
     updated: function () {
