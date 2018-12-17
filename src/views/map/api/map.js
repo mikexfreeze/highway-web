@@ -30,14 +30,27 @@ export function GetWeightCountingCheck(startTime,endTime,range) {
 
 
 export function GetStatErrorCount(startTime,endTime,range) {
+    // return fetch({
+    //     url: 'gaosuWeb/doGetStatErrorCount?startTime=' + startTime + "&endTime=" + endTime + "&range=" + range ,
+    //     method: 'get',
+    // }).then(function (response) {
+    //     console.log("获取别人重量统计接口")
+    //     console.log(response)
+    //     return response
+    // })
+
+    // TEST
     return fetch({
-        url: 'gaosuWeb/doGetStatErrorCount?startTime=' + startTime + "&endTime=" + endTime + "&range=" + range ,
+        url: 'gaosuWeb/doGetWeightCountingCheck?startTime=' + startTime + "&endTime=" + endTime + "&range=" + range ,
         method: 'get',
     }).then(function (response) {
-        console.log("获取别人重量统计接口")
+        console.log("获取重量统计接口")
         console.log(response)
         return response
     })
+
+
+
 }
 
 export function GetWeightCountingOriginal(startTime,endTime,range) {

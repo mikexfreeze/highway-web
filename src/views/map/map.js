@@ -1,7 +1,7 @@
 /**
  * Created by Micheal Xiao on 2017/7/10.
  */
-import {GetXY,GetWeightCountingCheck,GetWeightCountingOriginal} from './api/map'
+import {GetXY,GetWeightCountingCheck,GetWeightCountingOriginal,GetStatErrorCount} from './api/map'
 import dotview from './components/dotview.vue'
 import moment from 'moment'
 
@@ -120,6 +120,8 @@ export default {
             let startStr = moment(start).format("YYYY-MM-DD");
             let endStr = moment(end).format("YYYY-MM-DD");
 
+            var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+            var diffDays = Math.round(Math.abs((start.getTime() - end.getTime())/(oneDay)));
 
             GetWeightCountingCheck(startStr,endStr,"guangxi").then((resp) => {
 
@@ -127,10 +129,6 @@ export default {
                 if (resp.data) {
 
                     this.chart1 = makeChart(resp.data,"计重统计")
-
-
-
-
 
                 } else {
                     this.chart1 = {}
@@ -148,15 +146,28 @@ export default {
                     this.chart2 = makeChart(resp.data,"监测统计")
 
 
-
-
-
                 } else {
                     this.chart2 = {}
                 }
 
                 let targetChart = this.$refs.c2;
                 this.newLoad(targetChart,this.chart2);
+            })
+
+            GetStatErrorCount(startStr,endStr,"guangxi").then((resp)=> {
+
+                // 构造图表
+                if (resp.data) {
+
+                    this.errorChart = makeErrorChart(resp.data,"监测统计")
+
+
+                } else {
+                    this.errorChart = {}
+                }
+
+                let targetChart = this.$refs.errorC;
+                this.newLoad(targetChart,this.errorChart);
             })
 
 
@@ -198,6 +209,8 @@ export default {
 
         let startStr = moment(start).format("YYYY-MM-DD");
         let endStr = moment(end).format("YYYY-MM-DD");
+        var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+        var diffDays = Math.round(Math.abs((start.getTime() - end.getTime())/(oneDay)));
 
 
         GetWeightCountingCheck(startStr,endStr,"guangxi").then((resp) => {
@@ -206,10 +219,6 @@ export default {
             if (resp.data) {
 
                 this.chart1 = makeChart(resp.data,"计重统计")
-
-
-
-
 
             }
         })
@@ -221,30 +230,20 @@ export default {
             if (resp.data) {
 
                 this.chart2 = makeChart(resp.data,"监测统计")
-
-
-
-
-
             }
         })
 
+        GetStatErrorCount(startStr,endStr, "guangxi").then((resp)=> {
+
+            // 构造表
+            if (resp.data) {
+                this.errorChart = makeErrorChart(resp.data, "健康统计", diffDays)
+            }
 
 
 
-
-
-
-
-
-
-
-
+        })
     },
-
-
-
-
 
     updated: function () {
         this.imageWidth = document.getElementById('map-image').clientWidth;
@@ -261,6 +260,80 @@ export default {
 }
 
 
+function makeErrorChart(data,title,days) {
+
+
+    var testData = [{"PlatLen":"18","ProductSpec":"測試產品型號","Manufactor":"測試廠家","DevID":"guangxi-nanlinggaosu-nanlingzhan-1","PlatType":"測試稱台類型","checkDay":"0","brokenDay":"2"},{"PlatLen":"","ProductSpec":"","Manufactor":"","DevID":"guangxi-nanlinggaosu-nanlingzhan-2","PlatType":"","checkDay":"0","brokenDay":"0"},{"PlatLen":"","ProductSpec":"","Manufactor":"","DevID":"guangxi-nanlinggaosu-nanlingzhan-3","PlatType":"","checkDay":"0","brokenDay":"0"}]
+
+
+    var serDatas = [];
+    var lenDatas = [];
+
+    var count = testData.length;
+
+    var allDays = count * days;
+
+    var brokenDay = 0;
+    var checkDay = 0;
+
+    testData.forEach((tmpInfo)=> {
+
+        if (tmpInfo["brokenDay"] && tmpInfo["brokenDay"] !== "0") {
+            brokenDay += parseInt(tmpInfo["brokenDay"])
+        }
+
+        if (tmpInfo["checkDay"] && tmpInfo["checkDay"] !== "0") {
+            checkDay += parseInt(tmpInfo["checkDay"])
+        }
+    })
+
+
+    var healthDay = allDays - brokenDay - checkDay;
+
+
+    serDatas.push({value: healthDay,name: "健康"});
+    serDatas.push({value: brokenDay, name: "故障"});
+    serDatas.push({value: checkDay, name: "维护"});
+
+
+    var chartOptions = {};
+
+    chartOptions.title = {
+        text: title,
+        left: "center"
+    };
+
+    chartOptions.tooltip = {
+        trigger: 'item',
+        formatter: "{b} : {c} 天 ({d}%)"
+    };
+
+
+    chartOptions.series = {
+        type: 'pie',
+        radius : '50%',
+        center: ['30%', '50%'],
+        data: serDatas,
+        itemStyle: {
+            emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+        }
+    };
+
+    chartOptions.legend = {
+        orient: "vertical",
+        right: 10,
+        top: 50,
+        data: ["健康","维护","故障"],
+    }
+
+    return chartOptions
+
+
+}
 
 
 function makeChart(data,title) {
