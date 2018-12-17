@@ -1,8 +1,10 @@
 /**
  * Created by Micheal Xiao on 2017/7/10.
  */
-import {GetXY} from './api/map'
+import {GetXY,GetWeightCountingCheck,GetWeightCountingOriginal} from './api/map'
 import dotview from './components/dotview.vue'
+import moment from 'moment'
+
 
 var randomState = 0;
 var timeSet;
@@ -17,6 +19,8 @@ require('echarts/lib/component/toolbox');
 require('echarts/lib/component/legend');
 require('echarts/lib/component/markLine');
 require('echarts/lib/component/dataZoom');
+require('echarts/lib/component/title');
+require('echarts/lib/component/legendScroll');
 
 
 export default {
@@ -27,7 +31,34 @@ export default {
             imageWidth: 1059,
             imageHeight: 672,
             show: true,
-            weightInfo:[{value:1000, name:"2轴车"},{value:1000, name:"3轴车"},{value:1000, name:"4轴车"},{value:1000, name:"5轴车"},{value:1000, name:"6轴车"}]
+            pickerOptions: {
+                shortcuts: [{
+                    text: '最近一周',
+                    onClick(picker) {
+                        const end = new Date();
+                        const start = new Date();
+                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+                        picker.$emit('pick', [start, end]);
+                    }
+                }, {
+                    text: '最近一个月',
+                    onClick(picker) {
+                        const end = new Date();
+                        const start = new Date();
+                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+                        picker.$emit('pick', [start, end]);
+                    }
+                }, {
+                    text: '最近三个月',
+                    onClick(picker) {
+                        const end = new Date();
+                        const start = new Date();
+                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+                        picker.$emit('pick', [start, end]);
+                    }
+                }]
+            },
+            weightDateRange: '',
         }
     },
     mounted() {
@@ -80,9 +111,74 @@ export default {
         getImageHeight(event) {
             this.imageHeight = document.getElementById('map-image').clientHeight;
         },
-        hideWeightInfo() {
 
-        }
+        userChangeDate() {
+
+            let start = this.weightDateRange[0];
+            let end = this.weightDateRange[1];
+
+            let startStr = moment(start).format("YYYY-MM-DD");
+            let endStr = moment(end).format("YYYY-MM-DD");
+
+
+            GetWeightCountingCheck(startStr,endStr,"guangxi").then((resp) => {
+
+                // 构造图表
+                if (resp.data) {
+
+                    this.chart1 = makeChart(resp.data,"计重统计")
+
+
+
+
+
+                } else {
+                    this.chart1 = {}
+                }
+
+                let targetChart = this.$refs.c1;
+                this.newLoad(targetChart,this.chart1);
+            });
+
+            GetWeightCountingOriginal(startStr,endStr,"guangxi").then((resp)=> {
+
+                // 构造图表
+                if (resp.data) {
+
+                    this.chart2 = makeChart(resp.data,"监测统计")
+
+
+
+
+
+                } else {
+                    this.chart2 = {}
+                }
+
+                let targetChart = this.$refs.c2;
+                this.newLoad(targetChart,this.chart2);
+            })
+
+
+        },
+
+        newLoad(chart,dataOptions) {
+            chart.showLoading({
+                text: '正在加载',
+                color: '#4ea397',
+                maskColor: 'rgba(255, 255, 255, 0.4)'
+            })
+
+            chart.clear()
+
+            let timer = setInterval(() => {
+                clearTimeout(timer)
+                chart.hideLoading()
+                chart.mergeOptions(dataOptions)
+            }, 500)
+        },
+
+
     },
     created: function () {
 
@@ -95,52 +191,61 @@ export default {
         }, 60000)
 
 
-        this.chart =  {
-            title: {
-                text: '天气情况统计',
-                subtext: '虚构数据',
-                left: 'center'
-            },
-            tooltip : {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
-            },
-            legend: {
-                // orient: 'vertical',
-                // top: 'middle',
-                bottom: 10,
-                left: 'center',
-                data: ['2轴车', '3轴车','4轴车','5轴车','6轴车']
-            },
-            series : [
-                {
-                    type: 'pie',
-                    radius : '65%',
-                    center: ['50%', '50%'],
-                    selectedMode: 'single',
-                    data:[
-                        {value:535, name: '2轴车'},
-                        {value:510, name: '3轴车'},
-                        {value:634, name: '4轴车'},
-                        {value:735, name: '5轴车'},
-                        {value:735, name: '6轴车'}
-                    ],
-                    itemStyle: {
-                        emphasis: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    }
-                }
-            ]
-        }
+        const end = new Date();
+        const start = new Date();
+        start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+        this.weightDateRange = [start, end];
 
-        let c1 = this.$refs.c1;
-        c1.mergeOptions(this.chart);
+        let startStr = moment(start).format("YYYY-MM-DD");
+        let endStr = moment(end).format("YYYY-MM-DD");
+
+
+        GetWeightCountingCheck(startStr,endStr,"guangxi").then((resp) => {
+
+            // 构造图表
+            if (resp.data) {
+
+                this.chart1 = makeChart(resp.data,"计重统计")
+
+
+
+
+
+            }
+        })
+
+
+        GetWeightCountingOriginal(startStr, endStr,"guangxi").then((resp) => {
+
+            // 构造图表
+            if (resp.data) {
+
+                this.chart2 = makeChart(resp.data,"监测统计")
+
+
+
+
+
+            }
+        })
+
+
+
+
+
+
+
+
+
+
 
 
     },
+
+
+
+
+
     updated: function () {
         this.imageWidth = document.getElementById('map-image').clientWidth;
         this.imageHeight = document.getElementById('map-image').clientHeight;
@@ -153,6 +258,67 @@ export default {
         window.removeEventListener('resize', this.getImageWidth);
         window.removeEventListener('resize', this.getImageHeight);
     }
+}
+
+
+
+
+function makeChart(data,title) {
+
+    var lenDatas = [];
+    var serDatas = [];
+    var lenFormatName = {};
+
+    data.forEach(tmp => {
+
+        let tmpResult = tmp.axlenum + "轴车" + " "  + tmp.count + " 辆 " + "总吨位：" + tmp.totalWeight + " Kg";
+
+        serDatas.push({value: tmp.totalWeight, name: tmp.axlenum + "轴车"});
+        lenDatas.push(tmp.axlenum + "轴车");
+        lenFormatName[tmp.axlenum + "轴车"] = tmpResult;
+    });
+
+
+    var chartOptions = {};
+
+    chartOptions.title = {
+        text: title,
+        left: "center"
+    };
+
+    chartOptions.tooltip = {
+        trigger: 'item',
+        formatter: "{b} : {c} Kg ({d}%)"
+    };
+
+
+    chartOptions.series = {
+        type: 'pie',
+        radius : '50%',
+        center: ['30%', '43%'],
+        data: serDatas,
+        itemStyle: {
+            emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+        }
+    };
+
+    chartOptions.legend = {
+        orient: "vertical",
+        right: 10,
+        top: 50,
+        data: lenDatas,
+        formatter: function (name) {
+
+            return lenFormatName[name]
+
+        },
+    }
+
+    return chartOptions
 }
 
 
