@@ -23,16 +23,17 @@
                     </el-date-picker>
 
 
-                    <figure id="weightinfo-charts-1" style="margin: 0px 0px">
-                        <chart :options="chart1" ref="c1" style="height: 200px; width: 500px"></chart>
+                    <figure id="weightinfo-charts-2" style="margin: 0px 0px 0px 0px">
+                        <chart :options="chart2" ref="c2" style="width: 500px;height: 280px"></chart>
                     </figure>
 
-                    <figure id="weightinfo-charts-2" style="margin: 0px 0px">
-                        <chart :options="chart2" ref="c2" style="height: 200px; width: 500px"></chart>
+                    <figure id="weightinfo-charts-1" style="margin: 0px 0px 0px 0px">
+                        <chart :options="chart1" ref="c1" style=" width: 500px; height: 280px"></chart>
                     </figure>
+
 
                     <figure id="error-charts" style="margin: 0px 0px">
-                        <chart :options="errorChart" ref="errorC" style="height: 200px; width: 500px"></chart>
+                        <chart :options="errorChart" ref="errorC" style="width: 500px;height: 280px"></chart>
                         <div align="center">
                             <el-button @click="dialogTableVisible = true" v-if="errorChart">查看详情</el-button>
                         </div>
@@ -44,12 +45,13 @@
 
 
             <el-dialog title="健康统计详情" :visible.sync="dialogTableVisible">
-                <el-table :data="errorDataDetail">
-                    <el-table-column property="PlatLen" label="承台长度(m)" width="150"></el-table-column>
-                    <el-table-column property="PlatType" label="承台类型"></el-table-column>
-                    <el-table-column property="ProductSpec" label="产品型号" width="200"></el-table-column>
-                    <el-table-column property="Manufactor" label="厂家"></el-table-column>
+                <el-table :data="errorDataDetail" height="500">
+                    <el-table-column type="index" label="序号"></el-table-column>
                     <el-table-column property="DevID" label="设备ID"></el-table-column>
+                    <el-table-column property="Manufactor" label="厂家"></el-table-column>
+                    <el-table-column property="ProductSpec" label="产品型号" width="200"></el-table-column>
+                    <el-table-column property="PlatType" label="称台类型"></el-table-column>
+                    <el-table-column property="PlatLen" label="称台长度(m)" width="150"></el-table-column>
                     <el-table-column property="checkDay" label="维修(天)"></el-table-column>
                     <el-table-column property="brokenDay" label="故障(天)"></el-table-column>
                 </el-table>

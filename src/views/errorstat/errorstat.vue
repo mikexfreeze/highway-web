@@ -116,7 +116,7 @@
                 </el-table-column>
                 <el-table-column
                         prop="sstat"
-                        label="传感器状态 ( 0:正常  1:故障 )"
+                        label="传感器状态 ( 0:健康  1:故障 )"
                         >
                 </el-table-column>
 

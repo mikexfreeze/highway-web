@@ -105,10 +105,10 @@ export default {
                     let data = response.data[0]
 
                     response.data.forEach((val,n)=>{
-                        response.data[n].statuLabel = "正常状态"
+                        response.data[n].statuLabel = "健康"
                         Object.keys(val).forEach((w)=>{
                             if(val[w] == "1" && w != "port"){
-                                response.data[n].statuLabel = "需要维护"
+                                response.data[n].statuLabel = "维护"
                             }
                         })
                     });
@@ -139,10 +139,10 @@ export default {
                     let data = response.data[this.currentSelectedLaneIndex];
 
                     response.data.forEach((val,n)=>{
-                        response.data[n].statuLabel = "正常状态"
+                        response.data[n].statuLabel = "健康"
                         Object.keys(val).forEach((w)=>{
                             if(val[w] == "1" && w != "port" && w != "sensorCount"){
-                                response.data[n].statuLabel = "需要维护"
+                                response.data[n].statuLabel = "维护"
                             }
                         })
                     })
@@ -320,14 +320,14 @@ function sensorbox(roadInfo) {
 
     var num_road = roadNumName(roadInfo["port"]);
 
-    var sysInfo = "正常状态";
+    var sysInfo = "健康";
 
     if (roadInfo["s0"] == "1" || roadInfo["s1"] == "1" || roadInfo["s2"] == "1" || roadInfo["s3"] == "1" || roadInfo["s4"] == "1" || roadInfo["s5"] == "1" || roadInfo["s6"] == "1" || roadInfo["s7"] == "1" || roadInfo["s8"] == "1" || roadInfo["s9"] == "1") {
-        sysInfo = "检查预警";
+        sysInfo = "维护";
     }
 
     if (roadInfo["s0"] == "2" || roadInfo["s1"] == "2" || roadInfo["s2"] == "2" || roadInfo["s3"] == "2" || roadInfo["s4"] == "2" || roadInfo["s5"] == "2" || roadInfo["s6"] == "2" || roadInfo["s7"] == "2" || roadInfo["s8"] == "2" || roadInfo["s9"] == "2") {
-        sysInfo = "维护预警";
+        sysInfo = "故障";
     }
 
     var sensorboxHtml =

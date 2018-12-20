@@ -36,7 +36,17 @@ export function loginByUserName(username, password) {
         method: 'get',
         url: '/gaosuWeb/doLogin?username=' + username + '&password=' + password,
     }).then(function (result) {
-        return result
+
+        let resultData = result.data;
+
+        if (resultData.result === "0") {
+
+            let roadManage = resultData.roadManage;
+
+            localStorage.setItem("roadManage",roadManage);
+        }
+
+        return result;
     });
 
 }

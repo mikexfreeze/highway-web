@@ -125,7 +125,10 @@ export default {
             var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
             var diffDays = Math.round(Math.abs((start.getTime() - end.getTime())/(oneDay)));
 
-            GetWeightCountingCheck(startStr,endStr,"guangxi").then((resp) => {
+            let range = localStorage.getItem("roadManage");
+
+
+            GetWeightCountingCheck(startStr,endStr,range).then((resp) => {
 
                 // 构造图表
                 if (resp.data) {
@@ -140,7 +143,7 @@ export default {
                 this.newLoad(targetChart,this.chart1);
             });
 
-            GetWeightCountingOriginal(startStr,endStr,"guangxi").then((resp)=> {
+            GetWeightCountingOriginal(startStr,endStr,range).then((resp)=> {
 
                 // 构造图表
                 if (resp.data) {
@@ -156,7 +159,7 @@ export default {
                 this.newLoad(targetChart,this.chart2);
             })
 
-            GetStatErrorCount(startStr,endStr,"guangxi").then((resp)=> {
+            GetStatErrorCount(startStr,endStr,range).then((resp)=> {
 
                 // 构造图表
                 if (resp.data) {
@@ -220,7 +223,10 @@ export default {
         var diffDays = Math.round(Math.abs((start.getTime() - end.getTime())/(oneDay)));
 
 
-        GetWeightCountingCheck(startStr,endStr,"guangxi").then((resp) => {
+        let range = localStorage.getItem("roadManage")
+
+
+        GetWeightCountingCheck(startStr,endStr,range).then((resp) => {
 
             // 构造图表
             if (resp.data) {
@@ -231,7 +237,7 @@ export default {
         })
 
 
-        GetWeightCountingOriginal(startStr, endStr,"guangxi").then((resp) => {
+        GetWeightCountingOriginal(startStr, endStr,range).then((resp) => {
 
             // 构造图表
             if (resp.data) {
@@ -240,24 +246,19 @@ export default {
             }
         })
 
-        GetStatErrorCount(startStr,endStr, "guangxi").then((resp)=> {
+        GetStatErrorCount(startStr,endStr, range).then((resp)=> {
 
             // 构造表
             if (resp.data) {
 
-                // this.errorDataDetail = resp.data;
+                this.errorDataDetail = resp.data;
 
                 this.errorChart = makeErrorChart(resp.data, "健康统计", diffDays)
             }
 
-
-
         });
 
-        this.errorDataDetail = [{"PlatLen":"18","ProductSpec":"測試產品型號","Manufactor":"測試廠家","DevID":"guangxi-nanlinggaosu-nanlingzhan-1","PlatType":"測試稱台類型","checkDay":"0","brokenDay":"2"},{"PlatLen":"","ProductSpec":"","Manufactor":"","DevID":"guangxi-nanlinggaosu-nanlingzhan-2","PlatType":"","checkDay":"0","brokenDay":"0"},{"PlatLen":"","ProductSpec":"","Manufactor":"","DevID":"guangxi-nanlinggaosu-nanlingzhan-3","PlatType":"","checkDay":"0","brokenDay":"0"}]
 
-
-        // TEST
     },
 
     updated: function () {
@@ -320,8 +321,10 @@ function makeErrorChart(data,title,days) {
 
     chartOptions.tooltip = {
         trigger: 'item',
-        formatter: "{b} : {c} 天 ({d}%)"
+        formatter: "{b} : {d}%"
     };
+
+    chartOptions.color = ['#2cd84e','#ee6f5c','#ffd400'];
 
 
     chartOptions.series = {
@@ -383,7 +386,7 @@ function makeChart(data,title) {
     chartOptions.series = {
         type: 'pie',
         radius : '50%',
-        center: ['30%', '43%'],
+        center: ['30%', '50%'],
         data: serDatas,
         itemStyle: {
             emphasis: {

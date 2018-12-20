@@ -150,8 +150,8 @@
     }
 
     .dotview {
-        width: 30px;
-        height: 30px;
+        width: 60px;
+        height: 60px;
         position: absolute;
         -webkit-animation: twinkling 1.6s infinite ease-in-out;
     }

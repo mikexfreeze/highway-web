@@ -222,7 +222,7 @@
         },
         computed: {
             statusLabel: function () {
-                let label = "正常状态"
+                let label = "健康"
                 $(this.roadstatus).each((key, val)=>{
                     console.log(val)
                 })
