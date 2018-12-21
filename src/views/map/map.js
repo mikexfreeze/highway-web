@@ -372,6 +372,8 @@ function makeChart(data,title) {
 
     var chartOptions = {};
 
+    chartOptions.color = ['#ee721a','#65e6ce','#5f427a','#20A0FF','#ffd400','#1F2D3D',];
+
     chartOptions.title = {
         text: title,
         left: "center"

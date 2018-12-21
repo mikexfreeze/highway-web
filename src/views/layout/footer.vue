@@ -94,7 +94,7 @@
                             <span style="display: block;" class="dot-text">健康</span>
                         </el-col>
                         <el-col :span="4" align="center">
-                            <img style="width: 38px;height: 38px;margin-top: -0.6em"  class="img-dot" src="../../assets/images/bluedot.png" />
+                            <img style="width: 38px;height: 38px;margin-top: -0.6em"  class="img-dot" src="../../assets/images/yellowdot.png" />
                             <span style="display: block;" class="dot-text">维护</span>
                         </el-col>
                         <el-col :span="4" align="center">

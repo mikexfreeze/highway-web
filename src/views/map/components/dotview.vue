@@ -162,7 +162,7 @@
     }
 
     .blueview {
-        background-image: url("../../../assets/images/bluedot.png");
+        background-image: url("../../../assets/images/yellowdot.png");
         background-size: cover
     }
 

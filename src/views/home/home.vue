@@ -48,7 +48,7 @@
                         <el-tag type="success">健康</el-tag>
                     </el-col>
                     <el-col :span="8">
-                        <el-tag type="primary">维护</el-tag>
+                        <el-tag type="warning">维护</el-tag>
                     </el-col>
                     <el-col :span="8">
                         <el-tag type="danger">故障</el-tag>
