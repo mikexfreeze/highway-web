@@ -233,6 +233,8 @@ export default {
 
                 this.chart1 = makeChart(resp.data,"计重统计")
 
+            } else {
+                this.chart1 = makeEmptyChart();
             }
         })
 
@@ -243,6 +245,8 @@ export default {
             if (resp.data) {
 
                 this.chart2 = makeChart(resp.data,"监测统计")
+            } else {
+                this.chart2 = makeEmptyChart();
             }
         })
 
@@ -275,24 +279,55 @@ export default {
     }
 }
 
+function makeEmptyChart() {
+    var serDatas = [];
+
+
+    serDatas.push({value: 0, name: "无数据"});
+
+
+    var chartOptions = {};
+
+    chartOptions.color = ['#ee721a','#65e6ce','#5f427a','#20A0FF','#ffd400','#1F2D3D',];
+
+    chartOptions.title = {
+        text: title,
+        left: "center"
+    };
+
+    chartOptions.series = {
+        type: 'pie',
+        radius : '50%',
+        center: ['30%', '50%'],
+        data: serDatas,
+        itemStyle: {
+            emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+        }
+    };
+
+    return chartOptions
+}
 
 function makeErrorChart(data,title,days) {
 
 
-    var testData = [{"PlatLen":"18","ProductSpec":"測試產品型號","Manufactor":"測試廠家","DevID":"guangxi-nanlinggaosu-nanlingzhan-1","PlatType":"測試稱台類型","checkDay":"0","brokenDay":"2"},{"PlatLen":"","ProductSpec":"","Manufactor":"","DevID":"guangxi-nanlinggaosu-nanlingzhan-2","PlatType":"","checkDay":"0","brokenDay":"0"},{"PlatLen":"","ProductSpec":"","Manufactor":"","DevID":"guangxi-nanlinggaosu-nanlingzhan-3","PlatType":"","checkDay":"0","brokenDay":"0"}]
 
 
     var serDatas = [];
     var lenDatas = [];
 
-    var count = testData.length;
+    var count = data.length;
 
     var allDays = count * days;
 
     var brokenDay = 0;
     var checkDay = 0;
 
-    testData.forEach((tmpInfo)=> {
+    data.forEach((tmpInfo)=> {
 
         if (tmpInfo["brokenDay"] && tmpInfo["brokenDay"] !== "0") {
             brokenDay += parseInt(tmpInfo["brokenDay"])
