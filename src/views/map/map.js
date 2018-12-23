@@ -117,13 +117,15 @@ export default {
         userChangeDate() {
 
             let start = this.weightDateRange[0];
-            let end = this.weightDateRange[1];
+            var end = this.weightDateRange[1];
+            // 结束日期+1天
+
+            end = end.setDate(end.getDate() + 1);
 
             let startStr = moment(start).format("YYYY-MM-DD");
             let endStr = moment(end).format("YYYY-MM-DD");
 
             var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
-            var diffDays = Math.round(Math.abs((start.getTime() - end.getTime())/(oneDay)));
 
             let range = localStorage.getItem("roadManage");
 
@@ -212,13 +214,17 @@ export default {
         }, 60000)
 
 
-        const end = new Date();
-        const start = new Date();
+        var end = new Date();
+        var start = new Date();
         start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
         this.weightDateRange = [start, end];
 
         let startStr = moment(start).format("YYYY-MM-DD");
-        let endStr = moment(end).format("YYYY-MM-DD");
+
+        var tmpDate = new Date(end);
+        tmpDate = tmpDate.setDate(tmpDate.getDate() + 1);
+
+        let endStr = moment(tmpDate).format("YYYY-MM-DD");
         var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
         var diffDays = Math.round(Math.abs((start.getTime() - end.getTime())/(oneDay)));
 
