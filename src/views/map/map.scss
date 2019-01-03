@@ -16,3 +16,38 @@
   top: 0px;
   right: 0px;
 }
+
+
+.weightInfoTable {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background: #c0d0e694;
+}
+
+.weightInfoTable .el-table__body-wrapper {
+  overflow: hidden!important;
+}
+
+.weightInfoTable .el-table--enable-row-transition .el-table__body td {
+  overflow: hidden!important;
+}
+
+.showFla .el-table__body-wrapper table tr td .cell{animation: showTableScroll .6s both ease-in-out;}
+
+@keyframes showTableScroll {
+  0%{transform: translate(0,0);}
+  50%{transform: translate(0,-300%);}
+  50.001%{transform: translate(0,300%);}
+  100%{transform: translate(0,0%);}
+}
+
+.inlineDiv {
+  float: left;
+  width: 50%;
+}
+
+.inlineTitle {
+  margin: 8px 4px;
+  text-align: center;
+}

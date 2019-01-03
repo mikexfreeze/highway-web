@@ -1,6 +1,6 @@
 <template>
 
-        <span class="dot">
+        <span class="dot" @click="showDetail()">
             <el-popover
                     ref="popover1"
                     placement="top"
@@ -53,6 +53,17 @@
             }
         },
         methods: {
+            showDetail() {
+                console.log(this.tmpDot);
+                let devIDArr = this.tmpDot.Devid.split('-');
+
+
+                if (devIDArr.length === 3) {
+                    window.localStorage.setItem("home_route",this.tmpDot.Devid);
+                }
+
+                this.$router.push("/home");
+            },
             popViewShow() {
                 this.checkPointList = [];
 

@@ -8,6 +8,54 @@
                          v-for="(dot, index) in dotList"></dotview>
             </div>
 
+            <div style="width: 580px;" class="weightInfoTable" ref="animTarget">
+                <div class="inlineDiv">
+                    <div class="inlineTitle">计费（总重：{{chargeCarWeight}} Kg 车辆数：{{chargeCarNum}} ）</div>
+                    <div>
+                        <el-table
+                                :data="lastChargeDatas"
+                                border
+                                style="width: 100%">
+                            <el-table-column
+                                    prop="Axlenum"
+                                    label="轴数"
+                                    align="center"
+                                    header-align="center">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="CarWeight"
+                                    label="车重（Kg）"
+                                    align="center"
+                                    header-align="center">
+                            </el-table-column>
+                        </el-table>
+                    </div>
+                </div>
+                <div class="inlineDiv">
+                    <div class="inlineTitle">监测 （总重：{{checkCarWeight}} Kg 车辆数：{{checkCarNum}} ）</div>
+                    <div>
+                        <el-table
+                                :data="lastCheckDatas"
+                                border
+                                style="width: 100%">
+                            <el-table-column
+                                    prop="Axlenum"
+                                    label="轴数"
+                                    align="center"
+                                    header-align="center">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="CarWeight"
+                                    label="车重（Kg）"
+                                    align="center"
+                                    header-align="center">
+                            </el-table-column>
+                        </el-table>
+                    </div>
+
+                </div>
+            </div>
+
 
             <transition name="fade">
                 <div class="weightInfo" v-if="show">
@@ -56,8 +104,6 @@
                     <el-table-column property="brokenDay" label="故障(天)"></el-table-column>
                 </el-table>
             </el-dialog>
-
-
         </div>
     </div>
 

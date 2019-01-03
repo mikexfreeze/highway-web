@@ -164,40 +164,90 @@ export default {
             }
         }, 10000);
 
-        var cachePovince = window.localStorage.getItem("home_povince");
-        if (cachePovince) {
-            this.selectedProvince = cachePovince;
-        }
+        var devID = window.localStorage.getItem("home_route");
 
-        var cacheRoad = window.localStorage.getItem("home_road");
+        if (devID) {
 
-        if (cacheRoad) {
-            this.selectedRoad = cacheRoad;
-            this.roadOptions = JSON.parse(window.localStorage.getItem("home_road_options"));
-        }
+            let devArr = devID.split('-');
 
-        var cacheStation = window.localStorage.getItem("home_station");
+            let p = devArr[0];
+            let r = devArr[1];
+            let z = devArr[2];
 
-        if (cacheStation) {
-            this.selectedStation =  cacheStation;
-            this.stationOptions = JSON.parse(window.localStorage.getItem("home_station_options"));
-            this.currentSelectedLaneIndex = 0;
-            this.updateStatusPerSecond();
-        }
+            this.selectedProvince = p;
 
 
-        this.getPovince()
-            .then((response) => {
-                this.provinceOptions = [];
-                response.data.provinceList.forEach((val, n) => {
-                    let x = Object.keys(val)[0];
-                    this.provinceOptions.push({
-                        "key": x,
-                        "value": val[x]
+            this.getPovince()
+                .then((response) => {
+                    this.provinceOptions = [];
+                    response.data.provinceList.forEach((val, n) => {
+                        let x = Object.keys(val)[0];
+                        this.provinceOptions.push({
+                            "key": x,
+                            "value": val[x]
+                        })
+
                     })
+                });
 
+            this.selectedStation = null;
+            this.selectedRoad = null;
+            // 调用查询Road接口
+            GetRoad(this.selectedProvince)
+                .then((response)=>{
+                    this.roadOptions = getResObjArry(response.data.roadList)
+                    this.selectedRoad = r;
+
+                    GetStation(this.selectedProvince ,this.selectedRoad)
+                        .then((response)=>{
+                            this.stationOptions = getResObjArry(response.data.stationList)
+                            this.selectedStation = z;
+                        })
                 })
-            });
+
+
+
+
+            window.localStorage.removeItem("home_route");
+        } else {
+
+            var cachePovince = window.localStorage.getItem("home_povince");
+            if (cachePovince) {
+                this.selectedProvince = cachePovince;
+            }
+
+            var cacheRoad = window.localStorage.getItem("home_road");
+
+            if (cacheRoad) {
+                this.selectedRoad = cacheRoad;
+                this.roadOptions = JSON.parse(window.localStorage.getItem("home_road_options"));
+            }
+
+            var cacheStation = window.localStorage.getItem("home_station");
+
+            if (cacheStation) {
+                this.selectedStation =  cacheStation;
+                this.stationOptions = JSON.parse(window.localStorage.getItem("home_station_options"));
+                this.currentSelectedLaneIndex = 0;
+                this.updateStatusPerSecond();
+            }
+
+
+            this.getPovince()
+                .then((response) => {
+                    this.provinceOptions = [];
+                    response.data.provinceList.forEach((val, n) => {
+                        let x = Object.keys(val)[0];
+                        this.provinceOptions.push({
+                            "key": x,
+                            "value": val[x]
+                        })
+
+                    })
+                });
+
+        }
+
     },
     destroyed:function () {
         clearInterval(timeSet)

@@ -53,3 +53,15 @@ export function GetWeightCountingOriginal(startTime,endTime,range) {
     })
 }
 
+
+// 记录统计数据，检测单元和原始仪表，得到top5的检测单元和原始仪表数据
+export function GetLastCarInfoWithRange(range) {
+    return fetch({
+        url: 'gaosuWeb/doGetLastCarInfoWithRange?range=' + range ,
+        method: 'get',
+    }).then(function (response) {
+        console.log("记录统计数据，检测单元和原始仪表，得到top5的检测单元和原始仪表数据")
+        console.log(response)
+        return response
+    })
+}
