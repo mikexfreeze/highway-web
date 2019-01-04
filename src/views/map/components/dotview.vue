@@ -1,17 +1,20 @@
 <template>
 
-        <span class="dot" @click="showDetail()">
+        <span class="dot" @click="showDetail">
             <el-popover
                     ref="popover1"
                     placement="top"
-                    :title="mapDot.stationName"
                     width="200"
                     trigger="hover"
-                    @show="popViewShow()"
+                    @show="popViewShow"
             >
+                <el-button @click="changeStationReq" type="primary" size="small">{{mapDot.stationName}}</el-button>
                 <el-table
                         :data="portList"
-                        style="width: 100%">
+                        style="width: 100%;margin-top: 4px"
+                        highlight-current-row
+                        @row-click="handleRowClick"
+                >
                     <el-table-column
                             prop="portName"
                             label="道路"
@@ -63,6 +66,20 @@
                 }
 
                 this.$router.push("/home");
+            },
+            changeStationReq() {
+                this.$parent.resetReq(this.tmpDot.Devid);
+            },
+            handleRowClick(row, event, column) {
+
+                console.log("click");
+
+                var strLen = row.portName.length;
+
+                var tmpStr = row.portName.slice(0,strLen-2);
+
+                this.$parent.resetReq(this.tmpDot.Devid + "-" + tmpStr);
+
             },
             popViewShow() {
                 this.checkPointList = [];

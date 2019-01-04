@@ -116,9 +116,6 @@ export default {
     },
     methods: {
         handlerLastCarInfoResp(resp) {
-
-
-
             var respData = resp.data;
 
             var _this = this;
@@ -157,7 +154,25 @@ export default {
 
 
         },
+        resetReq(range) {
+            clearInterval(updateTimeSet);
 
+            GetLastCarInfoWithRange(range).then((response) => {
+
+                _this.handlerLastCarInfoResp(response);
+            });
+
+
+            updateTimeSet = setInterval(function () {
+
+                $(".weightInfoTable").removeClass("showFla");
+
+                GetLastCarInfoWithRange(range).then((response) => {
+
+                    _this.handlerLastCarInfoResp(response);
+                });
+            }, 6000);
+        },
         getXY() {
             this.dotList = testXY();
         },
