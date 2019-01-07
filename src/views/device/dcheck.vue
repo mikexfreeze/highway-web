@@ -60,6 +60,7 @@
                 <el-table
                         highlight-current-row
                         @current-change="handleCurrentChange"
+                        :row-class-name="tableRowClassName"
                         ref="singleTable"
                         :show-header="false"
                         :data="sensorList"
@@ -95,6 +96,43 @@
                         <chart :options="sensorline"  ref="c1" auto-resize></chart>
                     </figure>
                 </el-row>
+                <el-row type="flex" justify="center">
+                    <table class="min-max-table" cellspacing="0" cellpadding="0" border="0">
+                        <tr>
+                           <td class="column-td">
+                               设备
+                           </td>
+                            <td v-for="(item, index) in chartDatas">
+
+
+                                <span v-if="currentIndex === index" :style="{color: lineColors[index]}">传感器{{index +1}}</span>
+                                <span v-else>传感器{{index +1}}</span>
+
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="column-td">
+                                最大值
+                            </td>
+                            <td v-for="(item, index) in chartDatas">
+
+                                <span v-if="currentIndex === index" :style="{color: lineColors[index]}">{{item.max}}</span>
+                                <span v-else>{{item.max}}</span>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="column-td">
+                                最小值
+                            </td>
+                            <td v-for="(item, index) in chartDatas">
+                                <span v-if="currentIndex === index" :style="{color: lineColors[index]}">{{item.min}}</span>
+                                <span v-else>{{item.min}}</span>
+                            </td>
+                        </tr>
+                    </table>
+                </el-row>
             </el-col>
         </el-row>
 
@@ -128,6 +166,9 @@
         },
         data() {
             return {
+                lineColors: ["red","orange","yellow","green","teal","darkblue","darkorchid","lightslategray","darkgoldenrod","black","royalblue","deeppink"],
+                currentIndex: -1,
+                chartDatas: [],
                 tmpStatus:[],
                 sensorList:[],
                 provinceOptions: [],
@@ -213,6 +254,10 @@
             }
         },
         methods: {
+            tableRowClassName(row, index) {
+                //把每一行的索引放进row
+                row.index = index
+            },
             saveSelecetedToCache() {
                 window.localStorage.setItem("home_povince", this.selectedProvince);
                 window.localStorage.setItem("home_road_options", JSON.stringify(this.roadOptions));
@@ -221,14 +266,23 @@
                 window.localStorage.setItem("home_station", this.selectedStation);
             },
             changeType() {
+                this.currentIndex = -1;
                 this.fetchChartData();
             },
             checkAll() {
+                this.currentIndex = -1;
                 this.updateWholeChart(this.sensorList);
             },
             handleCurrentChange(val) {
                 this.currentRow = val;
-                this.updateChart(val);
+
+                this.currentIndex = val.index;
+
+                var sensorIndex = val.index;
+
+                var color = this.lineColors[sensorIndex];
+
+                this.updateChart(val,color);
             },
             setCurrent(row) {
                 this.$refs.singleTable.setCurrentRow(row);
@@ -266,7 +320,7 @@
             },
 
             // 渲染图表
-            updateChart(sensorData) {
+            updateChart(sensorData, lineColor) {
                 let maxV = parseInt(sensorData.cMax);
                 let minV = parseInt(sensorData.cMin);
 
@@ -353,7 +407,7 @@
                             data: fixAvs,
                             lineStyle: {
                                 normal: {
-                                    color: 'green'
+                                    color: lineColor
                                 }
                             },
                             markLine: {
@@ -397,6 +451,31 @@
             },
             // 渲染整个图表
             updateWholeChart(sensorList) {
+
+                sensorList.forEach(elem => {
+
+                    var min = 0;
+                    var max = 0;
+                    var base = elem.avs[0];
+
+                    elem.avs.forEach(a => {
+
+                        var tmpV = a - base;
+
+                        if (tmpV < min) {
+                            min = tmpV;
+                        }
+
+                        if (tmpV > max) {
+                            max = tmpV;
+                        }
+                    })
+
+                    elem.min = min;
+                    elem.max = max;
+                });
+
+                this.chartDatas = sensorList.slice();
 
                 this.charts = {
                     color: ["red","orange","yellow","green","teal","darkblue","darkorchid","lightslategray","darkgoldenrod","black","royalblue","deeppink"],
@@ -776,6 +855,21 @@
     #select-chart-type-row {
         margin-left: 5em;
         margin-top: 1.4em;
+    }
+
+    .min-max-table {
+        border-color: grey;
+    }
+
+    .min-max-table th, .min-max-table td {
+        padding: 5px;
+        border: 1px solid black;
+        text-align: center;
+    }
+
+    .min-max-table {
+        border-collapse: collapse;
+        border-spacing: 0px;
     }
 
 </style>
