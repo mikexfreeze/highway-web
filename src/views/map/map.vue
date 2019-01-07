@@ -8,9 +8,9 @@
                          v-for="(dot, index) in dotList"></dotview>
             </div>
 
-            <div style="width: 580px;" class="weightInfoTable" ref="animTarget">
+            <div style="width: 700px;" class="weightInfoTable" ref="animTarget">
                 <div class="inlineDiv">
-                    <div class="inlineTitle">计费（总重：{{chargeCarWeight}} Kg 车辆数：{{chargeCarNum}} ）</div>
+                    <div class="inlineTitle">计费（ 车辆数：{{chargeCarNum}}  &nbsp; 总重：{{(chargeCarWeight / 1000).toFixed(2) }} 吨 ）</div>
                     <div>
                         <el-table
                                 :data="lastChargeDatas"
@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <div class="inlineDiv">
-                    <div class="inlineTitle">监测 （总重：{{checkCarWeight}} Kg 车辆数：{{checkCarNum}} ）</div>
+                    <div class="inlineTitle">监测 （ 车辆数：{{checkCarNum}}  &nbsp; 总重：{{(checkCarWeight / 1000).toFixed(2)}} 吨  ）</div>
                     <div>
                         <el-table
                                 :data="lastCheckDatas"
@@ -70,15 +70,13 @@
                                     v-model="weightDateRange">
                     </el-date-picker>
 
+                    <figure id="weightinfo-charts-1" style="margin: 0px 0px 0px 0px">
+                        <chart :options="chart1" ref="c1" style="width: 500px;height: 280px"></chart>
+                    </figure>
 
                     <figure id="weightinfo-charts-2" style="margin: 0px 0px 0px 0px">
-                        <chart :options="chart2" ref="c2" style="width: 500px;height: 280px"></chart>
+                        <chart :options="chart2" ref="c2" style=" width: 500px; height: 280px"></chart>
                     </figure>
-
-                    <figure id="weightinfo-charts-1" style="margin: 0px 0px 0px 0px">
-                        <chart :options="chart1" ref="c1" style=" width: 500px; height: 280px"></chart>
-                    </figure>
-
 
                     <figure id="error-charts" style="margin: 0px 0px">
                         <chart :options="errorChart" ref="errorC" style="width: 500px;height: 280px"></chart>

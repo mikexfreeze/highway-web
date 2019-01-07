@@ -99,7 +99,6 @@ export default {
             }
         })
 
-
         setTimeout(function () {
             vm.getImageWidth();
             vm.getImageHeight();
@@ -184,7 +183,6 @@ export default {
         getImageHeight(event) {
             this.imageHeight = document.getElementById('map-image').clientHeight;
         },
-
         userChangeDate() {
 
             let start = this.weightDateRange[0];
@@ -197,6 +195,7 @@ export default {
             let endStr = moment(end).format("YYYY-MM-DD");
 
             var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+            var diffDays = Math.round(Math.abs((start.getTime() - end) / (oneDay)));
 
             let range = localStorage.getItem("roadManage");
 
@@ -206,7 +205,7 @@ export default {
                 // 构造图表
                 if (resp.data) {
 
-                    this.chart1 = makeChart(resp.data, "计重统计")
+                    this.chart1 = makeChart(resp.data, "监测统计")
 
                 } else {
                     this.chart1 = {}
@@ -221,7 +220,7 @@ export default {
                 // 构造图表
                 if (resp.data) {
 
-                    this.chart2 = makeChart(resp.data, "监测统计")
+                    this.chart2 = makeChart(resp.data, "计费统计")
 
 
                 } else {
@@ -239,7 +238,7 @@ export default {
 
                     this.errorDataDetail = resp.data;
 
-                    this.errorChart = makeErrorChart(resp.data, "监测统计")
+                    this.errorChart = makeErrorChart(resp.data, "健康统计",diffDays)
 
 
                 } else {
@@ -326,7 +325,7 @@ export default {
             // 构造图表
             if (resp.data) {
 
-                this.chart1 = makeChart(resp.data, "计重统计")
+                this.chart1 = makeChart(resp.data, "监测统计")
 
             } else {
                 this.chart1 = makeEmptyChart();
@@ -339,7 +338,7 @@ export default {
             // 构造图表
             if (resp.data) {
 
-                this.chart2 = makeChart(resp.data, "监测统计")
+                this.chart2 = makeChart(resp.data, "计费统计")
             } else {
                 this.chart2 = makeEmptyChart();
             }
@@ -378,11 +377,7 @@ export default {
 
 function makeEmptyChart() {
     var serDatas = [];
-
-
     serDatas.push({value: 0, name: "无数据"});
-
-
     var chartOptions = {};
 
     chartOptions.color = ['#ee721a', '#65e6ce', '#5f427a', '#20A0FF', '#ffd400', '#1F2D3D',];
@@ -410,8 +405,6 @@ function makeEmptyChart() {
 }
 
 function makeErrorChart(data, title, days) {
-
-
     var serDatas = [];
     var lenDatas = [];
 
@@ -492,7 +485,7 @@ function makeChart(data, title) {
 
     data.forEach(tmp => {
 
-        let tmpResult = tmp.axlenum + "轴车" + " " + tmp.count + " 辆 " + "总吨位：" + tmp.totalWeight + " Kg";
+        let tmpResult = tmp.axlenum + "轴车" + " " + tmp.count + " 辆 " + "总吨位：" + (tmp.totalWeight /1000).toFixed(2) + " 吨";
 
         serDatas.push({value: tmp.totalWeight, name: tmp.axlenum + "轴车"});
         lenDatas.push(tmp.axlenum + "轴车");

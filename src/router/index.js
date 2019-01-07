@@ -38,14 +38,14 @@ export const constantRouterMap = [
         redirect: '/map',
         name: '首页',
         children: [
-            {path: 'map', component: map, name:'地图'},
-            {path: 'home', component: home, name:'主页'},
-            {path: 'device', component: device, name:'设备'},
-            {path: 'errorstat', component: errorstat, name: '故障统计'},
-            {path: 'orgindata', component: orgindata, name: '监测数据查询'},
-            {path: 'feedata', component: feedata, name: '计费数据查询'},
-            {path: 'admin', component: admin, name: '管理' },
-            {path: 'devcheck', component: devcheck, name: '设备体检'}
+            {path: 'map', component: map, name:'地图', meta: {title: '路网分布图'}},
+            {path: 'home', component: home, name:'主页', meta: {title: '收费站监测'}},
+            {path: 'device', component: device, name:'设备', meta: {title: '设备实时报告'}},
+            {path: 'errorstat', component: errorstat, name: '故障统计', meta: {title: '故障统计报表'}},
+            {path: 'orgindata', component: orgindata, name: '监测数据查询', meta: {title: '监测数据查询'}},
+            {path: 'feedata', component: feedata, name: '计费数据查询', meta: {title: '计费数据查询'}},
+            {path: 'admin', component: admin, name: '管理', meta: {title: '权限管理'}},
+            {path: 'devcheck', component: devcheck, name: '设备体检', meta: {title: '设备体检报告'}}
 
         ]
     }

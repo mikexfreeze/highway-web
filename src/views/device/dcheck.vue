@@ -97,7 +97,7 @@
                     </figure>
                 </el-row>
                 <el-row type="flex" justify="center">
-                    <table class="min-max-table" cellspacing="0" cellpadding="0" border="0">
+                    <table v-if="chartDatas.length" class="min-max-table" cellspacing="0" cellpadding="0" border="0">
                         <tr>
                            <td class="column-td">
                                设备
@@ -166,7 +166,7 @@
         },
         data() {
             return {
-                lineColors: ["red","orange","yellow","green","teal","darkblue","darkorchid","lightslategray","darkgoldenrod","black","royalblue","deeppink"],
+                lineColors: ["red","orange","#ffd400","green","teal","darkblue","darkorchid","lightslategray","darkgoldenrod","#008fc4","royalblue","deeppink"],
                 currentIndex: -1,
                 chartDatas: [],
                 tmpStatus:[],
@@ -478,7 +478,7 @@
                 this.chartDatas = sensorList.slice();
 
                 this.charts = {
-                    color: ["red","orange","yellow","green","teal","darkblue","darkorchid","lightslategray","darkgoldenrod","black","royalblue","deeppink"],
+                    color: this.lineColors,
                     tooltip: {
                         trigger: 'axis'
                     },

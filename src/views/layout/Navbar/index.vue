@@ -1,8 +1,12 @@
 <template>
     <header>
-        <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-caidan"></use>
-        </svg>
+        <div style="float: left">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-caidan"></use>
+            </svg>
+        </div>
+        <div style="float: left;line-height: 60px;color: white">{{title}}</div>
+
     </header>
 
 </template>

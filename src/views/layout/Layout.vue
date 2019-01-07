@@ -1,6 +1,6 @@
 <template>
     <div class="app-wrapper">
-        <Navbar></Navbar>
+        <Navbar :title="title"></Navbar>
 
         <div class="main-container">
             <transition name="fade" mode="out-in">
@@ -24,6 +24,21 @@
             Navbar,
             FooterBar
         },
+        data() {
+            return {
+                title: "路网分布图"
+            }
+        },
+        // 基于路线变化的动态设置路由切换动画
+        mounted() {
+            //检测浏览器类型决定是否展示栏
+            this.title = this.$route.meta.title;
+        },
+        watch: {
+            $route(to, from) {
+                this.title = to.meta.title;
+            }
+        }
     }
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>
