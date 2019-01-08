@@ -4,57 +4,86 @@
         <div style="position: relative">
             <img id="map-image" src="../../assets/images/map.jpg">
             <div id='station_point'>
-                <dotview :key="index" :mapDot="dot" :style="{top: (dot.top * (imageHeight/545)) + 'px', left: (dot.left * (imageWidth/906)) + 'px'}"
+                <dotview :key="index" :mapDot="dot"
+                         :style="{top: (dot.top * (imageHeight/545)) + 'px', left: (dot.left * (imageWidth/906)) + 'px'}"
                          v-for="(dot, index) in dotList"></dotview>
             </div>
 
-            <div style="width: 700px;" class="weightInfoTable" ref="animTarget">
-                <div class="inlineDiv">
-                    <div class="inlineTitle">计费（ 车辆数：{{chargeCarNum}}  &nbsp; 总重：{{(chargeCarWeight / 1000).toFixed(2) }} 吨 ）</div>
+
+
+
+            <transition name="fade">
+
+                <div style="min-width: 850px;" class="weightInfoTable" ref="animTarget" v-if="leftShow">
                     <div>
-                        <el-table
-                                :data="lastChargeDatas"
-                                border
-                                style="width: 100%">
-                            <el-table-column
-                                    prop="Axlenum"
-                                    label="轴数"
-                                    align="center"
-                                    header-align="center">
-                            </el-table-column>
-                            <el-table-column
-                                    prop="CarWeight"
-                                    label="车重（Kg）"
-                                    align="center"
-                                    header-align="center">
-                            </el-table-column>
-                        </el-table>
-                    </div>
-                </div>
-                <div class="inlineDiv">
-                    <div class="inlineTitle">监测 （ 车辆数：{{checkCarNum}}  &nbsp; 总重：{{(checkCarWeight / 1000).toFixed(2)}} 吨  ）</div>
-                    <div>
-                        <el-table
-                                :data="lastCheckDatas"
-                                border
-                                style="width: 100%">
-                            <el-table-column
-                                    prop="Axlenum"
-                                    label="轴数"
-                                    align="center"
-                                    header-align="center">
-                            </el-table-column>
-                            <el-table-column
-                                    prop="CarWeight"
-                                    label="车重（Kg）"
-                                    align="center"
-                                    header-align="center">
-                            </el-table-column>
-                        </el-table>
+                        <el-button @click="leftShow = !leftShow" icon="arrow-left"></el-button>
+                        <h3 style="display: inline">过车信息</h3>
                     </div>
 
+                    <div class="inlineDiv">
+                        <div class="inlineTitle">计费（ 车辆数：{{chargeCarNum}} &nbsp; 总重：{{(chargeCarWeight /
+                            1000).toFixed(2) }} 吨 ）
+                        </div>
+                        <div>
+                            <el-table
+                                    :data="lastChargeDatas"
+                                    border
+                                    style="width: 100%">
+                                <el-table-column
+                                        prop="Axlenum"
+                                        label="轴数"
+                                        align="center"
+                                        header-align="center">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="CarWeight"
+                                        label="车重（Kg）"
+                                        align="center"
+                                        header-align="center">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="SationName"
+                                        label="路网"
+                                        align="center"
+                                        header-align="center">
+                                </el-table-column>
+                            </el-table>
+                        </div>
+                    </div>
+                    <div class="inlineDiv">
+                        <div class="inlineTitle">监测 （ 车辆数：{{checkCarNum}} &nbsp; 总重：{{(checkCarWeight /
+                            1000).toFixed(2)}} 吨 ）
+                        </div>
+                        <div>
+                            <el-table
+                                    :data="lastCheckDatas"
+                                    border
+                                    style="width: 100%">
+                                <el-table-column
+                                        prop="Axlenum"
+                                        label="轴数"
+                                        align="center"
+                                        header-align="center">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="CarWeight"
+                                        label="车重（Kg）"
+                                        align="center"
+                                        header-align="center">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="SationName"
+                                        label="路网"
+                                        align="center"
+                                        header-align="center">
+                                </el-table-column>
+                            </el-table>
+                        </div>
+
+                    </div>
                 </div>
-            </div>
+                <el-button @click="leftShow = !leftShow" class="weightInfoTableBtn" v-if="!leftShow">过<br/>车<br/>信<br/>息</el-button>
+            </transition>
 
 
             <transition name="fade">

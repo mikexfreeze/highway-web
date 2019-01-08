@@ -3,9 +3,9 @@
  */
 import fetch from 'utils/fetch';
 
-export function GetXY() {
+export function GetXY(range) {
     return fetch({
-        url: '/gaosuWeb/doMapShow',
+        url: '/gaosuWeb/doMapShow?range=' + range,
         method: 'get',
     }).then(function (response) {
         console.log("获取坐标信息接口")

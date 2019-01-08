@@ -46,7 +46,12 @@ export default {
             imageWidth: 1059,
             imageHeight: 672,
             show: true,
+            leftShow: true,
             dialogTableVisible: false,
+            errorChart: null,
+            chart1: null,
+            chart2: null,
+            lastUpateCarDate: null,
             pickerOptions: {
                 shortcuts: [{
                     text: '最近一周',
@@ -99,11 +104,13 @@ export default {
             }
         })
 
+        let range = localStorage.getItem("roadManage");
+
         setTimeout(function () {
             vm.getImageWidth();
             vm.getImageHeight();
 
-            GetXY().then((response) => {
+            GetXY(range).then((response) => {
                 vm.dotList = response.data;
             })
 
@@ -123,40 +130,49 @@ export default {
 
             if (respData.length !== 12) return;
 
-            _this.lastCheckDatas = [];
-            _this.lastChargeDatas = [];
+            var upateDate = Date.parse(respData[2]["time"]);
 
-            respData.forEach(function (obj) {
+            if (!this.lastUpateCarDate || this.lastUpateCarDate < upateDate) {
 
-                if (obj.type === "OriDevInfo") {
-                    _this.chargeCarNum = obj.countOriDev;
-                    _this.chargeCarWeight = obj.totalWeightOriDev;
-                }
+                _this.lastCheckDatas = [];
+                _this.lastChargeDatas = [];
+
+                respData.forEach(function (obj) {
+
+                    if (obj.type === "OriDevInfo") {
+                        _this.chargeCarNum = obj.countOriDev;
+                        _this.chargeCarWeight = obj.totalWeightOriDev;
+                    }
 
 
-                if (obj.type === "CheckDevInfo") {
-                    _this.checkCarNum = obj.countCheckDev;
-                    _this.checkCarWeight = obj.totalWeightCheckDev;
-                }
+                    if (obj.type === "CheckDevInfo") {
+                        _this.checkCarNum = obj.countCheckDev;
+                        _this.checkCarWeight = obj.totalWeightCheckDev;
+                    }
 
-                if (obj.type === "CheckDevTop5") {
-                    _this.lastCheckDatas.push(obj);
-                }
+                    if (obj.type === "CheckDevTop5") {
+                        _this.lastCheckDatas.push(obj);
+                    }
 
-                if (obj.type === "OrignalDevTop5") {
-                    _this.lastChargeDatas.push(obj);
-                }
-            })
+                    if (obj.type === "OrignalDevTop5") {
+                        _this.lastChargeDatas.push(obj);
+                    }
+                })
 
-            $(".weightInfoTable").addClass("showFla");
+                $(".weightInfoTable").addClass("showFla");
 
+                this.lastUpateCarDate = upateDate;
+            }
 
 
         },
         resetReq(range) {
             clearInterval(updateTimeSet);
 
+            var _this = this;
+
             GetLastCarInfoWithRange(range).then((response) => {
+
 
                 _this.handlerLastCarInfoResp(response);
             });
@@ -277,8 +293,10 @@ export default {
 
         var _this = this;
 
+        let range = localStorage.getItem("roadManage")
+
         timeSet = setInterval(function () {
-            GetXY().then((response) => {
+            GetXY(range).then((response) => {
                 this.dotList = response.data;
 
             })
@@ -301,7 +319,6 @@ export default {
         var diffDays = Math.round(Math.abs((start.getTime() - end.getTime()) / (oneDay)));
 
 
-        let range = localStorage.getItem("roadManage")
 
         GetLastCarInfoWithRange(range).then((response) => {
 
