@@ -14,7 +14,7 @@
 
             <transition name="fade">
 
-                <div style="min-width: 850px;" class="weightInfoTable" ref="animTarget" v-if="leftShow">
+                <div style="min-width: 680px;" class="weightInfoTable" ref="animTarget" v-if="leftShow">
                     <div>
                         <el-button @click="leftShow = !leftShow" icon="arrow-left"></el-button>
                         <h3 style="display: inline">过车信息</h3>
@@ -33,17 +33,26 @@
                                         prop="Axlenum"
                                         label="轴数"
                                         align="center"
-                                        header-align="center">
+                                        header-align="center"
+                                        width="50px">
                                 </el-table-column>
                                 <el-table-column
+                                        width="70px"
                                         prop="CarWeight"
                                         label="车重（Kg）"
                                         align="center"
                                         header-align="center">
                                 </el-table-column>
                                 <el-table-column
+                                        width="70px"
                                         prop="SationName"
                                         label="路网"
+                                        align="center"
+                                        header-align="center">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="time"
+                                        label="时间"
                                         align="center"
                                         header-align="center">
                                 </el-table-column>
@@ -60,20 +69,29 @@
                                     border
                                     style="width: 100%">
                                 <el-table-column
+                                        width="50px"
                                         prop="Axlenum"
                                         label="轴数"
                                         align="center"
                                         header-align="center">
                                 </el-table-column>
                                 <el-table-column
+                                        width="70px"
                                         prop="CarWeight"
                                         label="车重（Kg）"
                                         align="center"
                                         header-align="center">
                                 </el-table-column>
                                 <el-table-column
+                                        width="70px"
                                         prop="SationName"
                                         label="路网"
+                                        align="center"
+                                        header-align="center">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="time"
+                                        label="时间"
                                         align="center"
                                         header-align="center">
                                 </el-table-column>
@@ -120,16 +138,18 @@
 
 
             <el-dialog title="健康统计详情" :visible.sync="dialogTableVisible">
-                <el-table :data="errorDataDetail" height="500">
-                    <el-table-column type="index" label="序号"></el-table-column>
-                    <el-table-column property="DevID" label="设备ID"></el-table-column>
-                    <el-table-column property="Manufactor" label="厂家"></el-table-column>
-                    <el-table-column property="ProductSpec" label="产品型号" width="200"></el-table-column>
-                    <el-table-column property="PlatType" label="称台类型"></el-table-column>
-                    <el-table-column property="PlatLen" label="称台长度(m)" width="150"></el-table-column>
-                    <el-table-column property="checkDay" label="维修(天)"></el-table-column>
-                    <el-table-column property="brokenDay" label="故障(天)"></el-table-column>
-                </el-table>
+                <div class="modal-table">
+                    <el-table :data="errorDataDetail" height="500">
+                        <el-table-column type="index" label="序号" align="center"></el-table-column>
+                        <el-table-column property="DevID" label="设备ID" align="center" width="200px"></el-table-column>
+                        <el-table-column property="Manufactor" label="厂家" align="center"></el-table-column>
+                        <el-table-column property="ProductSpec" label="产品型号" width="80px" align="center"></el-table-column>
+                        <el-table-column property="PlatType" label="称台类型" align="center"></el-table-column>
+                        <el-table-column property="PlatLen" label="称台长度(m)" width="80px" align="center"></el-table-column>
+                        <el-table-column property="checkDay" label="维修(天)" align="center" width="80px"></el-table-column>
+                        <el-table-column property="brokenDay" label="故障(天)" align="center" width="80px"></el-table-column>
+                    </el-table>
+                </div>
             </el-dialog>
         </div>
     </div>

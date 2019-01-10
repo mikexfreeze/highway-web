@@ -51,9 +51,42 @@
 .inlineDiv {
   float: left;
   width: 50%;
+  font-size: 14px;
 }
 
 .inlineTitle {
   margin: 8px 4px;
   text-align: center;
 }
+
+.weightInfoTable .el-table th>.cell {
+  line-height: 16px!important;
+  font-size: 10px;
+}
+
+.weightInfoTable .el-table .cell {
+  line-height: 16px;
+  font-size: 10px;
+}
+
+.weightInfoTable .el-table .cell, .el-table th>div {
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+
+.modal-table .el-table th>.cell {
+  line-height: 16px!important;
+  font-size: 12px;
+}
+
+.modal-table .el-table .cell {
+  line-height: 16px;
+  font-size: 12px;
+}
+
+.modal-table .el-table .cell, .el-table th>div {
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
