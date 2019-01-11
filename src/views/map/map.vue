@@ -30,20 +30,6 @@
                                     border
                                     style="width: 100%">
                                 <el-table-column
-                                        prop="Axlenum"
-                                        label="轴数"
-                                        align="center"
-                                        header-align="center"
-                                        width="50px">
-                                </el-table-column>
-                                <el-table-column
-                                        width="70px"
-                                        prop="CarWeight"
-                                        label="车重（Kg）"
-                                        align="center"
-                                        header-align="center">
-                                </el-table-column>
-                                <el-table-column
                                         width="70px"
                                         prop="SationName"
                                         label="路网"
@@ -55,6 +41,20 @@
                                         label="时间"
                                         align="center"
                                         header-align="center">
+                                </el-table-column>
+                                <el-table-column
+                                        width="70px"
+                                        prop="CarWeight"
+                                        label="车重（Kg）"
+                                        align="center"
+                                        header-align="center">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="Axlenum"
+                                        label="轴数"
+                                        align="center"
+                                        header-align="center"
+                                        width="50px">
                                 </el-table-column>
                             </el-table>
                         </div>
@@ -69,9 +69,15 @@
                                     border
                                     style="width: 100%">
                                 <el-table-column
-                                        width="50px"
-                                        prop="Axlenum"
-                                        label="轴数"
+                                        width="70px"
+                                        prop="SationName"
+                                        label="路网"
+                                        align="center"
+                                        header-align="center">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="time"
+                                        label="时间"
                                         align="center"
                                         header-align="center">
                                 </el-table-column>
@@ -83,15 +89,9 @@
                                         header-align="center">
                                 </el-table-column>
                                 <el-table-column
-                                        width="70px"
-                                        prop="SationName"
-                                        label="路网"
-                                        align="center"
-                                        header-align="center">
-                                </el-table-column>
-                                <el-table-column
-                                        prop="time"
-                                        label="时间"
+                                        width="50px"
+                                        prop="Axlenum"
+                                        label="轴数"
                                         align="center"
                                         header-align="center">
                                 </el-table-column>

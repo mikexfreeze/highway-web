@@ -128,9 +128,21 @@ export default {
 
             if (!respData) return;
 
-            if (respData.length !== 12) return;
+            if (respData.length < 3) return;
 
             var upateDate = Date.parse(respData[2]["time"]);
+
+
+            for (var i= 2; i < respData.length; i++) {
+                var tmpDate = Date.parse(respData[i]["time"]);
+
+                if (tmpDate > upateDate) {
+                    upateDate = tmpDate;
+                }
+
+            }
+
+
 
             if (!this.lastUpateCarDate || this.lastUpateCarDate < upateDate) {
 
