@@ -181,6 +181,9 @@ export default {
         resetReq(range) {
             clearInterval(updateTimeSet);
 
+            this.lastUpateCarDate = null;
+
+
             var _this = this;
 
             GetLastCarInfoWithRange(range).then((response) => {

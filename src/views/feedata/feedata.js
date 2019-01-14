@@ -87,6 +87,7 @@ export default {
             // 获取总个数
             let numParam = {
                 province:this.selectedProvince,
+                road:this.selectedRoad,
                 station:this.selectedStation,
                 port:this.selectedPort,
                 startTime:startT,

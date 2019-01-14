@@ -34,9 +34,9 @@
 
         <div class="dotview greenview" v-popover:popover1 v-if="mapDot.stat == 0">
         </div>
-        <div class="dotview blueview" v-popover:popover1 v-if="mapDot.stat == 1">
+        <div class="dotview blueview" v-popover:popover1 v-if="mapDot.stat == 2">
         </div>
-        <div class="dotview redview" v-popover:popover1 v-if="mapDot.stat == 2">
+        <div class="dotview redview" v-popover:popover1 v-if="mapDot.stat == 1">
         </div>
     </span>
 
