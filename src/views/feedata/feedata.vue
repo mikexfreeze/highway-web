@@ -106,7 +106,7 @@
                         label="轴数"
                 >
                 </el-table-column>
-                <el-table-column label="轴组数" prop="Axlenum">
+                <el-table-column label="轴组数" prop="AGWNum">
                 </el-table-column>
                 <el-table-column label="是否超重" prop="OverLoad">
                     <template scope="scope">
